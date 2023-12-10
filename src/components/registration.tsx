@@ -10,17 +10,28 @@ function Registration() {
         password: '',
     });
 
+    const [successMessage, setSuccessMessage] = useState('');
+    const [errorMessage, setErrorMessage] = useState('');
+
     const handleFormSubmit = async (e) => {
-        e.preventDefault(); // Zapobiegamy domyślnej akcji przesyłania formularza
+        e.preventDefault();
+
+        setSuccessMessage('');
+        setErrorMessage('');
 
         try {
-            // Wysyłamy dane do API w formie JSON
             const response = await Axios.post('http://localhost:8080/api/v1/auth/register', formData);
-
-            // Tutaj możesz obsłużyć odpowiedź od serwera, np. wyświetlić komunikat o sukcesie
+            setSuccessMessage('Rejestracja zakończona sukcesem!');
+            setFormData({
+                firstName: '',
+                lastName: '',
+                email: '',
+                password: '',
+            });
             console.log('Sukces:', response.data);
+
         } catch (error) {
-            // Obsługa błędów, np. wyświetlenie komunikatu o błędzie
+            setErrorMessage('Użytkownik o podanym e-mail już istnieje!');
             console.error('Błąd:', error);
         }
     };
@@ -78,6 +89,12 @@ function Registration() {
                     </div>
                 </div>
             </div>
+            {successMessage && (
+                <div className="alert alert-success mt-3 text-center rounded-4">{successMessage}</div>
+            )}
+            {errorMessage && (
+                <div className="alert alert-danger mt-3 text-center">{errorMessage}</div>
+            )}
         </div>
     );
 }
