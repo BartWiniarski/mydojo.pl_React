@@ -24,7 +24,7 @@ function Login(){
                             <div className="p-3">
                                 <div className="small">
                                     <input type="checkbox" className="form-check-input" id="RememberMe"/>
-                                    <label className="" htmlFor="RememberMe">Zapamiętaj mnie</label>
+                                    <label className="ms-2" htmlFor="RememberMe">Zapamiętaj mnie</label>
                                 </div>
                             </div>
                             <div className="text-center">
