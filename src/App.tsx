@@ -1,5 +1,4 @@
 import {useState} from "react";
-import requireAuth from "./components/RequireAuth.tsx";
 import { Route, Routes, Link} from "react-router-dom";
 
 import Layout from "./components/Layout.tsx";
@@ -15,7 +14,7 @@ import Forbidden from "./pages/forbidden.tsx";
 
 
 function App() {
-    const [showLogin, setShowLogin] = useState(false);
+    // const [showLogin, setShowLogin] = useState(false);
 
     return (
         <Routes>
@@ -25,6 +24,7 @@ function App() {
                 <Route path="login" element={<Login/>}/>
                 <Route path="register" element={<Registration/>}/>
                 <Route path="/forbidden" element={<Forbidden/>}/>
+                <Route path="*" element={<Missing/>}/>
 
                 {/*protected*/}
                 <Route element={<RequireAuth allowedRoles={["ADMIN"]}/>}>
@@ -37,8 +37,6 @@ function App() {
                     <Route path="dashboardStudent" element={<DashboardStudent/>}/>
                 </Route>
 
-                {/*missing*/}
-                <Route path="*" element={<Missing/>}/>
             </Route>
         </Routes>
     );

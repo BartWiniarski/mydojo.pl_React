@@ -1,5 +1,6 @@
 import {useLocation, Navigate, Outlet} from "react-router-dom";
 import useAuth from "../hooks/useAuth.tsx";
+import Layout from "./Layout.tsx";
 
 const RequireAuth = ({allowedRoles}) => {
     const {auth} = useAuth();

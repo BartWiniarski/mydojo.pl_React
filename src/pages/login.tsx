@@ -32,7 +32,7 @@ function Login() {
             const response = await axiosInstance.post(LOGIN_URL, formData);
             const token = response?.data?.token;
             const roles = response?.data?.roles;
-            setAuth({ user: formData.email, pwd: formData.password, roles, token });
+            setAuth({ user: formData.email, roles, token });
             navigate(from, {replace: true});
 
         } catch (error) {
