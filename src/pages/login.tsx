@@ -1,11 +1,14 @@
-import {Link, useNavigate} from "react-router-dom";
-import {useState, useContext} from "react";
+import {Link, useLocation, useNavigate} from "react-router-dom";
+import {useState} from "react";
 import axiosInstance from "../axios/axios.tsx";
-import AuthContext from "../context/AuthProvider.tsx";
+import useAuth from "../hooks/useAuth.tsx";
+
 
 function Login() {
-    const {setAuth} = useContext(AuthContext);
+    const {setAuth} = useAuth();
     const navigate = useNavigate();
+    const location = useLocation();
+    const from = location.state?.from?.pathname || "/";
 
     const [formData, setFormData] = useState({
         email: '',
@@ -29,8 +32,8 @@ function Login() {
             const response = await axiosInstance.post(LOGIN_URL, formData);
             const token = response?.data?.token;
             const roles = response?.data?.roles;
-            setAuth({token, roles});
-            navigate("/dashboard")
+            setAuth({ user: formData.email, pwd: formData.password, roles, token });
+            navigate(from, {replace: true});
 
         } catch (error) {
             setFormData({
@@ -38,11 +41,11 @@ function Login() {
                 password: '',
             });
             if (!error?.response) {
-                setErrorMessage("Brak odpowiedzi serwera.")
+                setErrorMessage("Brak odpowiedzi serwera.");
             } else if (error.response?.status === 403) {
                 setErrorMessage('Brak autoryzacji - sprawdź poprawność e-mail i hasła.');
             } else {
-                setErrorMessage("Logowanie zakończone niepowodzeniem.")
+                setErrorMessage("Logowanie zakończone niepowodzeniem.");
             }
         }
     };

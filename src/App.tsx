@@ -1,31 +1,46 @@
 import {useState} from "react";
-import {BrowserRouter as Router, Route, Routes, Link} from "react-router-dom";
+import requireAuth from "./components/RequireAuth.tsx";
+import { Route, Routes, Link} from "react-router-dom";
 
-import Header from "./pages/header.tsx";
-import Footer from "./pages/footer.tsx";
+import Layout from "./components/Layout.tsx";
 import Login from "./pages/login.tsx";
 import Home from "./pages/home.tsx";
 import Registration from "./pages/registration.tsx";
-import Dashboard from "./pages/dashboard.tsx";
+import DashboardAdmin from "./pages/dashboardAdmin.tsx";
+import Missing from "./pages/missing.tsx";
+import RequireAuth from "./components/RequireAuth.tsx";
+import DashboardTrainer from "./pages/dashboardTrainer.tsx";
+import DashboardStudent from "./pages/dashboardStudent.tsx";
+import Forbidden from "./pages/forbidden.tsx";
+
 
 function App() {
     const [showLogin, setShowLogin] = useState(false);
 
     return (
-        <Router>
-            <div className="App">
-                <Header/>
-                <div id="main-content-row" className="row main-content-row main-row-text">
-                    <Routes>
-                        <Route path="/" element={<Home/>}/>
-                        <Route path="/login" element={<Login/>}/>
-                        <Route path="/register" element={<Registration/>}/>
-                        <Route path="/dashboard" element={<Dashboard/>}/>
-                    </Routes>
-                </div>
-                <Footer/>
-            </div>
-        </Router>
+        <Routes>
+            <Route path="/" element={<Layout/>}>
+                {/*public*/}
+                <Route path="/" element={<Home/>}/>
+                <Route path="login" element={<Login/>}/>
+                <Route path="register" element={<Registration/>}/>
+                <Route path="/forbidden" element={<Forbidden/>}/>
+
+                {/*protected*/}
+                <Route element={<RequireAuth allowedRoles={["ADMIN"]}/>}>
+                    <Route path="dashboardAdmin" element={<DashboardAdmin/>}/>
+                </Route>
+                <Route element={<RequireAuth allowedRoles={["TRAINER"]}/>}>
+                    <Route path="dashboardTrainer" element={<DashboardTrainer/>}/>
+                </Route>
+                <Route element={<RequireAuth allowedRoles={["STUDENT"]}/>}>
+                    <Route path="dashboardStudent" element={<DashboardStudent/>}/>
+                </Route>
+
+                {/*missing*/}
+                <Route path="*" element={<Missing/>}/>
+            </Route>
+        </Routes>
     );
 }
 
