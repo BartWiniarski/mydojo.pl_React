@@ -21,7 +21,7 @@ function Registration() {
 
         try {
             const response = await Axios.post('http://localhost:8080/api/v1/auth/register', formData);
-            setSuccessMessage('Rejestracja zakończona sukcesem!');
+            setSuccessMessage('Rejestracja zakończona sukcesem!'); //TODO dodać adres do 'klasy'
             setFormData({
                 firstName: '',
                 lastName: '',
@@ -33,6 +33,7 @@ function Registration() {
         } catch (error) {
             setErrorMessage('Użytkownik o podanym e-mail już istnieje!');
             console.error('Błąd:', error);
+            // TODO dodać inne errory
         }
     };
 
