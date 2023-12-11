@@ -6,6 +6,7 @@ import Footer from "./pages/footer.tsx";
 import Login from "./pages/login.tsx";
 import Home from "./pages/home.tsx";
 import Registration from "./pages/registration.tsx";
+import Dashboard from "./pages/dashboard.tsx";
 
 function App() {
     const [showLogin, setShowLogin] = useState(false);
@@ -19,6 +20,7 @@ function App() {
                         <Route path="/" element={<Home/>}/>
                         <Route path="/login" element={<Login/>}/>
                         <Route path="/register" element={<Registration/>}/>
+                        <Route path="/dashboard" element={<Dashboard/>}/>
                     </Routes>
                 </div>
                 <Footer/>

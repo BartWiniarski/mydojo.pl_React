@@ -3,23 +3,18 @@
 document.addEventListener("DOMContentLoaded", (event) => {
     document.addEventListener("click", function () {
         const welcomeLogoEl = document.querySelector("#welcomelogo");
-        const columnLeftEl = document.querySelector("#column-left");
-        const columnRightEl = document.querySelector("#column-right");
+        const columnLandingEl = document.querySelector("#column-landing");
 
         welcomeLogoEl.classList.add("logo-hide");
         setTimeout(function () {
             welcomeLogoEl.classList.add("d-none");
-            columnLeftEl.classList.remove("d-none");
-            columnRightEl.classList.remove("d-none");
-            columnLeftEl.classList.add("text-hide");
-            columnRightEl.classList.add("text-hide");
+            columnLandingEl.classList.remove("d-none");
+            columnLandingEl.classList.add("text-hide");
         }, 400);
 
         setTimeout(function (){
-            columnLeftEl.classList.add("text-unhide");
-            columnRightEl.classList.add("text-unhide");
-            columnLeftEl.classList.remove("text-hide");
-            columnRightEl.classList.remove("text-hide");
+            columnLandingEl.classList.add("text-unhide");
+            columnLandingEl.classList.remove("text-hide");
         },450);
     });
 });

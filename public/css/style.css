@@ -57,6 +57,10 @@ body {
         overflow-y: auto;
     }
 }
+.column-landing{
+    height: 87vh;
+    overflow-y: auto;
+}
 
 /* SCROLLBAR DEFINITION */
 ::-webkit-scrollbar {
