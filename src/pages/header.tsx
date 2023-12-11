@@ -15,11 +15,11 @@ function Header() {
                         </div>
                         <div>
                             <Link to="/" className="link-wo-decoration">
-                                <a className="navbar-brand">
+                                <div className="navbar-brand">
                                     <img src="/images/logo_symbol_3.png" className="shadow-img" alt="Logo"
                                          style={{height: '3.15rem', verticalAlign: 'middle'}}/>
                                     <span className="ms-2">myDojo.pl</span>
-                                </a>
+                                </div>
                             </Link>
                         </div>
                         <div className="d-flex align-items-center">
