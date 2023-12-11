@@ -1,10 +1,12 @@
-import {Link} from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
 import {useState, useContext} from "react";
 import axiosInstance from "../axios/axios.tsx";
 import AuthContext from "../context/AuthProvider.tsx";
 
 function Login() {
     const {setAuth} = useContext(AuthContext);
+    const navigate = useNavigate();
+
     const [formData, setFormData] = useState({
         email: '',
         password: '',
@@ -18,15 +20,30 @@ function Login() {
 
         setErrorMessage('');
 
+        if (!formData.email.trim() || !formData.password.trim()) {
+            setErrorMessage('Wszystkie pola są wymagane!');
+            return;
+        }
+
         try {
             const response = await axiosInstance.post(LOGIN_URL, formData);
+            const token = response?.data?.token;
+            const roles = response?.data?.roles;
+            setAuth({token, roles});
+            navigate("/dashboard")
+
+        } catch (error) {
             setFormData({
                 email: '',
                 password: '',
             });
-            console.log("SUKCES!")
-        } catch (error) {
-            setErrorMessage('błąd!');
+            if (!error?.response) {
+                setErrorMessage("Brak odpowiedzi serwera.")
+            } else if (error.response?.status === 403) {
+                setErrorMessage('Brak autoryzacji - sprawdź poprawność e-mail i hasła.');
+            } else {
+                setErrorMessage("Logowanie zakończone niepowodzeniem.")
+            }
         }
     };
 
