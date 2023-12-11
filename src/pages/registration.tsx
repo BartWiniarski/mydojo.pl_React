@@ -1,4 +1,4 @@
-import Axios from 'axios';
+import axiosInstance from "../axios/axios.tsx";
 import {useState} from 'react';
 import {Link} from "react-router-dom";
 
@@ -12,6 +12,7 @@ function Registration() {
 
     const [successMessage, setSuccessMessage] = useState('');
     const [errorMessage, setErrorMessage] = useState('');
+    const REGISTER_URL = "/auth/register";
 
     const handleFormSubmit = async (e) => {
         e.preventDefault();
@@ -19,21 +20,29 @@ function Registration() {
         setSuccessMessage('');
         setErrorMessage('');
 
+        if (!formData.firstName.trim() || !formData.lastName.trim() || !formData.email.trim() || !formData.password.trim()) {
+            setErrorMessage('Wszystkie pola są wymagane!');
+            return;
+        }
+
         try {
-            const response = await Axios.post('http://localhost:8080/api/v1/auth/register', formData);
-            setSuccessMessage('Rejestracja zakończona sukcesem!'); //TODO dodać adres do 'klasy'
+            const response = await axiosInstance.post(REGISTER_URL, formData);
+            setSuccessMessage('Rejestracja zakończona sukcesem!');
             setFormData({
                 firstName: '',
                 lastName: '',
                 email: '',
                 password: '',
             });
-            console.log('Sukces:', response.data);
 
         } catch (error) {
-            setErrorMessage('Użytkownik o podanym e-mail już istnieje!');
-            console.error('Błąd:', error);
-            // TODO dodać inne errory
+            if (!error?.response) {
+                setErrorMessage("Brak odpowiedzi serwera.")
+            } else if (error.response?.status === 409) {
+                setErrorMessage('Użytkownik o podanym e-mail już istnieje!');
+            } else {
+                setErrorMessage("Rejestracja zakończona niepowodzeniem.")
+            }
         }
     };
 
@@ -86,7 +95,7 @@ function Registration() {
                         <hr/>
                         <div className="text-center">
                             <Link to="/login" className="link-wo-decoration">
-                            <a className="small" href="">Masz już konto? Zaloguj się!</a>
+                                <p className="small">Masz już konto? Zaloguj się!</p>
                             </Link>
                         </div>
                     </div>
