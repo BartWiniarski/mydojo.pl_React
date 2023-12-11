@@ -1,6 +1,6 @@
 import Axios from 'axios';
 import {useState} from 'react';
-
+import {Link} from "react-router-dom";
 
 function Registration() {
     const [formData, setFormData] = useState({
@@ -85,7 +85,9 @@ function Registration() {
                         </form>
                         <hr/>
                         <div className="text-center">
+                            <Link to="/login" className="link-wo-decoration">
                             <a className="small" href="">Masz już konto? Zaloguj się!</a>
+                            </Link>
                         </div>
                     </div>
                 </div>

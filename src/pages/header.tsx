@@ -1,8 +1,6 @@
+import {Link} from "react-router-dom";
 
-function Header({setShowLogin}) {
-    const handleLoginClick = () => {
-        setShowLogin(true);
-    };
+function Header() {
 
     return (
         <div className="container-fluid">
@@ -16,16 +14,20 @@ function Header({setShowLogin}) {
                             </button>
                         </div>
                         <div>
-                            <a className="navbar-brand" href="#">
-                                <img src="/images/logo_symbol_3.png" className="shadow-img" alt="Logo"
-                                     style={{height: '3.15rem', verticalAlign: 'middle'}}/>
-                                <span className="ms-2">myDojo.pl</span>
-                            </a>
+                            <Link to="/" className="link-wo-decoration">
+                                <a className="navbar-brand">
+                                    <img src="/images/logo_symbol_3.png" className="shadow-img" alt="Logo"
+                                         style={{height: '3.15rem', verticalAlign: 'middle'}}/>
+                                    <span className="ms-2">myDojo.pl</span>
+                                </a>
+                            </Link>
                         </div>
                         <div className="d-flex align-items-center">
-                            <span className="btn-slideY" onClick={handleLoginClick}>zaloguj się</span>
-                            <img src="/images/user_3.png" className="btn-slideY" alt="user" onClick={handleLoginClick}
-                                 style={{height: '3.3rem', verticalAlign: 'middle'}}/>
+                            <Link to="/login" className="btn-slideY link-wo-decoration">zaloguj się</Link>
+                            <Link to="/login">
+                                <img src="/images/user_3.png" className="btn-slideY" alt="user"
+                                     style={{height: '3.3rem', verticalAlign: 'middle'}}/>
+                            </Link>
                             <div className="btn-slideY">
                                 {/*<span id="message-counter" className="notify-badge">3</span>*/}
                                 <img src="/images/envelope_4.png" className="me-2" alt="envelope"

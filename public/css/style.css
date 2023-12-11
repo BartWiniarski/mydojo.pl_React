@@ -213,6 +213,11 @@ input[type=checkbox]{
     color: white!important;
 }
 
+/*CUSTOM LINKS*/
+.link-wo-decoration {
+    text-decoration: none;
+}
+
 
 
 /*OBRAMOWANIA TESTOWE CONTENERÓW*/

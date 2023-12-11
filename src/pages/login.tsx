@@ -1,6 +1,7 @@
+import {Link} from "react-router-dom";
 
-function Login(){
-    return(
+function Login() {
+    return (
         <div className="card card-primary-body rounded-5 mx-auto"
              style={{marginTop: "15vh", marginBottom: "15vh", width: "70%"}}>
             <div className="row">
@@ -37,7 +38,9 @@ function Login(){
                             <a className="small" href="">Zmień hasło</a>
                         </div>
                         <div className="text-center">
-                            <a className="small" href="">Stwórz nowe konto</a>
+                            <Link to="/register" className="link-wo-decoration">
+                                <a className="small">Stwórz nowe konto</a>
+                            </Link>
                         </div>
                     </div>
                 </div>
