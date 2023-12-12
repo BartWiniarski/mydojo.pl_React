@@ -32,7 +32,8 @@ function Login() {
             const response = await axiosInstance.post(LOGIN_URL, formData);
             const token = response?.data?.token;
             const roles = response?.data?.roles;
-            setAuth({ user: formData.email, roles, token });
+            //TODO: usunąć hasło z kontekstu i nie używać go w kodzie.
+            setAuth({ email: formData.email, password: formData.password, roles, token });
             navigate(from, {replace: true});
 
         } catch (error) {
