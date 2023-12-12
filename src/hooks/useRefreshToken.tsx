@@ -14,6 +14,8 @@ const useRefreshToken = () => {
         password: auth.password,
     }: {};
 
+    //TODO: dodać handling w przypadku wygaśnięcia odświeżonego tokena 
+
 
     const refresh = async () => {
         try{

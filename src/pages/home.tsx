@@ -35,10 +35,6 @@ function Home() {
                  className={`col-12 ms-3 me-3 column-landing ${isTextShowing ? 'text-unhide' : 'text-hide'} ${!isLogoHidden ? 'd-none' : ''}`}
                  style={{width: '99%'}}>
                 <h1 className="text-center">LANDING PAGE</h1>
-
-                <Link to="/dashboardAdmin">ADMIN</Link> <br/>
-                <Link to="/dashboardTrainer">TRAINER</Link><br/>
-                <Link to="/dashboardStudent">STUDENT</Link><br/>
                 <hr/>
                 <p>
                     Lorem ipsum dolor sillt amet, consectetur adipiscing elit, sed do eiusmod tempor

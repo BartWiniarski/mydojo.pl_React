@@ -1,12 +1,22 @@
-import {Link} from "react-router-dom";
+import {useNavigate, Link} from "react-router-dom";
+import useAuth from "../hooks/useAuth.tsx";
+
 
 function Header() {
+    const {auth, setAuth} = useAuth();
+    const isLoggedIn = auth.token;
+    const navigate = useNavigate();
+
+    const logout = async () => {
+        setAuth({});
+        navigate('/');
+    }
 
     return (
         <div className="container-fluid">
             <nav className="navbar navbar-dark fixed-top p-0">
                 <div className="d-flex justify-content-between navbar-container navbar-transparent w-100 navbar-text">
-                    <div className="d-flex align-items-center">
+                    <div className="d-flex align-items-center" style={{width: "100%"}}>
                         <div>
                             <button className="navbar-toggler me-2 ms-2" type="button" data-bs-toggle="offcanvas"
                                     data-bs-target="#offcanvasDarkNavbar">
@@ -22,14 +32,28 @@ function Header() {
                                 </div>
                             </Link>
                         </div>
-                        <div className="d-flex align-items-center">
-                            <Link to="/login" className="btn-slideY link-wo-decoration">zaloguj się</Link>
-                            <Link to="/login">
-                                <img src="/images/user_3.png" className="btn-slideY" alt="user"
-                                     style={{height: '3.3rem', verticalAlign: 'middle'}}/>
-                            </Link>
-                            <div className="btn-slideY">
-                                {/*<span id="message-counter" className="notify-badge">3</span>*/}
+                        <div className="d-flex align-items-center ms-auto">
+                            {!isLoggedIn ? (
+                                <>
+                                    <Link to="/login" className="btn-slideY link-wo-decoration">zaloguj się</Link>
+                                    <Link to="/login">
+                                        <img src="/images/user_3.png" className="btn-slideY" alt="user"
+                                             style={{height: '3.3rem', verticalAlign: 'middle'}}/>
+                                    </Link>
+                                </>
+                            ) : (
+                                <>
+                                    {/*TODO: zamienić role na imię kiedy funkcjonalnośc powstanie*/}
+                                    <div className="">Osu {auth.roles}!</div>
+                                    <Link to="">
+                                        <img src="/images/user_3.png" className="btn-slideY" alt="user"
+                                             style={{height: '3.3rem', verticalAlign: 'middle'}}/>
+                                    </Link>
+                                </>
+                            )}
+
+                            <div className="btn-slideY p-2">
+                                <span id="message-counter" className="notify-badge">3</span>
                                 <img src="/images/envelope_4.png" className="me-2" alt="envelope"
                                      style={{height: '3.5rem', verticalAlign: 'middle'}}/>
                             </div>
@@ -48,46 +72,53 @@ function Header() {
                     <div className="offcanvas-body">
                         <img src="/images/fan_2.png" className="img-fluid shadow-img d-block mx-auto" alt="Logo"
                              style={{maxHeight: '100px'}}/>
+
                         <ul className="navbar-nav justify-content-end flex-grow-1 pe-3">
-                            <li className="nav-item">
-                                <a className="nav-link active" href="#">Home</a>
-                            </li>
-                            <li className="nav-item">
-                                <a className="nav-link" href="#">Link</a>
-                            </li>
-                            <li className="nav-item dropdown">
-                                <a className="nav-link dropdown-toggle" href="#" role="button"
-                                   data-bs-toggle="dropdown">
-                                    Dropdown
-                                </a>
-                                <ul className="dropdown-menu dropdown-menu-dark">
-                                    <li><a className="dropdown-item" href="#">Action</a></li>
-                                    <li><a className="dropdown-item" href="#">Another action</a></li>
-                                    <li>
-                                        <hr className="dropdown-divider"/>
+                            {isLoggedIn ? (
+                                <>
+                                    <li className="nav-item">
+                                        <Link to="/" className="nav-link active">Strona Główna</Link>
                                     </li>
-                                    <li><a className="dropdown-item" href="#">Something else here</a></li>
-                                </ul>
-                            </li>
-                            <li className="nav-item">
-                                <a className="nav-link" href="#">Link</a>
-                            </li>
-                            <li className="nav-item">
-                                <a className="nav-link" href="#">Link</a>
-                            </li>
-                            <li className="nav-item">
-                                <a className="nav-link" href="#">Link</a>
-                            </li>
-                            <li className="nav-item">
-                                <a className="nav-link" href="#">Link</a>
-                            </li>
-                            <li className="nav-item">
-                                <a className="nav-link" href="#">Link</a>
-                            </li>
-                            <li></li>
+
+                                    {auth.roles && auth.roles.includes("ADMIN") && (
+                                        <li className="nav-item">
+                                            <Link to="/dashboardAdmin" className="nav-link active">Dashboard</Link>
+                                        </li>
+                                    )}
+
+                                    {auth.roles && auth.roles.includes("TRAINER") && (
+                                        <li className="nav-item">
+                                            <Link to="/dashboardTrainer" className="nav-link active">Dashboard</Link>
+                                        </li>
+                                    )}
+
+                                    {auth.roles && auth.roles.includes("STUDENT") && (
+                                        <li className="nav-item">
+                                            <Link to="/dashboardStudent" className="nav-link active">Dashboard</Link>
+                                        </li>
+                                    )}
+
+                                    <li className="nav-item">
+                                        <Link to="" onClick={logout} className="nav-link active">Wyloguj</Link>
+                                    </li>
+                                </>
+                            ) : (
+                                <>
+                                    <li className="nav-item">
+                                        <Link to="/" className="nav-link active">Strona Główna</Link>
+                                    </li>
+                                    <li className="nav-item">
+                                        <Link to="/login" className="nav-link">Logowanie</Link>
+                                    </li>
+                                    <li className="nav-item">
+                                        <Link to="/register" className="nav-link">Rejestracja</Link>
+                                    </li>
+                                </>
+                            )}
                         </ul>
-                        <img src="/images/logo_1_1024_64.png" className="img-fluid shadow-img d-block mx-auto"
-                             alt="Logo"
+
+                        <img src="/images/logo_1_1024_64.png" className=" img-fluid shadow-img d-block mx-auto"
+                             alt=" Logo"
                              style={{maxHeight: '200px'}}/>
                     </div>
                 </div>
