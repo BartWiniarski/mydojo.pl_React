@@ -1,52 +1,52 @@
 import {useState, useEffect} from "react";
-import axiosInstance from "../axios/axios.tsx";
-import useRefreshToken from "../hooks/useRefreshToken.tsx";
+import useAxiosInstanceToken from "../hooks/useAxiosInstanceToken.tsx";
 
 const AdminTestFetch = () => {
-    const [responses, setResponses] = useState();
-    const refresh = useRefreshToken();
+    const [response, setResponses] = useState([]);
+    const axiosInstanceToken = useAxiosInstanceToken();
 
-    // useEffect(() => {
-    //     let isMounted = true;
-    //     const controller = new AbortController();
-    //
-    //     const getFetch = async () => {
-    //         try {
-    //             const response = await axiosInstance.get("/admin/test",
-    //                 {signal: controller.signal});
-    //             console.log(response.data)
-    //             isMounted && setResponses(response.data);
-    //         } catch (error) {
-    //             console.log(error)
-    //         }
-    //     }
-    //     getFetch();
-    //
-    //     return () => {
-    //         isMounted = false;
-    //         controller.abort();
-    //     }
-    //
-    // }, []);
+    useEffect(() => {
+        let isMounted = true;
+
+        const getFetch = async () => {
+            try {
+                const response = await axiosInstanceToken.get("/admin/test");
+
+                console.log(response.data)
+                console.log("time: ", response.data.time)
+                console.log("role: ", response.data.role)
+                console.log("loremIpsum: ", response.data.loremIpsum)
+
+                if (isMounted) {
+                    setResponses(response.data);
+                }
+            } catch (error) {
+                if (isMounted) {
+                    console.log(error);
+                }
+            }
+        }
+        getFetch();
+
+        return () => {
+            isMounted = false;
+        }
+
+    }, [axiosInstanceToken]);
 
     return (
         <article>
             <h2>Test Żesłą - ADMIN FETCH</h2>
-            {responses?.length
-                ? (
-                    <ul>
-                        {responses.map((response, i) =>
-                            <li key={i}>
-                                {response?.role}
-                                {response?.time}
-                                {response?.loremIpsum}
-                            </li>)}
-                    </ul>
-                ) : <p>no data fetched</p>
-            }
-            <button onClick={()=>refresh()}>REFRESH</button>
-            <br/>
+            {response ? (
+                <div>
+                    <p>Role: {response.role}</p>
+                    <p>Time: {response.time}</p>
+                    <p>Lorem Ipsum: {response.loremIpsum}</p>
+                </div>
+            ) : (
+                <p>no data fetched</p>
+            )}
         </article>
     );
-}
+};
 export default AdminTestFetch;

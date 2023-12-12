@@ -1,4 +1,4 @@
-import axiosInstance from "../axios/axios.tsx";
+import {axiosInstance} from "../axios/axios.tsx";
 import useAuth from "./useAuth.tsx";
 import {useState} from "react";
 
@@ -14,14 +14,11 @@ const useRefreshToken = () => {
         password: auth.password,
     }: {};
 
-    console.log(credentials)
 
     const refresh = async () => {
         try{
             const response = await axiosInstance.post(AUTHENTICATE_URL, credentials,);
             setAuth(prev => {
-                console.log(JSON.stringify(prev))
-                console.log((response.data.token))
                 return {...prev, token: response.data.token}
             });
             return response.data.token;

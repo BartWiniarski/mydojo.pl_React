@@ -1,6 +1,6 @@
 import {Link, useLocation, useNavigate} from "react-router-dom";
 import {useState} from "react";
-import axiosInstance from "../axios/axios.tsx";
+import {axiosInstance} from "../axios/axios.tsx";
 import useAuth from "../hooks/useAuth.tsx";
 
 
