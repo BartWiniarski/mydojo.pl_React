@@ -55,7 +55,7 @@ function Home() {
                     Lacus sed viverra tellus in hac habitasse platea dictumst vestibulum. Posuere
                     sollicitudin aliquam ultrices sagittis orci a scelerisque purus. Elementum
                     tempus
-                    egestas sed sed risus pretium quam. Tincidunt nunc pulvinar sapien et ligula
+                    egestas seeed sed risus pretium quam. Tincidunt nunc pulvinar sapien et ligula
                     ullamcorperf.
                 </p>
                 <p>
