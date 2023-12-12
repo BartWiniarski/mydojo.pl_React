@@ -41,7 +41,7 @@ function Home() {
                 <Link to="/dashboardStudent">STUDENT</Link><br/>
                 <hr/>
                 <p>
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
+                    Lorem ipsum dolor sillt amet, consectetur adipiscing elit, sed do eiusmod tempor
                     incididunt ut labore et dolore magna aliqua. Laoreet suspendisse interdum
                     consectetur
                     libero id faucibus nisl tincidunt. Orci ac auctor augue mauris augue neque
