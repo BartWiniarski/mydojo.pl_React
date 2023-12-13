@@ -1,0 +1,252 @@
+:root{
+    --main-color: rgba(220, 114, 62);
+    --main-color-darker: rgb(139, 72, 39);
+
+    --main-color-r: 220;
+    --main-color-g: 114;
+    --main-color-b: 62;
+    --main-color-transparent75: rgba(var(--main-color-r), var(--main-color-g), var(--main-color-b), 0.75);
+    --main-color-transparent50: rgba(var(--main-color-r), var(--main-color-g), var(--main-color-b), 0.50);
+
+}
+
+body {
+    background-image: url('../images/background_32.png');
+    background-repeat: no-repeat;
+    background-position: center;
+    background-attachment: fixed;
+    background-size: cover;
+    font-family: 'Poppins', sans-serif;
+    max-width: 100%;
+}
+
+/*RESPONSIVE ACTIONS*/
+/*RESPONSIVE MARGIN FOR CARD XL BREAKPOINT*/
+@media (min-width: 1400px) {
+    .ms-6 {
+        margin-left: 20rem !important;
+    }
+
+    .me-6 {
+        margin-right: 20rem !important;
+    }
+}
+/*RESPONSIVE MAIN CONTENT COLUMNS*/
+@media (min-width: 768px) {
+    .column-left {
+        position: fixed;
+        height: 87vh;
+        overflow: hidden;
+    }
+
+    .column-right {
+        height: 87vh;
+        overflow-y: auto;
+    }
+}
+
+@media (max-width: 767px) {
+    .column-left {
+        position: -ms-device-fixed;
+        height: 20vh;
+        overflow: hidden;
+    }
+
+    .column-right {
+        height: 67vh;
+        overflow-y: auto;
+    }
+}
+.column-landing{
+    height: 87vh;
+    overflow-y: auto;
+}
+
+/* SCROLLBAR DEFINITION */
+::-webkit-scrollbar {
+    width: 10px;
+}
+
+::-webkit-scrollbar-track {
+    border-radius: 8px;
+    background-color: #e7e7e7;
+    border: 1px solid #cacaca;
+}
+
+
+::-webkit-scrollbar-thumb {
+    border-radius: 8px;
+    border: 2px solid transparent;
+    background-clip: content-box;
+    background-color: var(--main-color);
+}
+
+
+::-webkit-scrollbar-thumb:hover {
+    background: rgba(149, 0, 0, 0.56);
+}
+
+/*LOGIN PAGE IMG*/
+.bg-login-image {
+    background-image: url('../images/logo_1_1024_64.png');
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-origin: content-box;
+}
+/*REGISTRATION PAGE IMG*/
+.bg-registration-image {
+    background-image: url('../images/meditating_3.png');
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-origin: content-box;
+}
+
+/* LANDING PAGE LOGO TRANSFORMATION STYLES */
+.text-hide {
+    opacity: 0;
+}
+
+.logo-hide {
+    opacity: 0;
+    transition: opacity 0.40s linear;
+}
+
+.text-unhide {
+    opacity: 1;
+    transition: opacity 0.40s linear;
+}
+
+/* NAVBAR AND OFFCANVAS STYLES */
+.navbar-text {
+    color: rgba(255, 255, 255, 0.65);
+}
+
+.navbar-container {
+    background-color: rgba(0, 0, 0, 0.5);
+    height: 6vh;
+}
+
+.offcanvas-color {
+    background-image: linear-gradient(to bottom, var(--main-color-transparent75), black);
+
+}
+
+.custom-offcanvas {
+    margin-top: 6vh;
+    height: 91vh;
+    --bs-offcanvas-width: 250px;
+}
+
+/* CANVAS TEXT VISIBILITY */
+.offcanvas-backdrop.show {
+    opacity: 0.0;
+}
+
+.offcanvas-header-white {
+    color: white;
+}
+
+/* NAVBAR ICONS EFFECTS */
+.btn-slideY {
+    transition: all 0.3s;
+
+    &:hover {
+        transform: translateY(-4px);
+    }
+}
+
+.notify-badge{
+    position: absolute;
+    right:0px;
+    top:5px;
+    background:var(--main-color);
+    text-align: center;
+    border-radius: 50px 50px 50px 50px;
+    color:white;
+    padding:5px 10px;
+    font-size:0.6rem;
+}
+
+/* MAIN ROW STYLES */
+.main-row-text {
+    color: white;
+}
+
+.main-content-row {
+    height: 88vh;
+    width: 100%;
+    margin-top: 4.5rem !important;
+}
+
+/* FOOTER CONTAINER STYLES */
+.footer-text {
+    color: white;
+    opacity: 0.35;
+}
+
+.footer-container {
+    height: 3.5vh;
+}
+
+/* IMAGE STYLES */
+.shadow-img {
+    filter: drop-shadow(5px 5px 10px rgba(0, 0, 0, 0.75));
+}
+
+/*TABLE ADDITIONAL STYLES */
+input[type=checkbox]{
+    accent-color: var(--main-color);
+}
+.bootstrap-table .fixed-table-container .table thead th .both {
+    background-image: url("/images/both.png");
+    background-position: 95% center;
+}
+.bootstrap-table .fixed-table-container .table thead th .desc {
+    background-image: url("/images/down.png")
+}
+.bootstrap-table .fixed-table-container .table thead th .asc {
+    background-image: url("/images/up.png")
+}
+/*SELECTED ROW*/
+.selected {
+    background: black;
+}
+.selected td:nth-child(2) {
+    color: white!important;
+}
+
+/*CUSTOM LINKS*/
+.link-wo-decoration {
+    text-decoration: none;
+}
+
+
+
+/*OBRAMOWANIA TESTOWE CONTENERÓW*/
+.border-white {
+    border: 2px solid white;
+    margin: 2px;
+}
+
+.border-green {
+    border: 2px solid green;
+    margin: 2px;
+}
+
+.border-blue {
+    border: 2px solid blue;
+    margin: 2px;
+}
+
+.border-red {
+    border: 2px solid red;
+    margin: 2px;
+}
+
+.border-yellow {
+    border: 2px solid yellow;
+    margin: 2px;
+}
+
