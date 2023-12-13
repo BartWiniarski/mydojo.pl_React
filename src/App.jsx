@@ -1,5 +1,4 @@
 import { Route, Routes, Link} from "react-router-dom";
-
 import Layout from "./components/Layout.jsx";
 import Login from "./pages/login.jsx";
 import Home from "./pages/home.jsx";
@@ -11,6 +10,7 @@ import DashboardTrainer from "./pages/dashboardTrainer.jsx";
 import DashboardStudent from "./pages/dashboardStudent.jsx";
 import Forbidden from "./pages/forbidden.jsx";
 import UserProfile from "./pages/userprofile.jsx";
+import AdminUserList from "./pages/adminUserList.jsx";
 
 
 function App() {
@@ -28,6 +28,7 @@ function App() {
                 {/*protected*/}
                 <Route element={<RequireAuth allowedRoles={["ADMIN"]}/>}>
                     <Route path="dashboardAdmin" element={<DashboardAdmin/>}/>
+                    <Route path="adminUserList" element={<AdminUserList/>}/>
                 </Route>
                 <Route element={<RequireAuth allowedRoles={["TRAINER"]}/>}>
                     <Route path="dashboardTrainer" element={<DashboardTrainer/>}/>

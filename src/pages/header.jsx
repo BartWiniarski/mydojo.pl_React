@@ -1,5 +1,6 @@
 import {useNavigate, Link} from "react-router-dom";
 import useAuth from "../hooks/useAuth.jsx";
+import AdminUserList from "./adminUserList.jsx";
 
 
 function Header() {
@@ -83,6 +84,8 @@ function Header() {
                                     {auth.roles && auth.roles.includes("ADMIN") && (
                                         <li className="nav-item">
                                             <Link to="/dashboardAdmin" className="nav-link active">Dashboard</Link>
+                                            <Link to="/adminUserList" className="nav-link active">Lisa użytkowników</Link>
+
                                         </li>
                                     )}
 

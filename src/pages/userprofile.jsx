@@ -64,8 +64,6 @@ function UserProfile() {
         } catch (error) {
             if (!error?.response) {
                 setErrorMessage("Brak odpowiedzi serwera.")
-            } else if (error.response?.status === 409) {
-                setErrorMessage('Użytkownik o podanym e-mail już istnieje!');
             } else {
                 setErrorMessage("Aktualizacja profilu zakończona niepowodzeniem.")
             }
