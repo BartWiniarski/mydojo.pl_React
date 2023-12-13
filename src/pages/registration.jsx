@@ -1,13 +1,20 @@
 import {axiosInstance} from "../axios/axios.jsx";
 import {useState} from 'react';
 import {Link} from "react-router-dom";
+import Calendar from "../components/Calendar.jsx";
+import ReactDatePicker, {registerLocale} from "react-datepicker"
+import "react-datepicker/dist/react-datepicker.css"
+import pl from "date-fns/locale/pl";
+
+registerLocale("pl", pl);
 
 function Registration() {
     const [formData, setFormData] = useState({
-        firstName: '',
-        lastName: '',
-        email: '',
-        password: '',
+        firstName: "",
+        lastName: "",
+        dob: null,
+        email: "",
+        password: "",
     });
 
     const [successMessage, setSuccessMessage] = useState('');
@@ -20,7 +27,11 @@ function Registration() {
         setSuccessMessage('');
         setErrorMessage('');
 
-        if (!formData.firstName.trim() || !formData.lastName.trim() || !formData.email.trim() || !formData.password.trim()) {
+        if (!formData.firstName.trim() ||
+            !formData.lastName.trim() ||
+            !formData.dob ||
+            !formData.email.trim() ||
+            !formData.password.trim()) {
             setErrorMessage('Wszystkie pola są wymagane!');
             return;
         }
@@ -29,11 +40,11 @@ function Registration() {
             const response = await axiosInstance.post(REGISTER_URL, formData);
             setSuccessMessage('Rejestracja zakończona sukcesem!');
             setFormData({
-                firstName: '',
-                lastName: '',
-                dob: '',
-                email: '',
-                password: '',
+                firstName: "",
+                lastName: "",
+                dob: null,
+                email: "",
+                password: "",
             });
 
         } catch (error) {
@@ -75,11 +86,12 @@ function Registration() {
                                            setFormData({...formData, lastName: e.target.value})}/>
                             </div>
                             <div className="p-2">
-                                <input type="text" className="form-control"
-                                       id="InputLastName" placeholder="Podaj datę urodzenia..."
-                                       value={formData.dob}
-                                       onChange={(e) =>
-                                           setFormData({...formData, dob: e.target.value})}/>
+                                <div>
+                                    <Calendar
+                                        selectedDate={formData.dob}
+                                        onDateChange={(date) => setFormData({...formData, dob: date})}
+                                    />
+                                </div>
                             </div>
                             <div className="p-2">
                                 <input type="email" className="form-control"
