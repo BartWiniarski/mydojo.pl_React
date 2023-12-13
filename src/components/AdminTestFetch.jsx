@@ -10,7 +10,8 @@ const AdminTestFetch = () => {
 
         const getFetch = async () => {
             try {
-                const response = await axiosInstanceToken.get("/admin/test");
+                const response =
+                    await axiosInstanceToken.get("/admin/test");
 
                  if (isMounted) {
                     setResponses(response.data);

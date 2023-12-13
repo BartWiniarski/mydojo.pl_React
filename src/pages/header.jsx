@@ -45,7 +45,7 @@ function Header() {
                                 <>
                                     {/*TODO: zamienić role na imię kiedy funkcjonalnośc powstanie*/}
                                     <div className="">Osu {auth.roles}!</div>
-                                    <Link to="">
+                                    <Link to="/profile">
                                         <img src="/images/user_3.png" className="btn-slideY" alt="user"
                                              style={{height: '3.3rem', verticalAlign: 'middle'}}/>
                                     </Link>

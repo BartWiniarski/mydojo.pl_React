@@ -62,6 +62,7 @@ function Login() {
                         <div className="text-center">
                             <img src="/images/user_3.png" className="img-fluid shadow-img mb-4" alt="Logo"
                                  style={{maxHeight: '100px'}}/>
+                            <hr/>
                         </div>
                         <form onSubmit={handleFormSubmit}>
                             <div className="p-2">

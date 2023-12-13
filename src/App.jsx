@@ -10,6 +10,7 @@ import RequireAuth from "./components/RequireAuth.jsx";
 import DashboardTrainer from "./pages/dashboardTrainer.jsx";
 import DashboardStudent from "./pages/dashboardStudent.jsx";
 import Forbidden from "./pages/forbidden.jsx";
+import UserProfile from "./pages/userprofile.jsx";
 
 
 function App() {
@@ -21,7 +22,7 @@ function App() {
                 <Route path="/" element={<Home/>}/>
                 <Route path="login" element={<Login/>}/>
                 <Route path="register" element={<Registration/>}/>
-                <Route path="/forbidden" element={<Forbidden/>}/>
+                <Route path="forbidden" element={<Forbidden/>}/>
                 <Route path="*" element={<Missing/>}/>
 
                 {/*protected*/}
@@ -33,6 +34,9 @@ function App() {
                 </Route>
                 <Route element={<RequireAuth allowedRoles={["STUDENT"]}/>}>
                     <Route path="dashboardStudent" element={<DashboardStudent/>}/>
+                </Route>
+                <Route element={<RequireAuth allowedRoles={["ADMIN","TRAINER","STUDENT"]}/>}>
+                    <Route path="profile" element={<UserProfile/>}/>
                 </Route>
 
             </Route>
