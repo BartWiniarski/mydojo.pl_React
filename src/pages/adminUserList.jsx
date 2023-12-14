@@ -1,13 +1,18 @@
 import {useState, useEffect} from "react";
 import useAxiosInstanceToken from "../hooks/useAxiosInstanceToken.jsx";
+import {axiosInstance} from "../axios/axios.jsx";
 import {DataTable} from 'primereact/datatable';
 import {Column} from 'primereact/column';
-import {Dialog} from 'primereact/dialog';
+import UserAddDialogAdmin from "../components/UserAddDialog_ADMIN.jsx";
+import UserEditDialogAdmin from "../components/UserEditDialog_ADMIN.jsx";
+import UserDeleteDialogAdmin from "../components/UserDeleteDialog_ADMIN.jsx";
 
 const AdminUserList = () => {
     const [users, setUsers] = useState([]);
     const [expandedRows, setExpandedRows] = useState(null);
+    const [addDialogVisible, setAddDialogVisible] = useState(false);
     const [editDialogVisible, setEditDialogVisible] = useState(false);
+    const [deleteDialogVisible, setDeleteDialogVisible] = useState(false);
     const [selectedUser, setSelectedUser] = useState(null);
     const [successMessage, setSuccessMessage] = useState('');
     const [errorMessage, setErrorMessage] = useState('');
@@ -17,7 +22,17 @@ const AdminUserList = () => {
         lastName: "",
         dob: null,
         email: "",
+        roles: ""
     });
+
+    const resetMessages = () => {
+        setSuccessMessage('');
+        setErrorMessage('');
+    };
+
+    const handleInputChange = (data) => {
+        setFormData(data);
+    };
 
     useEffect(() => {
         fetchUsers();
@@ -30,12 +45,13 @@ const AdminUserList = () => {
                 lastName: selectedUser.lastName,
                 dob: selectedUser.dob,
                 email: selectedUser.email,
+                roles: selectedUser.roles
             });
         }
     }, [selectedUser]);
 
 
-// POBIERANIE GETEM
+// FETCHING USERS
     const fetchUsers = async () => {
         try {
             const response =
@@ -46,9 +62,8 @@ const AdminUserList = () => {
         }
     }
 
-
-// WYSYŁANIE PUTEM
-    const handleFormSubmit = async (e) => {
+// ADDING NEW USER
+    const handleNewUser = async (e) => {
         e.preventDefault();
         setSuccessMessage('');
         setErrorMessage('');
@@ -56,7 +71,39 @@ const AdminUserList = () => {
         if (!formData.firstName.trim() ||
             !formData.lastName.trim() ||
             !formData.dob ||
-            !formData.email.trim()) {
+            !formData.email.trim() ||
+            !formData.roles ) {
+            setErrorMessage('Wszystkie pola są wymagane!');
+            return;
+        }
+
+        try {
+            const response =
+                await axiosInstanceToken.post("/admin/users", formData);
+            setSuccessMessage('Nowy użytkownik dodany!');
+            fetchUsers();
+        } catch (error) {
+            if (!error?.response) {
+                setErrorMessage("Brak odpowiedzi serwera")
+            } else if (error.response?.status === 409) {
+                setErrorMessage('Użytkownik o podanym e-mail już istnieje!');
+            } else {
+                setErrorMessage("Dodwanie nowego użytkownika zakończone niepowodzeniem")
+            }
+        }
+    };
+
+// UPDATE USER
+    const handleUpdateUser = async (e) => {
+        e.preventDefault();
+        setSuccessMessage('');
+        setErrorMessage('');
+
+        if (!formData.firstName.trim() ||
+            !formData.lastName.trim() ||
+            !formData.dob ||
+            !formData.email.trim() ||
+            !formData.roles ) {
             setErrorMessage('Wszystkie pola są wymagane!');
             return;
         }
@@ -66,70 +113,66 @@ const AdminUserList = () => {
                 await axiosInstanceToken.put(`/admin/users/${selectedUser.id}`, formData);
             setSuccessMessage('Aktualizacja profilu zakończona sukcesem!');
             fetchUsers();
-            // setEditDialogVisible(false);
         } catch (error) {
             if (!error?.response) {
-                setErrorMessage("Brak odpowiedzi serwera.")
+                setErrorMessage("Brak odpowiedzi serwera")
             } else if (error.response?.status === 409) {
                 setErrorMessage('Użytkownik o podanym e-mail już istnieje!');
             } else {
-                setErrorMessage("Aktualizacja profilu zakończona niepowodzeniem.")
+                setErrorMessage("Aktualizacja profilu zakończona niepowodzeniem")
             }
         }
     };
 
-// ROZWIJANIE WIERSZA
+// DELETE USER
+    const handleDeleteUser = async (e) => {
+        e.preventDefault();
+        setSuccessMessage('');
+        setErrorMessage('');
+
+        try {
+            const response =
+                await axiosInstanceToken.delete(`/admin/users/${selectedUser.id}`, formData);
+            setSuccessMessage('Użytkownik usunięty');
+            fetchUsers();
+        } catch (error) {
+            if (!error?.response) {
+                setErrorMessage("Brak odpowiedzi serwera")
+            } else {
+                setErrorMessage("Usunięcie użytkownika zakończone niepowodzeniem")
+            }
+        }
+    };
+
+// TABLE ROW EXPAND
     const rowExpansionTemplate = (data) => {
         return (
             <div className="p-3 card">
                 <h5 className="fw-bold">{data.firstName} {data.lastName}</h5>
+                <hr/>
                 <p className="fw-bold">Rola: {data.roles.map((role) => role.type).join(', ')}</p>
                 <p>Email: {data.email}</p>
                 <p>Data urodzenia: {data.dob}</p>
                 <p>Wiek: {data.age}</p>
                 <div className="text-left">
-                    <button type="submit" className="btn btn-primary shadow-lg mt-3 rounded-4" onClick={() => {
+                    <button type="submit" className="btn btn-primary shadow-lg mx-2 rounded-4"
+                            onClick={() => {
                         setSelectedUser(data);
                         setEditDialogVisible(true);
                     }}>
                         edytuj
                     </button>
+                    <button type="submit" className="btn btn-primary shadow-lg mx-2 rounded-4"
+                            onClick={() => {
+                        setSelectedUser(data);
+                        setDeleteDialogVisible(true);
+                    }}>
+                        usuń
+                    </button>
                 </div>
             </div>
         );
     };
-
-// MODAL / DIALOG
-    const renderEditDialog = () => {
-
-        return (
-            <Dialog header="Edycja użytkownika" visible={editDialogVisible} style={{width: '50vw'}}
-                    onHide={() => {
-                        setEditDialogVisible(false)
-                        setSuccessMessage('')
-                        setErrorMessage('')
-                    }}>
-                <div className="p-2">
-                    <label htmlFor="InputFirstName">Imię</label>
-                    <input type="text" className="form-control"
-                           id="InputFirstName"
-                           value={formData.firstName} onChange={(e) =>
-                        setFormData({...formData, firstName: e.target.value})}/>
-                </div>
-                {/* ... (TODO:Pozostałe pola formularza) */}
-                <button type="button" className="btn btn-primary shadow-lg mt-3 rounded-4" onClick={handleFormSubmit}>
-                    zapisz
-                </button>
-                {successMessage && (
-                    <div className="alert alert-success mt-3 text-center rounded-4">{successMessage}</div>
-                )}
-                {errorMessage && (
-                    <div className="alert alert-danger mt-3 text-center">{errorMessage}</div>
-                )}
-            </Dialog>
-        );
-    };
-
 
     return (
         <>
@@ -141,17 +184,52 @@ const AdminUserList = () => {
             <div id="column-right" className="col-12 col-md-10 ms-md-auto mt-md-auto column-right">
                 <h1 className="h3 mb-2">Lista użytkowników</h1>
                 <hr/>
+                <button type="button" className="btn btn-primary shadow-lg my-3 rounded-4"
+                        onClick={() => setAddDialogVisible(true)}>
+                    dodaj nowego użytkownika
+                </button>
                 <div className="card">
                     <DataTable value={users} expandedRows={expandedRows} onRowToggle={(e) => setExpandedRows(e.data)}
                                rowExpansionTemplate={rowExpansionTemplate} dataKey="id" className="p-datatable-striped">
                         <Column expander style={{width: '3em'}}/>
                         <Column field="firstName" header="Imię" sortable/>
                         <Column field="lastName" header="Nazwisko" sortable/>
-                        <Column field="age" header="Wiek" sortable/>
                         <Column field="roles" header="Role" sortable
                                 body={(rowData) => rowData.roles.map((role) => role.type).join(', ')}/>
+                        <Column field="status" header="Status" sortable/>
                     </DataTable>
-                    {renderEditDialog()}
+                    <UserAddDialogAdmin
+                        visible={addDialogVisible}
+                        onHide={() => {
+                            setAddDialogVisible(false);
+                            resetMessages();}}
+                        user={formData}
+                        onFormSubmit={handleNewUser}
+                        onInputChange={handleInputChange}
+                        successMessage={successMessage}
+                        errorMessage={errorMessage}
+                    />
+                    <UserEditDialogAdmin
+                        visible={editDialogVisible}
+                        onHide={() => {
+                            setEditDialogVisible(false);
+                            resetMessages();}}
+                        user={formData}
+                        onFormSubmit={handleUpdateUser}
+                        onInputChange={handleInputChange}
+                        successMessage={successMessage}
+                        errorMessage={errorMessage}
+                    />
+                    <UserDeleteDialogAdmin
+                        visible={deleteDialogVisible}
+                        onHide={() => {
+                            setDeleteDialogVisible(false);
+                            resetMessages();}}
+                        user={selectedUser}
+                        onDelete={handleDeleteUser}
+                        successMessage={successMessage}
+                        errorMessage={errorMessage}
+                    />
                 </div>
                 <hr/>
             </div>
