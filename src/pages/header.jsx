@@ -1,5 +1,6 @@
 import {useNavigate, Link} from "react-router-dom";
 import useAuth from "../hooks/useAuth.jsx";
+import AdminUserList from "./adminUserList.jsx";
 
 
 function Header() {
@@ -72,7 +73,7 @@ function Header() {
                     <div className="offcanvas-body">
                         <img src="/images/fan_2.png" className="img-fluid shadow-img d-block mx-auto" alt="Logo"
                              style={{maxHeight: '100px'}}/>
-
+                        <hr/>
                         <ul className="navbar-nav justify-content-end flex-grow-1 pe-3">
                             {isLoggedIn ? (
                                 <>
@@ -82,19 +83,21 @@ function Header() {
 
                                     {auth.roles && auth.roles.includes("ADMIN") && (
                                         <li className="nav-item">
-                                            <Link to="/dashboardAdmin" className="nav-link active">Dashboard</Link>
+                                            <Link to="/dashboardAdmin" className="nav-link active">Panel administratora</Link>
+                                            <Link to="/adminUserList" className="nav-link active">Lista użytkowników</Link>
+
                                         </li>
                                     )}
 
                                     {auth.roles && auth.roles.includes("TRAINER") && (
                                         <li className="nav-item">
-                                            <Link to="/dashboardTrainer" className="nav-link active">Dashboard</Link>
+                                            <Link to="/dashboardTrainer" className="nav-link active">Panel trenera</Link>
                                         </li>
                                     )}
 
                                     {auth.roles && auth.roles.includes("STUDENT") && (
                                         <li className="nav-item">
-                                            <Link to="/dashboardStudent" className="nav-link active">Dashboard</Link>
+                                            <Link to="/dashboardStudent" className="nav-link active">Panel ucznia</Link>
                                         </li>
                                     )}
 
@@ -116,7 +119,7 @@ function Header() {
                                 </>
                             )}
                         </ul>
-
+                        <hr/>
                         <img src="/images/logo_1_1024_64.png" className=" img-fluid shadow-img d-block mx-auto"
                              alt=" Logo"
                              style={{maxHeight: '200px'}}/>

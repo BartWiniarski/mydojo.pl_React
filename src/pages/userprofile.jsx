@@ -64,8 +64,6 @@ function UserProfile() {
         } catch (error) {
             if (!error?.response) {
                 setErrorMessage("Brak odpowiedzi serwera.")
-            } else if (error.response?.status === 409) {
-                setErrorMessage('Użytkownik o podanym e-mail już istnieje!');
             } else {
                 setErrorMessage("Aktualizacja profilu zakończona niepowodzeniem.")
             }
@@ -103,13 +101,11 @@ function UserProfile() {
                                            setFormData({...formData, lastName: e.target.value})}/>
                             </div>
                             <div className="p-2">
-                                <div>
-                                    <label>Data urodzenia</label>
+                                    <label>Data urodzenia</label><br/>
                                     <Calendar
                                         selectedDate={formData.dob}
                                         onDateChange={(date) => setFormData({...formData, dob: date})}
                                     />
-                                </div>
                             </div>
                             <div className="p-2">
                                 <label htmlFor="InputEmail">E-mail</label>
