@@ -1,7 +1,7 @@
-import {axiosInstance} from "../axios/axios.jsx";
+import {axiosInstance} from "../../axios/axios.jsx";
 import {useState} from 'react';
 import {Link} from "react-router-dom";
-import Calendar from "../components/Calendar.jsx";
+import Calendar from "../../components/Calendar.jsx";
 import ReactDatePicker, {registerLocale} from "react-datepicker"
 import "react-datepicker/dist/react-datepicker.css"
 import pl from "date-fns/locale/pl";

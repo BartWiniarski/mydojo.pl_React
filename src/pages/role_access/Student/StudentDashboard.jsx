@@ -1,6 +1,6 @@
-import StudentTestFetch from "../components/StudentTestFetch.jsx";
+import StudentTestFetch from "../../../components/Student/StudentTestFetch.jsx";
 
-function DashboardStudent() {
+function StudentDashboard() {
     return (
         <>
             <div id="column-left" className="col-12 col-md-2 mt-md-3  column-left">
@@ -16,4 +16,4 @@ function DashboardStudent() {
     );
 }
 
-export default DashboardStudent;
+export default StudentDashboard;

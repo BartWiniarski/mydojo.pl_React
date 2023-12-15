@@ -1,11 +1,10 @@
-import {useState, useEffect} from "react";
-import useAxiosInstanceToken from "../hooks/useAxiosInstanceToken.jsx";
-import {axiosInstance} from "../axios/axios.jsx";
+import {useEffect, useState} from "react";
+import useAxiosInstanceToken from "../../../hooks/useAxiosInstanceToken.jsx";
 import {DataTable} from 'primereact/datatable';
 import {Column} from 'primereact/column';
-import UserAddDialogAdmin from "../components/UserAddDialog_ADMIN.jsx";
-import UserEditDialogAdmin from "../components/UserEditDialog_ADMIN.jsx";
-import UserDeleteDialogAdmin from "../components/UserDeleteDialog_ADMIN.jsx";
+import UserAddDialogAdmin from "../../../components/Admin/UserCRUD/AdminUserAddDialog.jsx";
+import UserEditDialogAdmin from "../../../components/Admin/UserCRUD/AdminUserEditDialog.jsx";
+import UserDeleteDialogAdmin from "../../../components/Admin/UserCRUD/AdminUserDeleteDialog.jsx";
 
 const AdminUserList = () => {
     const [users, setUsers] = useState([]);

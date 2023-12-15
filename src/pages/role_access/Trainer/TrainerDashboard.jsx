@@ -1,4 +1,4 @@
-function DashboardTrainer() {
+function TrainerDashboard() {
     return (
         <>
             <div id="column-left" className="col-12 col-md-2 mt-md-3  column-left">
@@ -11,4 +11,4 @@ function DashboardTrainer() {
     );
 }
 
-export default DashboardTrainer;
+export default TrainerDashboard;

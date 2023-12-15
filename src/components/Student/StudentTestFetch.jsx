@@ -1,5 +1,5 @@
 import {useState, useEffect} from "react";
-import useAxiosInstanceToken from "../hooks/useAxiosInstanceToken.jsx";
+import useAxiosInstanceToken from "../../hooks/useAxiosInstanceToken.jsx";
 
 const StudentTestFetch = () => {
     const [response, setResponses] = useState([]);

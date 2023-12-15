@@ -1,6 +1,6 @@
 import React from 'react';
 import { Dialog } from 'primereact/dialog';
-import Calendar from "./Calendar.jsx";
+import Calendar from "../../Calendar.jsx";
 
 const UserAddDialogAdmin = ({ visible,
                                  onHide,
