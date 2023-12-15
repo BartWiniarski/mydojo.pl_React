@@ -31,14 +31,16 @@ const UserEditDialogAdmin = ({ visible,
             <hr/>
             <div className="p-2">
                 <label htmlFor="InputFirstName">Imię</label>
-                <input type="text" className="form-control"
+                <input type="text"
+                       className="form-control"
                        id="InputFirstName"
                        value={user.firstName} onChange={(e) =>
                     onInputChange({...user, firstName: e.target.value})}/>
             </div>
             <div className="p-2">
                 <label htmlFor="InputLastName">Nazwisko</label>
-                <input type="text" className="form-control"
+                <input type="text"
+                       className="form-control"
                        id="InputLastName"
                        value={user.lastName} onChange={(e) =>
                     onInputChange({...user, lastName: e.target.value})}/>
@@ -52,7 +54,8 @@ const UserEditDialogAdmin = ({ visible,
             </div>
             <div className="p-2">
                 <label htmlFor="InputEmailName">E-mail</label>
-                <input type="text" className="form-control"
+                <input type="text"
+                       className="form-control"
                        id="InputEmailName"
                        value={user.email} onChange={(e) =>
                     onInputChange({...user, email: e.target.value})}/>

@@ -1,10 +1,12 @@
-import { Fieldset } from 'primereact/fieldset';
+import {Fieldset} from 'primereact/fieldset';
 import React, {useEffect, useState} from "react";
 import useAxiosInstanceToken from "../../../hooks/useAxiosInstanceToken.jsx";
 import {DataTable} from "primereact/datatable";
 import {Column} from "primereact/column";
-import UserAddDialogAdmin from "../../../components/Admin/UserCRUD/AdminUserAddDialog.jsx";
 import TrainingGroupAddDialogAdmin from "../../../components/Admin/TrainingGroupCRUD/AdminTrainingGroupAddDialog.jsx";
+import TrainingGroupEditDialogAdmin from "../../../components/Admin/TrainingGroupCRUD/AdminTrainingGroupEditDialog.jsx";
+import TrainingGroupDeleteDialogAdmin
+    from "../../../components/Admin/TrainingGroupCRUD/AdminTrainingGroupDeleteDialog.jsx";
 
 
 function AdminTrainingGroups() {
@@ -36,6 +38,16 @@ function AdminTrainingGroups() {
         setFormData(data);
     };
 
+    const handleEditClick = (groupData) => {
+        setFormData(groupData);
+        setEditDialogVisible(true);
+    };
+
+    const handleCloseDialog = () => {
+        resetMessages();
+        setFormData({name: "", description: "", date: null});
+    }
+
 // FETCHING TRAINING GROUPS
     const fetchTrainingGroups = async () => {
         try {
@@ -54,14 +66,11 @@ function AdminTrainingGroups() {
         setSuccessMessage('');
         setErrorMessage('');
 
-        // if (!formData.firstName.trim() ||
-        //     !formData.lastName.trim() ||
-        //     !formData.dob ||
-        //     !formData.email.trim() ||
-        //     !formData.roles ) {
-        //     setErrorMessage('Wszystkie pola są wymagane!');
-        //     return;
-        // }
+        if (!formData.name.trim() ||
+            !formData.description.trim()) {
+            setErrorMessage('Wszystkie pola są wymagane!');
+            return;
+        }
 
         try {
             const response =
@@ -71,14 +80,57 @@ function AdminTrainingGroups() {
         } catch (error) {
             if (!error?.response) {
                 setErrorMessage("Brak odpowiedzi serwera")
-            // } else if (error.response?.status === 409) {
-            //     setErrorMessage('Użytkownik o podanym e-mail już istnieje!');
             } else {
                 setErrorMessage("Dodwanie nowej grupy treningowej zakończone niepowodzeniem")
             }
         }
     };
 
+// UPDATE TRAINING GROUP
+    const handleUpdateTrainingGroup = async (e) => {
+        e.preventDefault();
+        setSuccessMessage('');
+        setErrorMessage('');
+
+        if (!formData.name.trim() ||
+            !formData.description.trim()) {
+            setErrorMessage('Wszystkie pola są wymagane!');
+            return;
+        }
+
+        try {
+            const response =
+                await axiosInstanceToken.put(`/admin/trainingGroups/${selectedTrainingGroup.id}`, formData);
+            setSuccessMessage('Aktualizacja grupy treningowej zakończona sukcesem!');
+            fetchTrainingGroups();
+        } catch (error) {
+            if (!error?.response) {
+                setErrorMessage("Brak odpowiedzi serwera")
+            } else {
+                setErrorMessage("Aktualizacja grupy treningowej zakończona niepowodzeniem")
+            }
+        }
+    };
+
+// DELETE TRAINING GROUP
+    const handleDeleteTrainingGroup = async (e) => {
+        e.preventDefault();
+        setSuccessMessage('');
+        setErrorMessage('');
+
+        try {
+            const response =
+                await axiosInstanceToken.delete(`/admin/trainingGroups/${selectedTrainingGroup.id}`, formData);
+            setSuccessMessage('Grupa treningowa usunięta');
+            fetchTrainingGroups();
+        } catch (error) {
+            if (!error?.response) {
+                setErrorMessage("Brak odpowiedzi serwera")
+            } else {
+                setErrorMessage("Usunięcie grupy treningowej zakończone niepowodzeniem")
+            }
+        }
+    };
 
 // TABLE ROW EXPAND
     const rowExpansionTemplate = (data) => {
@@ -87,29 +139,36 @@ function AdminTrainingGroups() {
                 <h5 className="fw-bold">{data.name}</h5>
                 <hr/>
                 <p>Opis grupy: {data.description}</p>
+                <p>Lokalizacja: </p>
+                <p>Prowadzący: </p>
 
                 <div className="text-left">
-                    <button type="submit" className="btn btn-primary shadow-lg mx-2 rounded-4">
+                    <button type="submit" className="btn btn-primary shadow-lg mx-2 rounded-4"
+                            onClick={() => handleEditClick(data)}>
                         edytuj
                     </button>
-                    <button type="submit" className="btn btn-primary shadow-lg mx-2 rounded-4">
+                    <button type="submit" className="btn btn-primary shadow-lg mx-2 rounded-4"
+                            onClick={() => {
+                                setSelectedTrainingGroup(data);
+                                setDeleteDialogVisible(true);
+                            }}>
                         usuń
                     </button>
                 </div>
             </div>
-        );
+        )
     };
 
 
     return (
         <>
             <div id="column-left" className="col-12 col-md-2 mt-md-3  column-left">
-                <img src="/images/kimono_3.png" className="img-fluid shadow-img d-block mx-auto"
+                <img src="/images/kimono_3.png" className="img-fluid shadow-img d-block mx-auto mt-5"
                      alt="Logo"
-                     style={{ maxHeight: '600px' }} />
+                     style={{maxHeight: '600px'}}/>
             </div>
             <div id="column-right" className="col-12 col-md-10 ms-md-auto mt-md-auto column-right">
-                <h1 className="text-center">Grupy treningowe</h1>
+                <h1 className="h3 mb-2">Grupy treningowe</h1>
                 <hr/>
                 <button type="button" className="btn btn-primary shadow-lg my-3 rounded-4"
                         onClick={() => setAddDialogVisible(true)}>
@@ -117,7 +176,7 @@ function AdminTrainingGroups() {
                 </button>
                 <div className="card">
                     <div className="">
-                        <Fieldset legend="Wszystkie grupy" toggleable>
+                        <Fieldset legend="Wszystkie grupy" toggleable collapsed={true}>
                             <DataTable value={trainingGroups}
                                        expandedRows={expandedRows}
                                        onRowToggle={(e) => setExpandedRows(e.data)}
@@ -130,7 +189,7 @@ function AdminTrainingGroups() {
                         </Fieldset>
                     </div>
                     <div className="">
-                        <Fieldset legend="Zarządzaj grupami" toggleable>
+                        <Fieldset legend="Zarządzaj grupami" toggleable collapsed={true}>
                             TBD
                         </Fieldset>
                     </div>
@@ -139,10 +198,34 @@ function AdminTrainingGroups() {
                     visible={addDialogVisible}
                     onHide={() => {
                         setAddDialogVisible(false);
-                        resetMessages();}}
+                        handleCloseDialog()
+                    }}
                     trainingGroup={formData}
                     onFormSubmit={handleNewTrainingGroup}
                     onInputChange={handleInputChange}
+                    successMessage={successMessage}
+                    errorMessage={errorMessage}
+                />
+                <TrainingGroupEditDialogAdmin
+                    visible={editDialogVisible}
+                    onHide={() => {
+                        setEditDialogVisible(false)
+                        handleCloseDialog()
+                    }}
+                trainingGroup={formData}
+                onFormSubmit={handleUpdateTrainingGroup}
+                onInputChange={handleInputChange}
+                successMessage={successMessage}
+                errorMessage={errorMessage}
+                />
+                <TrainingGroupDeleteDialogAdmin
+                    visible={deleteDialogVisible}
+                    onHide={() => {
+                        setDeleteDialogVisible(false);
+                        resetMessages();
+                    }}
+                    trainingGroup={selectedTrainingGroup}
+                    onDelete={handleDeleteTrainingGroup}
                     successMessage={successMessage}
                     errorMessage={errorMessage}
                 />

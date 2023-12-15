@@ -6,7 +6,7 @@ function AdminDashboard() {
         return (
             <>
                 <div id="column-left" className="col-12 col-md-2 mt-md-3  column-left">
-                    <img src="/images/tree_with_spring_2.png" className="img-fluid shadow-img d-block mx-auto"
+                    <img src="/images/tree_with_spring_2.png" className="img-fluid shadow-img d-block mx-auto mt-5"
                          alt="Logo"
                          style={{maxHeight: '600px'}}/>
                 </div>
