@@ -7,10 +7,10 @@ function StudentsPickList() {
     const [target, setTarget] = useState([]);
 
     useEffect(() => {
-        fetchUsers();
+        fetchStudents();
     }, []);
 
-    const fetchUsers = async () => {
+    const fetchStudents = async () => {
         try {
             const response = await axiosInstanceToken.get("/admin/students");
             setSource(response.data);

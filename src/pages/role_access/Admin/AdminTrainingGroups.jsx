@@ -7,8 +7,9 @@ import TrainingGroupAddDialogAdmin from "../../../components/Admin/TrainingGroup
 import TrainingGroupEditDialogAdmin from "../../../components/Admin/TrainingGroupCRUD/TrainingGroupEditDialogAdmin.jsx";
 import TrainingGroupDeleteDialogAdmin
     from "../../../components/Admin/TrainingGroupCRUD/TrainingGroupDeleteDialogAdmin.jsx";
-import StudentsPickList from "../../../components/Admin/TrainingGroupCRUD/StudentsPickList.jsx";
 import StudentsMultiSelect from "../../../components/Admin/TrainingGroupCRUD/StudentsMultiSelect.jsx";
+import TrainersMultiSelect from "../../../components/Admin/TrainingGroupCRUD/TrainersMultiSelect.jsx";
+
 
 function AdminTrainingGroups() {
     const [expandedRows, setExpandedRows] = useState(null);
@@ -199,6 +200,10 @@ function AdminTrainingGroups() {
                             {/*    <StudentsPickList/>*/}
                             {/*</div>*/}
                             {/*<hr/>*/}
+                            <div>
+                                <TrainersMultiSelect/>
+                            </div>
+                            <hr/>
                             <div>
                                 <StudentsMultiSelect/>
                             </div>

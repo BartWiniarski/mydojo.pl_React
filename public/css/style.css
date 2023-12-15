@@ -230,6 +230,11 @@ input[type=checkbox]{
     width: 100%;
 }
 
+/*CUSTOM MULTISELECT*/
+.p-multiselect .p-multiselect-label {
+    color: white; /* Zmiana koloru tekstu */
+}
+
 /*OBRAMOWANIA TESTOWE CONTENERÓW*/
 .border-white {
     border: 2px solid white;

@@ -6,10 +6,10 @@ function StudentsMultiSelect() {
     const [groupedUsers, setGroupedUsers] = useState([]);
 
     useEffect(() => {
-        fetchUsers();
+        fetchStudents();
     }, []);
 
-    const fetchUsers = async () => {
+    const fetchStudents = async () => {
         try {
             const response = await axiosInstanceToken.get("/admin/students");
             const usersGroupedByAge = groupUsersByAge(response.data);
@@ -56,9 +56,10 @@ function StudentsMultiSelect() {
                 options={groupedUsers}
                 onChange={(e) => setSelectedUsers(e.value)}
                 optionLabel="label"
+                filter
                 optionGroupLabel="label"
                 optionGroupChildren="items"
-                placeholder="Wybier uczniów do przypisania"
+                placeholder="Wybierz uczniów do przypisania"
                 display="chip"
                 className="w-full md:w-20rem"
             />
