@@ -1,4 +1,4 @@
-import StudentTestFetch from "../../../components/Student/StudentTestFetch.jsx";
+import TestFetchStudent from "../../../components/Student/TestFetchStudent.jsx";
 
 function StudentDashboard() {
     return (
@@ -10,7 +10,7 @@ function StudentDashboard() {
             </div>
             <div id="column-right" className="col-12 col-md-10 ms-md-auto mt-md-auto column-right">
                 <h1 className="text-center">DASHBOARD STUDENT</h1>
-                <StudentTestFetch/>
+                <TestFetchStudent/>
             </div>
         </>
     );

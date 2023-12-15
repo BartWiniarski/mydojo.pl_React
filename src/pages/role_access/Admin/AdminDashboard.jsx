@@ -1,4 +1,4 @@
-import AdminTestFetch from "../../../components/Admin/AdminTestFetch.jsx"
+import TestFetchAdmin from "../../../components/Admin/TestFetchAdmin.jsx"
 import { Accordion, AccordionTab } from 'primereact/accordion';
 
 function AdminDashboard() {
@@ -24,7 +24,7 @@ function AdminDashboard() {
                                 }
                             >
                                 <p className="m-0">
-                                    <AdminTestFetch/>
+                                    <TestFetchAdmin/>
                                 </p>
                             </AccordionTab>
                             <AccordionTab

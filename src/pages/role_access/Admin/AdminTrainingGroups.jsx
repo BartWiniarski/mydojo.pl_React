@@ -3,11 +3,12 @@ import React, {useEffect, useState} from "react";
 import useAxiosInstanceToken from "../../../hooks/useAxiosInstanceToken.jsx";
 import {DataTable} from "primereact/datatable";
 import {Column} from "primereact/column";
-import TrainingGroupAddDialogAdmin from "../../../components/Admin/TrainingGroupCRUD/AdminTrainingGroupAddDialog.jsx";
-import TrainingGroupEditDialogAdmin from "../../../components/Admin/TrainingGroupCRUD/AdminTrainingGroupEditDialog.jsx";
+import TrainingGroupAddDialogAdmin from "../../../components/Admin/TrainingGroupCRUD/TrainingGroupAddDialogAdmin.jsx";
+import TrainingGroupEditDialogAdmin from "../../../components/Admin/TrainingGroupCRUD/TrainingGroupEditDialogAdmin.jsx";
 import TrainingGroupDeleteDialogAdmin
-    from "../../../components/Admin/TrainingGroupCRUD/AdminTrainingGroupDeleteDialog.jsx";
-
+    from "../../../components/Admin/TrainingGroupCRUD/TrainingGroupDeleteDialogAdmin.jsx";
+import StudentsPickList from "../../../components/Admin/TrainingGroupCRUD/StudentsPickList.jsx";
+import StudentsMultiSelect from "../../../components/Admin/TrainingGroupCRUD/StudentsMultiSelect.jsx";
 
 function AdminTrainingGroups() {
     const [expandedRows, setExpandedRows] = useState(null);
@@ -176,7 +177,9 @@ function AdminTrainingGroups() {
                 </button>
                 <div className="card">
                     <div className="">
+                        <hr/>
                         <Fieldset legend="Wszystkie grupy" toggleable collapsed={true}>
+                            <hr/>
                             <DataTable value={trainingGroups}
                                        expandedRows={expandedRows}
                                        onRowToggle={(e) => setExpandedRows(e.data)}
@@ -187,11 +190,23 @@ function AdminTrainingGroups() {
                                 <Column field="description" header="Opis grupy" sortable/>
                             </DataTable>
                         </Fieldset>
+                        <hr/>
                     </div>
                     <div className="">
                         <Fieldset legend="Zarządzaj grupami" toggleable collapsed={true}>
-                            TBD
+                            <hr/>
+                            {/*<div>*/}
+                            {/*    <StudentsPickList/>*/}
+                            {/*</div>*/}
+                            {/*<hr/>*/}
+                            <div>
+                                <StudentsMultiSelect/>
+                            </div>
+                            <button type="submit" className="btn btn-primary shadow-lg mx-2 my-3 rounded-4">
+                                zapisz
+                            </button>
                         </Fieldset>
+                        <hr/>
                     </div>
                 </div>
                 <TrainingGroupAddDialogAdmin
