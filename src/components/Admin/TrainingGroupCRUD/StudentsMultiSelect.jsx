@@ -59,7 +59,7 @@ function StudentsMultiSelect() {
                 filter
                 optionGroupLabel="label"
                 optionGroupChildren="items"
-                placeholder="Wybierz uczniów do przypisania"
+                placeholder="Wybierz uczniów"
                 display="chip"
                 className="w-full md:w-20rem"
             />

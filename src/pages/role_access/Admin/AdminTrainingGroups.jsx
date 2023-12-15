@@ -7,8 +7,9 @@ import TrainingGroupAddDialogAdmin from "../../../components/Admin/TrainingGroup
 import TrainingGroupEditDialogAdmin from "../../../components/Admin/TrainingGroupCRUD/TrainingGroupEditDialogAdmin.jsx";
 import TrainingGroupDeleteDialogAdmin
     from "../../../components/Admin/TrainingGroupCRUD/TrainingGroupDeleteDialogAdmin.jsx";
-import StudentsMultiSelect from "../../../components/Admin/TrainingGroupCRUD/StudentsMultiSelect.jsx";
+import TrainingGroupsMultiselect from "../../../components/Admin/TrainingGroupCRUD/TrainingGroupsMultiselect.jsx";
 import TrainersMultiSelect from "../../../components/Admin/TrainingGroupCRUD/TrainersMultiSelect.jsx";
+import StudentsMultiSelect from "../../../components/Admin/TrainingGroupCRUD/StudentsMultiSelect.jsx";
 
 
 function AdminTrainingGroups() {
@@ -196,10 +197,10 @@ function AdminTrainingGroups() {
                     <div className="">
                         <Fieldset legend="Zarządzaj grupami" toggleable collapsed={true}>
                             <hr/>
-                            {/*<div>*/}
-                            {/*    <StudentsPickList/>*/}
-                            {/*</div>*/}
-                            {/*<hr/>*/}
+                            <div>
+                                <TrainingGroupsMultiselect trainingGroups={trainingGroups} />
+                            </div>
+                            <hr/>
                             <div>
                                 <TrainersMultiSelect/>
                             </div>
