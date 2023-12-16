@@ -1,8 +1,7 @@
 import React, { useState } from 'react';
-import { MultiSelect } from 'primereact/multiselect';
+import { Dropdown } from 'primereact/dropdown';
 
-const TrainingGroupsMultiselect = ({ trainingGroups }) => {
-    const [selectedGroups, setSelectedGroups] = useState([]);
+const TrainingGroupsSelect = ({ trainingGroups, selectedGroup, setSelectedGroup }) => {
 
     const trainingGroupOptions = trainingGroups.map(group => ({
         label: group.name,
@@ -11,10 +10,10 @@ const TrainingGroupsMultiselect = ({ trainingGroups }) => {
 
     return (
         <div className="card">
-            <MultiSelect
-                value={selectedGroups}
+            <Dropdown
+                value={selectedGroup}
                 options={trainingGroupOptions}
-                onChange={(e) => setSelectedGroups(e.value)}
+                onChange={(e) => setSelectedGroup(e.value)}
                 optionLabel="label"
                 filter
                 placeholder="Wybierz grupę treningową"
@@ -24,4 +23,4 @@ const TrainingGroupsMultiselect = ({ trainingGroups }) => {
     );
 };
 
-export default TrainingGroupsMultiselect;
+export default TrainingGroupsSelect;

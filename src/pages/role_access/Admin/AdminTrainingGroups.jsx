@@ -7,7 +7,7 @@ import TrainingGroupAddDialogAdmin from "../../../components/Admin/TrainingGroup
 import TrainingGroupEditDialogAdmin from "../../../components/Admin/TrainingGroupCRUD/TrainingGroupEditDialogAdmin.jsx";
 import TrainingGroupDeleteDialogAdmin
     from "../../../components/Admin/TrainingGroupCRUD/TrainingGroupDeleteDialogAdmin.jsx";
-import TrainingGroupsMultiselect from "../../../components/Admin/TrainingGroupCRUD/TrainingGroupsMultiselect.jsx";
+import TrainingGroupsSelect from "../../../components/Admin/TrainingGroupCRUD/TrainingGroupsSelect.jsx";
 import TrainersMultiSelect from "../../../components/Admin/TrainingGroupCRUD/TrainersMultiSelect.jsx";
 import StudentsMultiSelect from "../../../components/Admin/TrainingGroupCRUD/StudentsMultiSelect.jsx";
 
@@ -19,6 +19,9 @@ function AdminTrainingGroups() {
     const [editDialogVisible, setEditDialogVisible] = useState(false);
     const [deleteDialogVisible, setDeleteDialogVisible] = useState(false);
     const [selectedTrainingGroup, setSelectedTrainingGroup] = useState(null);
+    const [selectedGroup, setSelectedGroup] = useState(null);
+    const [selectedTrainers, setSelectedTrainers] = useState(null)
+    const [selectedStudents, setSelectedStudents] = useState(null)
     const [successMessage, setSuccessMessage] = useState('');
     const [errorMessage, setErrorMessage] = useState('');
     const axiosInstanceToken = useAxiosInstanceToken();
@@ -31,6 +34,15 @@ function AdminTrainingGroups() {
     useEffect(() => {
         fetchTrainingGroups();
     }, [axiosInstanceToken]);
+
+    useEffect(() => {
+        if (selectedGroup) {
+            const group = trainingGroups.find(group => group.id === selectedGroup);
+            setSelectedTrainers(group.trainers);
+            setSelectedStudents(group.students);
+        }
+    }, [selectedGroup, trainingGroups]);
+
 
     const resetMessages = () => {
         setSuccessMessage('');
@@ -56,7 +68,6 @@ function AdminTrainingGroups() {
             console.log(error);
         }
     }
-
 
 // ADDING NEW TRAINING GROUP
     const handleNewTrainingGroup = async (e) => {
@@ -145,10 +156,10 @@ function AdminTrainingGroups() {
                             <span> {trainer.firstName} {trainer.lastName} </span>
                         ))
                     ) : (
-                        <span>Brak trenerów</span>
+                        <span> Brak trenerów</span>
                     )}
                 </p>
-                <p>Liczba uczestników: {data.students.length !== 0 ? data.students.length : "BRAK"}</p>
+                <p>Liczba uczestników: {data.students.length !== 0 ? data.students.length : "Brak uczestników"}</p>
 
                 <div className="text-left">
                     <button type="submit" className="btn btn-primary shadow-lg mx-2 rounded-4"
@@ -211,7 +222,11 @@ function AdminTrainingGroups() {
                         <Fieldset legend="Zarządzaj grupami" toggleable collapsed={true}>
                             <hr/>
                             <div>
-                                <TrainingGroupsMultiselect trainingGroups={trainingGroups}/>
+                                <TrainingGroupsSelect
+                                    trainingGroups={trainingGroups}
+                                    selectedGroup={selectedGroup}
+                                    setSelectedGroup={setSelectedGroup}
+                                />
                             </div>
                             <hr/>
                             <div>
