@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { MultiSelect } from 'primereact/multiselect';
 import {axiosInstanceToken} from "../../../axios/axios.jsx";
-function StudentsMultiSelect() {
-    const [selectedUsers, setSelectedUsers] = useState(null);
-    const [groupedUsers, setGroupedUsers] = useState([]);
+
+
+const StudentsMultiSelect = ({selectedStudents, setSelectedStudents}) => {
+    const [groupedStudents, setGroupedStudents] = useState([]);
 
     useEffect(() => {
         fetchStudents();
@@ -13,7 +14,7 @@ function StudentsMultiSelect() {
         try {
             const response = await axiosInstanceToken.get("/admin/students");
             const usersGroupedByAge = groupUsersByAge(response.data);
-            setGroupedUsers(usersGroupedByAge);
+            setGroupedStudents(usersGroupedByAge);
         } catch (error) {
             console.error("Error fetching users:", error);
         }
@@ -40,7 +41,7 @@ function StudentsMultiSelect() {
             else if (age <= 18) groupKey = '17-18';
             else groupKey = '18+';
 
-            ageGroups[groupKey].push({ label: `${user.firstName} ${user.lastName}`, value: user.id });
+            ageGroups[groupKey].push({ label: `${user.firstName} ${user.lastName}`, id: user.id });
         });
 
         return Object.entries(ageGroups).map(([label, items]) => ({
@@ -52,10 +53,11 @@ function StudentsMultiSelect() {
     return (
         <div className="card flex justify-content-center">
             <MultiSelect
-                value={selectedUsers}
-                options={groupedUsers}
-                onChange={(e) => setSelectedUsers(e.value)}
+                value={selectedStudents}
+                options={groupedStudents}
+                onChange={(e) => setSelectedStudents(e.value)}
                 optionLabel="label"
+                optionValue="id"
                 filter
                 optionGroupLabel="label"
                 optionGroupChildren="items"

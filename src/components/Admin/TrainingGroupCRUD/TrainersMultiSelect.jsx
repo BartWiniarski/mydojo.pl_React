@@ -2,9 +2,8 @@ import React, { useState, useEffect } from "react";
 import { MultiSelect } from 'primereact/multiselect';
 import {axiosInstanceToken} from "../../../axios/axios.jsx";
 
-function TrainersMultiSelect() {
-    const [selectedTrainers, setSelectedTrainers] = useState(null);
-    const [trainers, setTrainers] = useState([]);
+const TrainersMultiSelect = ({selectedTrainers, setSelectedTrainers}) => {
+    const [availableTrainers, setAvailableTrainers] = useState([]);
 
     useEffect(() => {
         fetchTrainers();
@@ -15,21 +14,23 @@ function TrainersMultiSelect() {
             const response = await axiosInstanceToken.get("/admin/trainers");
             const trainerOptions = response.data.map(trainer => ({
                 name: `${trainer.firstName} ${trainer.lastName}`,
-                code: trainer.id
+                id: trainer.id
             }));
-            setTrainers(trainerOptions);
+            setAvailableTrainers(trainerOptions);
         } catch (error) {
-            console.error("Error fetching trainers:", error);
+            console.error("Error fetching availableTrainers:", error);
         }
     };
+
 
     return (
         <div className="card flex justify-content-center">
             <MultiSelect
-                value={selectedTrainers}
+                value={selectedTrainers || []}
                 onChange={(e) => setSelectedTrainers(e.value)}
-                options={trainers}
+                options={availableTrainers}
                 optionLabel="name"
+                optionValue="id"
                 filter
                 placeholder="Wybierz trenerów"
                 maxSelectedLabels={3}

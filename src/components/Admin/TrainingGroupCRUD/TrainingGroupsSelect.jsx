@@ -3,7 +3,7 @@ import { Dropdown } from 'primereact/dropdown';
 
 const TrainingGroupsSelect = ({ trainingGroups, selectedGroup, setSelectedGroup }) => {
 
-    const trainingGroupOptions = trainingGroups.map(group => ({
+    const availableTrainingGroups = trainingGroups.map(group => ({
         label: group.name,
         value: group.id
     }));
@@ -12,7 +12,7 @@ const TrainingGroupsSelect = ({ trainingGroups, selectedGroup, setSelectedGroup 
         <div className="card">
             <Dropdown
                 value={selectedGroup}
-                options={trainingGroupOptions}
+                options={availableTrainingGroups}
                 onChange={(e) => setSelectedGroup(e.value)}
                 optionLabel="label"
                 filter

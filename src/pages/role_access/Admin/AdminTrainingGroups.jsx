@@ -20,7 +20,7 @@ function AdminTrainingGroups() {
     const [deleteDialogVisible, setDeleteDialogVisible] = useState(false);
     const [selectedTrainingGroup, setSelectedTrainingGroup] = useState(null);
     const [selectedGroup, setSelectedGroup] = useState(null);
-    const [selectedTrainers, setSelectedTrainers] = useState(null)
+    const [selectedTrainers, setSelectedTrainers] = useState([])
     const [selectedStudents, setSelectedStudents] = useState(null)
     const [successMessage, setSuccessMessage] = useState('');
     const [errorMessage, setErrorMessage] = useState('');
@@ -38,11 +38,10 @@ function AdminTrainingGroups() {
     useEffect(() => {
         if (selectedGroup) {
             const group = trainingGroups.find(group => group.id === selectedGroup);
-            setSelectedTrainers(group.trainers);
-            setSelectedStudents(group.students);
+            setSelectedTrainers(group.trainers.map(trainer => trainer.id));
+            setSelectedStudents(group.students.map(student => student.id));
         }
     }, [selectedGroup, trainingGroups]);
-
 
     const resetMessages = () => {
         setSuccessMessage('');
@@ -230,11 +229,17 @@ function AdminTrainingGroups() {
                             </div>
                             <hr/>
                             <div>
-                                <TrainersMultiSelect/>
+                                <TrainersMultiSelect
+                                    selectedTrainers = {selectedTrainers}
+                                    setSelectedTrainers = {setSelectedTrainers}
+                                />
                             </div>
                             <hr/>
                             <div>
-                                <StudentsMultiSelect/>
+                                <StudentsMultiSelect
+                                    selectedStudents = {selectedStudents}
+                                    setSelectedStudents = {setSelectedStudents}
+                                />
                             </div>
                             <button type="submit" className="btn btn-primary shadow-lg mx-2 my-3 rounded-4">
                                 zapisz
