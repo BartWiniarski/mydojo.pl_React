@@ -38,8 +38,8 @@ function AdminTrainingGroups() {
     useEffect(() => {
         if (selectedGroup) {
             const group = trainingGroups.find(group => group.id === selectedGroup);
-            setSelectedTrainers(group.trainers.map(trainer => trainer.id));
-            setSelectedStudents(group.students.map(student => student.id));
+            setSelectedTrainers(group.trainers);
+            setSelectedStudents(group.students);
         }
     }, [selectedGroup, trainingGroups]);
 
@@ -152,7 +152,8 @@ function AdminTrainingGroups() {
                 <p>Trenerzy:
                     {data.trainers.length > 0 ? (
                         data.trainers.map((trainer) => (
-                            <span> {trainer.firstName} {trainer.lastName} </span>
+                            <span> {trainer} </span>
+                            //TODO wyciągnąć imie i naziwsko po ID
                         ))
                     ) : (
                         <span> Brak trenerów</span>
@@ -229,19 +230,29 @@ function AdminTrainingGroups() {
                             </div>
                             <hr/>
                             <div>
+                                {/*TODO wyciągnąć fetcha poza funckcję i wrzucać tylko useSet*/}
                                 <TrainersMultiSelect
-                                    selectedTrainers = {selectedTrainers}
-                                    setSelectedTrainers = {setSelectedTrainers}
+                                    selectedTrainers={selectedTrainers}
+                                    setSelectedTrainers={setSelectedTrainers}
                                 />
                             </div>
                             <hr/>
                             <div>
+                                {/*TODO wyciągnąć fetcha poza funckcję i wrzucać tylko useSet*/}
                                 <StudentsMultiSelect
-                                    selectedStudents = {selectedStudents}
-                                    setSelectedStudents = {setSelectedStudents}
+                                    selectedStudents={selectedStudents}
+                                    setSelectedStudents={setSelectedStudents}
                                 />
                             </div>
-                            <button type="submit" className="btn btn-primary shadow-lg mx-2 my-3 rounded-4">
+                            <button type="submit" className="btn btn-primary shadow-lg mx-2 my-3 rounded-4"
+                                    onClick={() =>{
+                                        console.log("GRUPA:")
+                                        console.log(selectedGroup)
+                                        console.log("TRENERZY:")
+                                        console.log(selectedTrainers)
+                                        console.log("STUDENCI:")
+                                        console.log(selectedStudents)
+                                    }}>
                                 zapisz
                             </button>
                         </Fieldset>
