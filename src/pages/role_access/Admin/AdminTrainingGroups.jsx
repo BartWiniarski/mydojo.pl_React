@@ -90,6 +90,7 @@ function AdminTrainingGroups() {
         setSuccessMessage('');
         setErrorMessage('');
 
+
         if (!formData.name.trim() ||
             !formData.description.trim()) {
             setErrorMessage('Wszystkie pola są wymagane!');
