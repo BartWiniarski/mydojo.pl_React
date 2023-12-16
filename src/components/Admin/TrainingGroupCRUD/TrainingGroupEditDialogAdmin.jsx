@@ -8,7 +8,6 @@ const TrainingGroupEditDialogAdmin = ({ visible,
                                  onInputChange,
                                  successMessage,
                                  errorMessage }) => {
-
     return (
         <Dialog header="Edycja grupy treningowej" visible={visible} style={{width: '50vw'}} onHide={onHide}>
             <hr/>

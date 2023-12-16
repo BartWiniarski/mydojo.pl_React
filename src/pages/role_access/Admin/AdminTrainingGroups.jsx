@@ -41,11 +41,6 @@ function AdminTrainingGroups() {
         setFormData(data);
     };
 
-    const handleEditClick = (groupData) => {
-        setFormData(groupData);
-        setEditDialogVisible(true);
-    };
-
     const handleCloseDialog = () => {
         resetMessages();
         setFormData({name: "", description: "", date: null});
@@ -143,11 +138,28 @@ function AdminTrainingGroups() {
                 <hr/>
                 <p>Opis grupy: {data.description}</p>
                 <p>Lokalizacja: </p>
-                <p>Prowadzący: </p>
+                <p>Trenerzy:
+                    {data.trainers.length > 0 ? (
+                        data.trainers.map((trainer) => (
+                            <span> {trainer.firstName} {trainer.lastName} </span>
+                        ))
+                    ) : (
+                        <span>Brak trenerów</span>
+                    )}
+                </p>
+                <p>Liczba uczestników: {data.students.length !== 0 ? data.students.length : "BRAK"}</p>
 
                 <div className="text-left">
                     <button type="submit" className="btn btn-primary shadow-lg mx-2 rounded-4"
-                            onClick={() => handleEditClick(data)}>
+                            onClick={() => {
+                                setSelectedTrainingGroup(data);
+                                setFormData({
+                                    name: data.name,
+                                    description: data.description,
+                                    date: data.date
+                                });
+                                setEditDialogVisible(true);
+                            }}>
                         edytuj
                     </button>
                     <button type="submit" className="btn btn-primary shadow-lg mx-2 rounded-4"
@@ -198,7 +210,7 @@ function AdminTrainingGroups() {
                         <Fieldset legend="Zarządzaj grupami" toggleable collapsed={true}>
                             <hr/>
                             <div>
-                                <TrainingGroupsMultiselect trainingGroups={trainingGroups} />
+                                <TrainingGroupsMultiselect trainingGroups={trainingGroups}/>
                             </div>
                             <hr/>
                             <div>
@@ -233,11 +245,11 @@ function AdminTrainingGroups() {
                         setEditDialogVisible(false)
                         handleCloseDialog()
                     }}
-                trainingGroup={formData}
-                onFormSubmit={handleUpdateTrainingGroup}
-                onInputChange={handleInputChange}
-                successMessage={successMessage}
-                errorMessage={errorMessage}
+                    trainingGroup={formData}
+                    onFormSubmit={handleUpdateTrainingGroup}
+                    onInputChange={handleInputChange}
+                    successMessage={successMessage}
+                    errorMessage={errorMessage}
                 />
                 <TrainingGroupDeleteDialogAdmin
                     visible={deleteDialogVisible}
