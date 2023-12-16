@@ -94,7 +94,7 @@ function AdminTrainingGroups() {
         }
     };
 
-// UPDATE TRAINING GROUP
+// UPDATE TRAINING GROUP BASIC
     const handleUpdateTrainingGroup = async (e) => {
         e.preventDefault();
         setSuccessMessage('');
@@ -106,6 +106,7 @@ function AdminTrainingGroups() {
             setErrorMessage('Wszystkie pola są wymagane!');
             return;
         }
+
 
         try {
             const response =
@@ -120,6 +121,33 @@ function AdminTrainingGroups() {
             }
         }
     };
+
+// UPDATE TRAINING GROUP DETAILS
+    const handleUpdateTrainingGroupDetails = async (e) => {
+        setSuccessMessage('');
+        setErrorMessage('');
+
+        const updatedTrainingGroup = {
+            trainers: selectedTrainers,
+            students: selectedStudents,
+        };
+
+        try {
+            const response = await axiosInstanceToken.put(
+                `/admin/trainingGroups/${selectedGroup}`,
+                updatedTrainingGroup
+            );
+            setSuccessMessage('Aktualizacja grupy treningowej zakończona sukcesem!');
+            fetchTrainingGroups();
+        } catch (error) {
+            if (!error?.response) {
+                setErrorMessage('Brak odpowiedzi serwera');
+            } else {
+                setErrorMessage('Aktualizacja grupy treningowej zakończona niepowodzeniem');
+            }
+        }
+    };
+
 
 // DELETE TRAINING GROUP
     const handleDeleteTrainingGroup = async (e) => {
@@ -245,16 +273,15 @@ function AdminTrainingGroups() {
                                 />
                             </div>
                             <button type="submit" className="btn btn-primary shadow-lg mx-2 my-3 rounded-4"
-                                    onClick={() =>{
-                                        console.log("GRUPA:")
-                                        console.log(selectedGroup)
-                                        console.log("TRENERZY:")
-                                        console.log(selectedTrainers)
-                                        console.log("STUDENCI:")
-                                        console.log(selectedStudents)
-                                    }}>
+                                    onClick={() => handleUpdateTrainingGroupDetails()}>
                                 zapisz
                             </button>
+                            {successMessage && (
+                                <div className="alert alert-success mt-3 text-center rounded-4">{successMessage}</div>
+                            )}
+                            {errorMessage && (
+                                <div className="alert alert-danger mt-3 text-center">{errorMessage}</div>
+                            )}
                         </Fieldset>
                         <hr/>
                     </div>
