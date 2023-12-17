@@ -10,11 +10,14 @@ import TrainingGroupDeleteDialogAdmin
 import TrainingGroupsSelect from "../../../components/Admin/TrainingGroupCRUD/TrainingGroupsSelect.jsx";
 import TrainersMultiSelect from "../../../components/Admin/TrainingGroupCRUD/TrainersMultiSelect.jsx";
 import StudentsMultiSelect from "../../../components/Admin/TrainingGroupCRUD/StudentsMultiSelect.jsx";
+import {axiosInstanceToken} from "../../../axios/axios.jsx";
 
 
 function AdminTrainingGroups() {
     const [expandedRows, setExpandedRows] = useState(null);
-    const [trainingGroups, setTrainingGroups] = useState([]);
+    const [availableTrainingGroups, setAvailableTrainingGroups] = useState([]);
+    const [availableTrainers, setAvailableTrainers] = useState([]);
+    const [availableStudents, setAvailableStudents] = useState([]);
     const [addDialogVisible, setAddDialogVisible] = useState(false);
     const [editDialogVisible, setEditDialogVisible] = useState(false);
     const [deleteDialogVisible, setDeleteDialogVisible] = useState(false);
@@ -33,6 +36,8 @@ function AdminTrainingGroups() {
 
     useEffect(() => {
         fetchTrainingGroups();
+        fetchTrainers();
+        fetchStudents();
     }, [axiosInstanceToken]);
 
     useEffect(() => {
@@ -40,11 +45,11 @@ function AdminTrainingGroups() {
             setSelectedTrainers([]);
             setSelectedStudents([]);
         } else {
-            const group = trainingGroups.find(group => group.id === selectedGroup);
+            const group = availableTrainingGroups.find(group => group.id === selectedGroup);
             setSelectedTrainers(group.trainers);
             setSelectedStudents(group.students);
         }
-    }, [selectedGroup, trainingGroups]);
+    }, [selectedGroup, availableTrainingGroups]);
 
 
     const resetMessages = () => {
@@ -66,11 +71,35 @@ function AdminTrainingGroups() {
         try {
             const response =
                 await axiosInstanceToken.get("/admin/trainingGroups");
-            setTrainingGroups(response.data);
+            setAvailableTrainingGroups(response.data);
         } catch (error) {
             console.log(error);
         }
     }
+
+// FETCHING TRAINERS
+    const fetchTrainers = async () => {
+        try {
+            const response = await axiosInstanceToken.get("/admin/trainers");
+            const trainerOptions = response.data.map(trainer => ({
+                name: `${trainer.firstName} ${trainer.lastName}`,
+                id: trainer.id
+            }));
+            setAvailableTrainers(trainerOptions);
+        } catch (error) {
+            console.error("Error fetching availableTrainers:", error);
+        }
+    };
+
+// FETCHING STUDENTS
+    const fetchStudents = async () => {
+        try {
+            const response = await axiosInstanceToken.get("/admin/students");
+            setAvailableStudents(response.data);
+        } catch (error) {
+            console.error("Error fetching users:", error);
+        }
+    };
 
 // ADDING NEW TRAINING GROUP
     const handleNewTrainingGroup = async (e) => {
@@ -238,7 +267,7 @@ function AdminTrainingGroups() {
                         <hr/>
                         <Fieldset legend="Wszystkie grupy" toggleable collapsed={true}>
                             <hr/>
-                            <DataTable value={trainingGroups}
+                            <DataTable value={availableTrainingGroups}
                                        expandedRows={expandedRows}
                                        onRowToggle={(e) => setExpandedRows(e.data)}
                                        rowExpansionTemplate={rowExpansionTemplate} dataKey="id"
@@ -255,23 +284,23 @@ function AdminTrainingGroups() {
                             <hr/>
                             <div>
                                 <TrainingGroupsSelect
-                                    trainingGroups={trainingGroups}
+                                    availableTrainingGroups={availableTrainingGroups}
                                     selectedGroup={selectedGroup}
                                     setSelectedGroup={setSelectedGroup}
                                 />
                             </div>
                             <hr/>
                             <div>
-                                {/*TODO wyciągnąć fetcha poza funckcję i wrzucać tylko useSet*/}
                                 <TrainersMultiSelect
+                                    availableTrainers={availableTrainers}
                                     selectedTrainers={selectedTrainers}
                                     setSelectedTrainers={setSelectedTrainers}
                                 />
                             </div>
                             <hr/>
                             <div>
-                                {/*TODO wyciągnąć fetcha poza funckcję i wrzucać tylko useSet*/}
                                 <StudentsMultiSelect
+                                    availableStudents={availableStudents}
                                     selectedStudents={selectedStudents}
                                     setSelectedStudents={setSelectedStudents}
                                 />

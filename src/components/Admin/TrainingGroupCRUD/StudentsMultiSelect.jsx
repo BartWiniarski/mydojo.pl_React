@@ -3,22 +3,13 @@ import { MultiSelect } from 'primereact/multiselect';
 import {axiosInstanceToken} from "../../../axios/axios.jsx";
 
 
-const StudentsMultiSelect = ({selectedStudents, setSelectedStudents}) => {
+const StudentsMultiSelect = ({availableStudents, selectedStudents, setSelectedStudents}) => {
     const [groupedStudents, setGroupedStudents] = useState([]);
 
     useEffect(() => {
-        fetchStudents();
-    }, []);
-
-    const fetchStudents = async () => {
-        try {
-            const response = await axiosInstanceToken.get("/admin/students");
-            const usersGroupedByAge = groupUsersByAge(response.data);
-            setGroupedStudents(usersGroupedByAge);
-        } catch (error) {
-            console.error("Error fetching users:", error);
-        }
-    };
+        const usersGroupedByAge = groupUsersByAge(availableStudents);
+        setGroupedStudents(usersGroupedByAge);
+    }, [availableStudents]);
 
     const groupUsersByAge = (users) => {
         const ageGroups = {

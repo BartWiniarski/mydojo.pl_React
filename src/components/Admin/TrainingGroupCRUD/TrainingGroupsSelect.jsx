@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import { Dropdown } from 'primereact/dropdown';
 
-const TrainingGroupsSelect = ({ trainingGroups, selectedGroup, setSelectedGroup }) => {
+const TrainingGroupsSelect = ({ availableTrainingGroups, selectedGroup, setSelectedGroup }) => {
 
-    const availableTrainingGroups = trainingGroups.map(group => ({
+    const availableTrainingGroupsOptions = availableTrainingGroups.map(group => ({
         label: group.name,
         value: group.id
     }));
@@ -12,7 +12,7 @@ const TrainingGroupsSelect = ({ trainingGroups, selectedGroup, setSelectedGroup 
         <div className="card">
             <Dropdown
                 value={selectedGroup}
-                options={availableTrainingGroups}
+                options={availableTrainingGroupsOptions}
                 onChange={(e) => setSelectedGroup(e.value)}
                 optionLabel="label"
                 filter
