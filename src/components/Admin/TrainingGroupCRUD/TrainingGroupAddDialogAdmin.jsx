@@ -18,11 +18,13 @@ const TrainingGroupAddDialogAdmin = ({
     const [selectedHour, setSelectedHour] = useState(new Date());
     const [schedule, setSchedule] = useState(trainingGroup.schedule || {});
 
-    // useEffect(() => {
-    //     if (visible) {
-    //         setSchedule(trainingGroup.schedule || {});
-    //     }
-    // }, [visible, trainingGroup.schedule]);
+    useEffect(() => {
+        if (visible) {
+            setSchedule({});
+            setSelectedDay(null);
+            setSelectedHour(new Date());
+        }
+    }, [visible]);
 
     useEffect(() => {
         if (selectedDay && schedule[selectedDay]) {

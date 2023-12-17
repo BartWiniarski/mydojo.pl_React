@@ -1,24 +1,24 @@
 import React, {useState} from 'react';
 import {Dropdown} from 'primereact/dropdown';
 
-const PONIEDZIALEK = "PONIEDZIALEK";
-const WTOREK = "WTOREK";
-const SRODA = "SRODA";
-const CZWARTEK = "CZWARTEK";
-const PIATEK = "PIATEK";
-const SOBOTA = "SOBOTA";
-const NIEDZIELA = "NIEDZIELA";
+const MONDAY = "MONDAY";
+const TUESDAY = "TUESDAY";
+const WEDNESDAY = "WEDNESDAY";
+const THURSDAY = "THURSDAY";
+const FRIDAY = "FRIDAY";
+const SATURDAY = "SATURDAY";
+const SUNDAY = "SUNDAY";
 
 const DaysOfWeekSelect = ({selectedDay, setSelectedDay}) => {
 
         const availableDays = [
-            { label: "Poniedziałek", value: PONIEDZIALEK },
-            { label: "Wtorek", value: WTOREK },
-            { label: "Środa", value: SRODA },
-            { label: "Czwartek", value: CZWARTEK },
-            { label: "Piątek", value: PIATEK },
-            { label: "Sobota", value: SOBOTA },
-            { label: "Niedziela", value: NIEDZIELA },
+            { label: "Poniedziałek", value: MONDAY },
+            { label: "Wtorek", value: TUESDAY },
+            { label: "Środa", value: WEDNESDAY },
+            { label: "Czwartek", value: THURSDAY },
+            { label: "Piątek", value: FRIDAY },
+            { label: "Sobota", value: SATURDAY },
+            { label: "Niedziela", value: SUNDAY },
         ];
 
 return (

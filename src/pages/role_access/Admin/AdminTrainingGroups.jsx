@@ -63,7 +63,7 @@ function AdminTrainingGroups() {
 
     const handleCloseDialog = () => {
         resetMessages();
-        setFormData({name: "", description: "", date: null});
+        setFormData({name: "", description: "", schedule: ""});
     }
 
 // FETCHING TRAINING GROUPS
