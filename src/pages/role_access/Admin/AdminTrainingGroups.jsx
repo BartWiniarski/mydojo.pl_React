@@ -13,26 +13,42 @@ import StudentsMultiSelect from "../../../components/Admin/TrainingGroupCRUD/Stu
 
 
 function AdminTrainingGroups() {
-    const [expandedRows, setExpandedRows] = useState(null);
-    const [trainingGroups, setTrainingGroups] = useState([]);
-    const [addDialogVisible, setAddDialogVisible] = useState(false);
-    const [editDialogVisible, setEditDialogVisible] = useState(false);
-    const [deleteDialogVisible, setDeleteDialogVisible] = useState(false);
+    const [availableTrainingGroups, setAvailableTrainingGroups] = useState([]);
+    const [availableTrainers, setAvailableTrainers] = useState([]);
+    const [availableStudents, setAvailableStudents] = useState([]);
     const [selectedTrainingGroup, setSelectedTrainingGroup] = useState(null);
     const [selectedGroup, setSelectedGroup] = useState(null);
     const [selectedTrainers, setSelectedTrainers] = useState([])
     const [selectedStudents, setSelectedStudents] = useState(null)
+
+    const [expandedRows, setExpandedRows] = useState(null);
+    const [addDialogVisible, setAddDialogVisible] = useState(false);
+    const [editDialogVisible, setEditDialogVisible] = useState(false);
+    const [deleteDialogVisible, setDeleteDialogVisible] = useState(false);
     const [successMessage, setSuccessMessage] = useState('');
     const [errorMessage, setErrorMessage] = useState('');
     const axiosInstanceToken = useAxiosInstanceToken();
+
     const [formData, setFormData] = useState({
         name: "",
         description: "",
-        date: null,
+        schedule: ""
     });
+    const daysOfWeekMap = {
+        MONDAY: 'Poniedziałek',
+        TUESDAY: 'Wtorek',
+        WEDNESDAY: 'Środa',
+        THURSDAY: 'Czwartek',
+        FRIDAY: 'Piątek',
+        SATURDAY: 'Sobota',
+        SUNDAY: 'Niedziela'
+    };
+
 
     useEffect(() => {
         fetchTrainingGroups();
+        fetchTrainers();
+        fetchStudents();
     }, [axiosInstanceToken]);
 
     useEffect(() => {
@@ -40,11 +56,11 @@ function AdminTrainingGroups() {
             setSelectedTrainers([]);
             setSelectedStudents([]);
         } else {
-            const group = trainingGroups.find(group => group.id === selectedGroup);
+            const group = availableTrainingGroups.find(group => group.id === selectedGroup);
             setSelectedTrainers(group.trainers);
             setSelectedStudents(group.students);
         }
-    }, [selectedGroup, trainingGroups]);
+    }, [selectedGroup, availableTrainingGroups]);
 
 
     const resetMessages = () => {
@@ -58,7 +74,7 @@ function AdminTrainingGroups() {
 
     const handleCloseDialog = () => {
         resetMessages();
-        setFormData({name: "", description: "", date: null});
+        setFormData({name: "", description: "", schedule: ""});
     }
 
 // FETCHING TRAINING GROUPS
@@ -66,11 +82,31 @@ function AdminTrainingGroups() {
         try {
             const response =
                 await axiosInstanceToken.get("/admin/trainingGroups");
-            setTrainingGroups(response.data);
+            setAvailableTrainingGroups(response.data);
         } catch (error) {
             console.log(error);
         }
     }
+
+// FETCHING TRAINERS
+    const fetchTrainers = async () => {
+        try {
+            const response = await axiosInstanceToken.get("/admin/trainers");
+            setAvailableTrainers(response.data);
+        } catch (error) {
+            console.error("Error fetching availableTrainers:", error);
+        }
+    };
+
+// FETCHING STUDENTS
+    const fetchStudents = async () => {
+        try {
+            const response = await axiosInstanceToken.get("/admin/students");
+            setAvailableStudents(response.data);
+        } catch (error) {
+            console.error("Error fetching users:", error);
+        }
+    };
 
 // ADDING NEW TRAINING GROUP
     const handleNewTrainingGroup = async (e) => {
@@ -174,22 +210,43 @@ function AdminTrainingGroups() {
     };
 
 // TABLE ROW EXPAND
-    const rowExpansionTemplate = (data) => {
+    const rowExpansion = (data) => {
+
+        const getTrainerNameById = (trainerId) => {
+            const trainer = availableTrainers.find((trainer) => trainer.id === trainerId);
+            if (trainer) {
+                return `${trainer.firstName} ${trainer.lastName}`;
+            }
+            return "Brak danych o trenerze";
+        };
+
         return (
             <div className="p-3 card">
                 <h5 className="fw-bold">{data.name}</h5>
                 <hr/>
                 <p>Opis grupy: {data.description}</p>
                 <p>Lokalizacja: </p>
+                <p>Harmonogram zajęć:
+                    <ul>
+                        {Object.entries(data.schedule).length > 0 ? (
+                            Object.entries(data.schedule).map(([day, time]) => (
+                                <li key={day}> {daysOfWeekMap[day] || day}: {time} </li>
+                            ))
+                        ) : (
+                            <span> Brak harmonogramu zajęć</span>
+                        )}
+                    </ul>
+                </p>
                 <p>Trenerzy:
-                    {data.trainers.length > 0 ? (
-                        data.trainers.map((trainer) => (
-                            <span> {trainer} </span>
-                            //TODO wyciągnąć imie i naziwsko po ID
-                        ))
-                    ) : (
-                        <span> Brak trenerów</span>
-                    )}
+                    <ul>
+                        {data.trainers.length > 0 ? (
+                            data.trainers.map((trainerId) => (
+                                <li key={trainerId}> {getTrainerNameById(trainerId)} </li>
+                            ))
+                        ) : (
+                            <span> Brak trenerów</span>
+                        )}
+                    </ul>
                 </p>
                 <p>Liczba uczestników: {data.students.length !== 0 ? data.students.length : "Brak uczestników"}</p>
 
@@ -200,7 +257,7 @@ function AdminTrainingGroups() {
                                 setFormData({
                                     name: data.name,
                                     description: data.description,
-                                    date: data.date
+                                    schedule: data.schedule
                                 });
                                 setEditDialogVisible(true);
                             }}>
@@ -231,17 +288,17 @@ function AdminTrainingGroups() {
                 <hr/>
                 <button type="button" className="btn btn-primary shadow-lg my-3 rounded-4"
                         onClick={() => setAddDialogVisible(true)}>
-                    dodaj nową grupe
+                    dodaj nową grupę
                 </button>
                 <div className="card">
                     <div className="">
                         <hr/>
                         <Fieldset legend="Wszystkie grupy" toggleable collapsed={true}>
                             <hr/>
-                            <DataTable value={trainingGroups}
+                            <DataTable value={availableTrainingGroups}
                                        expandedRows={expandedRows}
                                        onRowToggle={(e) => setExpandedRows(e.data)}
-                                       rowExpansionTemplate={rowExpansionTemplate} dataKey="id"
+                                       rowExpansionTemplate={rowExpansion} dataKey="id"
                                        className="p-datatable-striped">
                                 <Column expander style={{width: '3em'}}/>
                                 <Column field="name" header="Nazwa grupy" sortable/>
@@ -255,23 +312,23 @@ function AdminTrainingGroups() {
                             <hr/>
                             <div>
                                 <TrainingGroupsSelect
-                                    trainingGroups={trainingGroups}
+                                    availableTrainingGroups={availableTrainingGroups}
                                     selectedGroup={selectedGroup}
                                     setSelectedGroup={setSelectedGroup}
                                 />
                             </div>
                             <hr/>
                             <div>
-                                {/*TODO wyciągnąć fetcha poza funckcję i wrzucać tylko useSet*/}
                                 <TrainersMultiSelect
+                                    availableTrainers={availableTrainers}
                                     selectedTrainers={selectedTrainers}
                                     setSelectedTrainers={setSelectedTrainers}
                                 />
                             </div>
                             <hr/>
                             <div>
-                                {/*TODO wyciągnąć fetcha poza funckcję i wrzucać tylko useSet*/}
                                 <StudentsMultiSelect
+                                    availableStudents={availableStudents}
                                     selectedStudents={selectedStudents}
                                     setSelectedStudents={setSelectedStudents}
                                 />

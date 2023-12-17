@@ -1,5 +1,8 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import {Dialog} from 'primereact/dialog';
+import DatePicker from 'react-datepicker';
+import DaysOfWeekSelect from "./DaysOfWeekSelect.jsx";
+import "/public/css/style.css";
 
 const TrainingGroupAddDialogAdmin = ({
                                          visible,
@@ -11,14 +14,54 @@ const TrainingGroupAddDialogAdmin = ({
                                          errorMessage
                                      }) => {
 
+    const [selectedDay, setSelectedDay] = useState(null);
+    const [selectedHour, setSelectedHour] = useState(new Date());
+    const [schedule, setSchedule] = useState(trainingGroup.schedule || {});
+
+    useEffect(() => {
+        if (visible) {
+            setSchedule({});
+            setSelectedDay(null);
+            setSelectedHour(new Date());
+        }
+    }, [visible]);
+
+    useEffect(() => {
+        if (selectedDay && schedule[selectedDay]) {
+            const [hours, minutes] = schedule[selectedDay].split(':');
+            setSelectedHour(new Date(new Date().setHours(parseInt(hours), parseInt(minutes), 0)));
+        }
+    }, [selectedDay, schedule]);
+
+    const handleDayChange = (day) => {
+        setSelectedDay(day);
+        const updatedSchedule = { ...schedule, [day]: schedule[day] || '' };
+        setSchedule(updatedSchedule);
+        onInputChange({ ...trainingGroup, schedule: updatedSchedule });
+    };
+
+    const handleHourChange = (date) => {
+        setSelectedHour(date);
+        const hours = date.getHours().toString().padStart(2, '0');
+        const minutes = date.getMinutes().toString().padStart(2, '0');
+        const formattedTime = `${hours}:${minutes}:00`;
+        if (selectedDay) {
+            const updatedSchedule = { ...schedule, [selectedDay]: formattedTime };
+            setSchedule(updatedSchedule);
+            onInputChange({ ...trainingGroup, schedule: updatedSchedule });
+        }
+    };
+
     trainingGroup = {
         name: trainingGroup.name || '',
         description: trainingGroup.description || '',
+        schedule: schedule
     };
 
 
     return (
-        <Dialog header="Dodawanie nowej grupy treningowej" visible={visible} style={{width: '50vw'}} onHide={onHide}>
+        <Dialog header="Dodawanie nowej grupy treningowej" visible={visible} style={{width: '50vw'}}
+                onHide={onHide}>
             <hr/>
             <div className="p-2">
                 <input type="text" className="form-control"
@@ -33,8 +76,24 @@ const TrainingGroupAddDialogAdmin = ({
                     onInputChange({...trainingGroup, description: e.target.value})}/>
             </div>
             <div className="p-2">
-                <div>
-
+                <DaysOfWeekSelect
+                    selectedDay={selectedDay}
+                    setSelectedDay={handleDayChange}
+                />
+            </div>
+            <div className="p-2">
+                <label>Wybierz godzinę:</label>
+                <div className="customDatePickerWidth">
+                    <DatePicker
+                        className="form-control"
+                        selected={selectedHour}
+                        onChange={handleHourChange}
+                        showTimeSelect
+                        showTimeSelectOnly
+                        timeIntervals={30}
+                        timeCaption="Godzina"
+                        dateFormat="HH:mm"
+                    />
                 </div>
             </div>
             <button type="button" className="btn btn-primary shadow-lg mx-2 my-2 rounded-4" onClick={onFormSubmit}>
