@@ -40,7 +40,7 @@ const TrainingGroupAddDialogAdmin = ({
         onInputChange({ ...trainingGroup, schedule: updatedSchedule });
     };
 
-    const handleDateChange = (date) => {
+    const handleHourChange = (date) => {
         setSelectedHour(date);
         const hours = date.getHours().toString().padStart(2, '0');
         const minutes = date.getMinutes().toString().padStart(2, '0');
@@ -87,7 +87,7 @@ const TrainingGroupAddDialogAdmin = ({
                     <DatePicker
                         className="form-control"
                         selected={selectedHour}
-                        onChange={handleDateChange}
+                        onChange={handleHourChange}
                         showTimeSelect
                         showTimeSelectOnly
                         timeIntervals={30}

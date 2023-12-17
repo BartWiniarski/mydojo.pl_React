@@ -28,11 +28,22 @@ function AdminTrainingGroups() {
     const [successMessage, setSuccessMessage] = useState('');
     const [errorMessage, setErrorMessage] = useState('');
     const axiosInstanceToken = useAxiosInstanceToken();
+
     const [formData, setFormData] = useState({
         name: "",
         description: "",
         schedule: ""
     });
+    const daysOfWeekMap = {
+        MONDAY: 'Poniedziałek',
+        TUESDAY: 'Wtorek',
+        WEDNESDAY: 'Środa',
+        THURSDAY: 'Czwartek',
+        FRIDAY: 'Piątek',
+        SATURDAY: 'Sobota',
+        SUNDAY: 'Niedziela'
+    };
+
 
     useEffect(() => {
         fetchTrainingGroups();
@@ -219,7 +230,7 @@ function AdminTrainingGroups() {
                     <ul>
                         {Object.entries(data.schedule).length > 0 ? (
                             Object.entries(data.schedule).map(([day, time]) => (
-                                <li key={day}> {day}: {time} </li>
+                                <li key={day}> {daysOfWeekMap[day] || day}: {time} </li>
                             ))
                         ) : (
                             <span> Brak harmonogramu zajęć</span>
@@ -246,7 +257,7 @@ function AdminTrainingGroups() {
                                 setFormData({
                                     name: data.name,
                                     description: data.description,
-                                    date: data.date
+                                    schedule: data.schedule
                                 });
                                 setEditDialogVisible(true);
                             }}>

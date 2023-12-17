@@ -1,4 +1,6 @@
 import TestFetchStudent from "../../../components/Student/TestFetchStudent.jsx";
+import {Accordion, AccordionTab} from "primereact/accordion";
+import TestFetchAdmin from "../../../components/Admin/TestFetchAdmin.jsx";
 
 function StudentDashboard() {
     return (
@@ -9,8 +11,49 @@ function StudentDashboard() {
                      style={{maxHeight: '600px'}}/>
             </div>
             <div id="column-right" className="col-12 col-md-10 ms-md-auto mt-md-auto column-right">
-                <h1 className="text-center">DASHBOARD STUDENT</h1>
-                <TestFetchStudent/>
+                <h1 className="text-center">Panel ucznia</h1>
+
+                <div className="card">
+                    <Accordion activeIndex={0}>
+                        <AccordionTab
+                            header={
+                                <div className="flex align-items-center">
+                                    <i className="pi pi-calendar mr-2"></i>
+                                    <span className="vertical-align-middle">Moje grupy treningowe</span>
+                                </div>
+                            }
+                        >
+                            <p className="m-0">
+                                TBD
+                            </p>
+                        </AccordionTab>
+                        <AccordionTab
+                            header={
+                                <div className="flex align-items-center">
+                                    <i className="pi pi-user mr-2"></i>
+                                    <span className="vertical-align-middle">TEST FETCH</span>
+                                </div>
+                            }
+                        >
+                            <p className="m-0">
+                                <TestFetchStudent/>
+                            </p>
+                        </AccordionTab>
+                        <AccordionTab
+                            header={
+                                <div className="flex align-items-center">
+                                    <i className="pi pi-search mr-2"></i>
+                                    <span className="vertical-align-middle">TBD</span>
+                                    <i className="pi pi-cog ml-2 ml-2"></i>
+                                </div>
+                            }
+                        >
+                            <p className="m-0">
+                                TBD
+                            </p>
+                        </AccordionTab>
+                    </Accordion>
+                </div>
             </div>
         </>
     );
