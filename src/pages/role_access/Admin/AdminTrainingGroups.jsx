@@ -10,7 +10,6 @@ import TrainingGroupDeleteDialogAdmin
 import TrainingGroupsSelect from "../../../components/Admin/TrainingGroupCRUD/TrainingGroupsSelect.jsx";
 import TrainersMultiSelect from "../../../components/Admin/TrainingGroupCRUD/TrainersMultiSelect.jsx";
 import StudentsMultiSelect from "../../../components/Admin/TrainingGroupCRUD/StudentsMultiSelect.jsx";
-import {axiosInstanceToken} from "../../../axios/axios.jsx";
 
 
 function AdminTrainingGroups() {
@@ -32,8 +31,7 @@ function AdminTrainingGroups() {
     const [formData, setFormData] = useState({
         name: "",
         description: "",
-        day: "",
-        time: ""
+        schedule: ""
     });
 
     useEffect(() => {

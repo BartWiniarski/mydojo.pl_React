@@ -1,11 +1,11 @@
 import React, {useState} from 'react';
 import {Dropdown} from 'primereact/dropdown';
 
-const PONIEDZIALEK = "PONIEDZIAŁEK";
+const PONIEDZIALEK = "PONIEDZIALEK";
 const WTOREK = "WTOREK";
-const SRODA = "ŚRODA";
+const SRODA = "SRODA";
 const CZWARTEK = "CZWARTEK";
-const PIATEK = "PIĄTEK";
+const PIATEK = "PIATEK";
 const SOBOTA = "SOBOTA";
 const NIEDZIELA = "NIEDZIELA";
 
