@@ -4,12 +4,17 @@ import {axiosInstanceToken} from "../../../axios/axios.jsx";
 
 const TrainersMultiSelect = ({availableTrainers, selectedTrainers, setSelectedTrainers}) => {
 
+    const trainerOptions = availableTrainers.map(trainer => ({
+        name: `${trainer.firstName} ${trainer.lastName}`,
+        id: trainer.id
+    }));
+
     return (
         <div className="card flex justify-content-center">
             <MultiSelect
                 value={selectedTrainers || []}
                 onChange={(e) => setSelectedTrainers(e.value)}
-                options={availableTrainers}
+                options={trainerOptions}
                 optionLabel="name"
                 optionValue="id"
                 filter

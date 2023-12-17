@@ -14,17 +14,18 @@ import {axiosInstanceToken} from "../../../axios/axios.jsx";
 
 
 function AdminTrainingGroups() {
-    const [expandedRows, setExpandedRows] = useState(null);
     const [availableTrainingGroups, setAvailableTrainingGroups] = useState([]);
     const [availableTrainers, setAvailableTrainers] = useState([]);
     const [availableStudents, setAvailableStudents] = useState([]);
-    const [addDialogVisible, setAddDialogVisible] = useState(false);
-    const [editDialogVisible, setEditDialogVisible] = useState(false);
-    const [deleteDialogVisible, setDeleteDialogVisible] = useState(false);
     const [selectedTrainingGroup, setSelectedTrainingGroup] = useState(null);
     const [selectedGroup, setSelectedGroup] = useState(null);
     const [selectedTrainers, setSelectedTrainers] = useState([])
     const [selectedStudents, setSelectedStudents] = useState(null)
+
+    const [expandedRows, setExpandedRows] = useState(null);
+    const [addDialogVisible, setAddDialogVisible] = useState(false);
+    const [editDialogVisible, setEditDialogVisible] = useState(false);
+    const [deleteDialogVisible, setDeleteDialogVisible] = useState(false);
     const [successMessage, setSuccessMessage] = useState('');
     const [errorMessage, setErrorMessage] = useState('');
     const axiosInstanceToken = useAxiosInstanceToken();
@@ -81,11 +82,7 @@ function AdminTrainingGroups() {
     const fetchTrainers = async () => {
         try {
             const response = await axiosInstanceToken.get("/admin/trainers");
-            const trainerOptions = response.data.map(trainer => ({
-                name: `${trainer.firstName} ${trainer.lastName}`,
-                id: trainer.id
-            }));
-            setAvailableTrainers(trainerOptions);
+            setAvailableTrainers(response.data);
         } catch (error) {
             console.error("Error fetching availableTrainers:", error);
         }
@@ -203,7 +200,19 @@ function AdminTrainingGroups() {
     };
 
 // TABLE ROW EXPAND
-    const rowExpansionTemplate = (data) => {
+    const rowExpansion = (data) => {
+
+        const getTrainerNameById = (trainerId) => {
+            const trainer = availableTrainers.find((trainer) => trainer.id === trainerId);
+            if (trainer) {
+                console.log(`${trainer.firstName} ${trainer.lastName}`);
+                return `${trainer.firstName} ${trainer.lastName}`;
+            }
+            return "Brak danych o trenerze";
+        };
+
+        getTrainerNameById(3);
+
         return (
             <div className="p-3 card">
                 <h5 className="fw-bold">{data.name}</h5>
@@ -212,9 +221,8 @@ function AdminTrainingGroups() {
                 <p>Lokalizacja: </p>
                 <p>Trenerzy:
                     {data.trainers.length > 0 ? (
-                        data.trainers.map((trainer) => (
-                            <span> {trainer} </span>
-                            //TODO wyciągnąć imie i naziwsko po ID
+                        data.trainers.map((trainerId) => (
+                            <span key={trainerId}> {getTrainerNameById(trainerId)} </span>
                         ))
                     ) : (
                         <span> Brak trenerów</span>
@@ -270,7 +278,7 @@ function AdminTrainingGroups() {
                             <DataTable value={availableTrainingGroups}
                                        expandedRows={expandedRows}
                                        onRowToggle={(e) => setExpandedRows(e.data)}
-                                       rowExpansionTemplate={rowExpansionTemplate} dataKey="id"
+                                       rowExpansionTemplate={rowExpansion} dataKey="id"
                                        className="p-datatable-striped">
                                 <Column expander style={{width: '3em'}}/>
                                 <Column field="name" header="Nazwa grupy" sortable/>
