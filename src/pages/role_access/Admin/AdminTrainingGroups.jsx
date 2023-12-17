@@ -36,12 +36,16 @@ function AdminTrainingGroups() {
     }, [axiosInstanceToken]);
 
     useEffect(() => {
-        if (selectedGroup) {
+        if (!selectedGroup) {
+            setSelectedTrainers([]);
+            setSelectedStudents([]);
+        } else {
             const group = trainingGroups.find(group => group.id === selectedGroup);
             setSelectedTrainers(group.trainers);
             setSelectedStudents(group.students);
         }
     }, [selectedGroup, trainingGroups]);
+
 
     const resetMessages = () => {
         setSuccessMessage('');
@@ -148,7 +152,6 @@ function AdminTrainingGroups() {
         }
     };
 
-
 // DELETE TRAINING GROUP
     const handleDeleteTrainingGroup = async (e) => {
         e.preventDefault();
@@ -159,6 +162,7 @@ function AdminTrainingGroups() {
             const response =
                 await axiosInstanceToken.delete(`/admin/trainingGroups/${selectedTrainingGroup.id}`, formData);
             setSuccessMessage('Grupa treningowa usunięta');
+            setSelectedGroup(null);
             fetchTrainingGroups();
         } catch (error) {
             if (!error?.response) {
