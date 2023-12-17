@@ -205,13 +205,10 @@ function AdminTrainingGroups() {
         const getTrainerNameById = (trainerId) => {
             const trainer = availableTrainers.find((trainer) => trainer.id === trainerId);
             if (trainer) {
-                console.log(`${trainer.firstName} ${trainer.lastName}`);
                 return `${trainer.firstName} ${trainer.lastName}`;
             }
             return "Brak danych o trenerze";
         };
-
-        getTrainerNameById(3);
 
         return (
             <div className="p-3 card">
@@ -219,14 +216,27 @@ function AdminTrainingGroups() {
                 <hr/>
                 <p>Opis grupy: {data.description}</p>
                 <p>Lokalizacja: </p>
+                <p>Harmonogram zajęć:
+                    <ul>
+                        {Object.entries(data.schedule).length > 0 ? (
+                            Object.entries(data.schedule).map(([day, time]) => (
+                                <li key={day}> {day}: {time} </li>
+                            ))
+                        ) : (
+                            <span> Brak harmonogramu zajęć</span>
+                        )}
+                    </ul>
+                </p>
                 <p>Trenerzy:
-                    {data.trainers.length > 0 ? (
-                        data.trainers.map((trainerId) => (
-                            <span key={trainerId}> {getTrainerNameById(trainerId)} </span>
-                        ))
-                    ) : (
-                        <span> Brak trenerów</span>
-                    )}
+                    <ul>
+                        {data.trainers.length > 0 ? (
+                            data.trainers.map((trainerId) => (
+                                <li key={trainerId}> {getTrainerNameById(trainerId)} </li>
+                            ))
+                        ) : (
+                            <span> Brak trenerów</span>
+                        )}
+                    </ul>
                 </p>
                 <p>Liczba uczestników: {data.students.length !== 0 ? data.students.length : "Brak uczestników"}</p>
 
