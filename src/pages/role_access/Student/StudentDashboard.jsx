@@ -1,6 +1,6 @@
 import TestFetchStudent from "../../../components/Student/TestFetchStudent.jsx";
 import {Accordion, AccordionTab} from "primereact/accordion";
-import TestFetchAdmin from "../../../components/Admin/TestFetchAdmin.jsx";
+import MyTrainingGroupsStudent from "../../../components/Student/MyTrainingGroupsStudent.jsx";
 
 function StudentDashboard() {
     return (
@@ -24,7 +24,7 @@ function StudentDashboard() {
                             }
                         >
                             <p className="m-0">
-                                TBD
+                                <MyTrainingGroupsStudent/>
                             </p>
                         </AccordionTab>
                         <AccordionTab

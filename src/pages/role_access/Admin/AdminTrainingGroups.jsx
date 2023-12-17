@@ -288,7 +288,7 @@ function AdminTrainingGroups() {
                 <hr/>
                 <button type="button" className="btn btn-primary shadow-lg my-3 rounded-4"
                         onClick={() => setAddDialogVisible(true)}>
-                    dodaj nową grupe
+                    dodaj nową grupę
                 </button>
                 <div className="card">
                     <div className="">

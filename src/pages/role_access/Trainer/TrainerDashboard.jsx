@@ -1,5 +1,5 @@
 import {Accordion, AccordionTab} from "primereact/accordion";
-import TestFetchAdmin from "../../../components/Admin/TestFetchAdmin.jsx";
+import MyTrainingGroupsTrainer from "../../../components/Trainer/MyTrainingGroupsTraine.jsx";
 
 function TrainerDashboard() {
     return (
@@ -23,7 +23,7 @@ function TrainerDashboard() {
                             }
                         >
                             <p className="m-0">
-                                TBD
+                                <MyTrainingGroupsTrainer/>
                             </p>
                         </AccordionTab>
                         <AccordionTab
