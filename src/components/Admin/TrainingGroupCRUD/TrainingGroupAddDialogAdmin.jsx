@@ -1,6 +1,8 @@
 import React, {useState} from 'react';
 import {Dialog} from 'primereact/dialog';
+import DatePicker from 'react-datepicker';
 import DaysOfWeekSelect from "./DaysOfWeekSelect.jsx";
+import "/public/css/style.css";
 
 const TrainingGroupAddDialogAdmin = ({
                                          visible,
@@ -25,47 +27,57 @@ const TrainingGroupAddDialogAdmin = ({
 
 
     return (
-            <Dialog header="Dodawanie nowej grupy treningowej" visible={visible} style={{width: '50vw'}}
-                    onHide={onHide}>
-                <hr/>
-                <div className="p-2">
-                    <input type="text" className="form-control"
-                           id="InputName" placeholder="Podaj nazwę grupy..."
-                           value={trainingGroup.name} onChange={(e) =>
-                        onInputChange({...trainingGroup, name: e.target.value})}/>
+        <Dialog header="Dodawanie nowej grupy treningowej" visible={visible} style={{width: '50vw'}}
+                onHide={onHide}>
+            <hr/>
+            <div className="p-2">
+                <input type="text" className="form-control"
+                       id="InputName" placeholder="Podaj nazwę grupy..."
+                       value={trainingGroup.name} onChange={(e) =>
+                    onInputChange({...trainingGroup, name: e.target.value})}/>
+            </div>
+            <div className="p-2">
+                <input type="text" className="form-control"
+                       id="InputDescription" placeholder="Podaj opis grupy..."
+                       value={trainingGroup.description} onChange={(e) =>
+                    onInputChange({...trainingGroup, description: e.target.value})}/>
+            </div>
+            <div className="p-2">
+                <div>
+                    <DaysOfWeekSelect
+                        selectedDay={selectedDay}
+                        setSelectedDay={setSelectedDay}
+                    />
                 </div>
-                <div className="p-2">
-                    <input type="text" className="form-control"
-                           id="InputDescription" placeholder="Podaj opis grupy..."
-                           value={trainingGroup.description} onChange={(e) =>
-                        onInputChange({...trainingGroup, description: e.target.value})}/>
+            </div>
+            <div className="p-2">
+                <label>Wybierz godzinę:</label>
+                <div className="customDatePickerWidth">
+                    <DatePicker
+                        className="form-control"
+                        selected={selectedHour}
+                        onChange={(date) => setSelectedHour(date)}
+                        showTimeSelect
+                        showTimeSelectOnly
+                        timeIntervals={30}
+                        timeCaption="Godzina"
+                        dateFormat="h:mm aa"
+                    />
                 </div>
-                <div className="p-2">
-                    <div>
-                        <DaysOfWeekSelect
-                            selectedDay={selectedDay}
-                            setSelectedDay={setSelectedDay}
-                        />
-                    </div>
-                </div>
-                <div className="p-2">
-                    <div>
-                        <label>Wybierz godzinę:</label>
-                    </div>
-                </div>
-                <button type="button" className="btn btn-primary shadow-lg mx-2 my-2 rounded-4" onClick={onFormSubmit}>
-                    zapisz
-                </button>
-                <button type="button" className="btn btn-primary shadow-lg mx-2 my-2 rounded-4" onClick={onHide}>
-                    anuluj
-                </button>
-                {successMessage && (
-                    <div className="alert alert-success mt-3 text-center rounded-4">{successMessage}</div>
-                )}
-                {errorMessage && (
-                    <div className="alert alert-danger mt-3 text-center">{errorMessage}</div>
-                )}
-            </Dialog>
+            </div>
+            <button type="button" className="btn btn-primary shadow-lg mx-2 my-2 rounded-4" onClick={onFormSubmit}>
+                zapisz
+            </button>
+            <button type="button" className="btn btn-primary shadow-lg mx-2 my-2 rounded-4" onClick={onHide}>
+                anuluj
+            </button>
+            {successMessage && (
+                <div className="alert alert-success mt-3 text-center rounded-4">{successMessage}</div>
+            )}
+            {errorMessage && (
+                <div className="alert alert-danger mt-3 text-center">{errorMessage}</div>
+            )}
+        </Dialog>
     );
 };
 
