@@ -1,7 +1,7 @@
 import {useState, useEffect} from "react";
-import useAxiosInstanceToken from "../hooks/useAxiosInstanceToken.jsx";
+import useAxiosInstanceToken from "../../hooks/useAxiosInstanceToken.jsx";
 
-const AdminTestFetch = () => {
+const TestFetchAdmin = () => {
     const [response, setResponses] = useState([]);
     const axiosInstanceToken = useAxiosInstanceToken();
 
@@ -45,4 +45,4 @@ const AdminTestFetch = () => {
         </article>
     );
 };
-export default AdminTestFetch;
+export default TestFetchAdmin;

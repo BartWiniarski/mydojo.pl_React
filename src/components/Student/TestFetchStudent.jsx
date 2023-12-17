@@ -1,7 +1,7 @@
 import {useState, useEffect} from "react";
-import useAxiosInstanceToken from "../hooks/useAxiosInstanceToken.jsx";
+import useAxiosInstanceToken from "../../hooks/useAxiosInstanceToken.jsx";
 
-const StudentTestFetch = () => {
+const TestFetchStudent = () => {
     const [response, setResponses] = useState([]);
     const axiosInstanceToken = useAxiosInstanceToken();
 
@@ -44,4 +44,4 @@ const StudentTestFetch = () => {
         </article>
     );
 };
-export default StudentTestFetch;
+export default TestFetchStudent;

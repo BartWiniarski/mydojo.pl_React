@@ -1,11 +1,10 @@
-import {useState, useEffect} from "react";
-import useAxiosInstanceToken from "../hooks/useAxiosInstanceToken.jsx";
-import {axiosInstance} from "../axios/axios.jsx";
+import {useEffect, useState} from "react";
+import useAxiosInstanceToken from "../../../hooks/useAxiosInstanceToken.jsx";
 import {DataTable} from 'primereact/datatable';
 import {Column} from 'primereact/column';
-import UserAddDialogAdmin from "../components/UserAddDialog_ADMIN.jsx";
-import UserEditDialogAdmin from "../components/UserEditDialog_ADMIN.jsx";
-import UserDeleteDialogAdmin from "../components/UserDeleteDialog_ADMIN.jsx";
+import UserAddDialogAdmin from "../../../components/Admin/UserCRUD/UserAddDialogAdmin.jsx";
+import UserEditDialogAdmin from "../../../components/Admin/UserCRUD/UserEditDialogAdmin.jsx";
+import UserDeleteDialogAdmin from "../../../components/Admin/UserCRUD/UserDeleteDialogAdmin.jsx";
 
 const AdminUserList = () => {
     const [users, setUsers] = useState([]);
@@ -176,8 +175,8 @@ const AdminUserList = () => {
 
     return (
         <>
-            <div id="column-left" className="col-12 col-md-2 mt-md-3 column-left">
-                <img src="/images/tree_with_spring_2.png" className="img-fluid shadow-img d-block mx-auto"
+            <div id="column-left" className="col-12 col-md-2 mt-md-3 column-left ">
+                <img src="/images/meditating_1.png" className="img-fluid shadow-img d-block mx-auto mt-5"
                      alt="Logo"
                      style={{maxHeight: '600px'}}/>
             </div>

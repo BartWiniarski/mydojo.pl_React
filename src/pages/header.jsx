@@ -1,6 +1,6 @@
 import {useNavigate, Link} from "react-router-dom";
 import useAuth from "../hooks/useAuth.jsx";
-import AdminUserList from "./adminUserList.jsx";
+import AdminUserList from "./role_access/Admin/AdminUserList.jsx";
 
 
 function Header() {
@@ -83,21 +83,22 @@ function Header() {
 
                                     {auth.roles && auth.roles.includes("ADMIN") && (
                                         <li className="nav-item">
-                                            <Link to="/dashboardAdmin" className="nav-link active">Panel administratora</Link>
+                                            <Link to="/adminDashboard" className="nav-link active">Panel administratora</Link>
                                             <Link to="/adminUserList" className="nav-link active">Lista użytkowników</Link>
+                                            <Link to="/adminTrainingGroups" className="nav-link active">Grupy treningowe</Link>
 
                                         </li>
                                     )}
 
                                     {auth.roles && auth.roles.includes("TRAINER") && (
                                         <li className="nav-item">
-                                            <Link to="/dashboardTrainer" className="nav-link active">Panel trenera</Link>
+                                            <Link to="/trainerDashboard" className="nav-link active">Panel trenera</Link>
                                         </li>
                                     )}
 
                                     {auth.roles && auth.roles.includes("STUDENT") && (
                                         <li className="nav-item">
-                                            <Link to="/dashboardStudent" className="nav-link active">Panel ucznia</Link>
+                                            <Link to="/studentDashboard" className="nav-link active">Panel ucznia</Link>
                                         </li>
                                     )}
 
