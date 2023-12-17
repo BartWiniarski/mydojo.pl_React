@@ -32,7 +32,8 @@ function AdminTrainingGroups() {
     const [formData, setFormData] = useState({
         name: "",
         description: "",
-        date: null,
+        day: "",
+        time: ""
     });
 
     useEffect(() => {
