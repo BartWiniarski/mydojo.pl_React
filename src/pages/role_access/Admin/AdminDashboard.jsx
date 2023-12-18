@@ -1,5 +1,7 @@
 import TestFetchAdmin from "../../../components/Admin/TestFetchAdmin.jsx"
+import myDojoStatusAdmin from "../../../components/Admin/myDojoStatusAdmin.jsx";
 import {Accordion, AccordionTab} from 'primereact/accordion';
+import MyDojoStatusAdmin from "../../../components/Admin/myDojoStatusAdmin.jsx";
 
 function AdminDashboard() {
 
@@ -23,11 +25,7 @@ function AdminDashboard() {
                                 </div>
                             }
                         >
-                            <p className="m-0">
-                            Ilość studentów:
-                                Ilość trenerów:
-                                Ilość grup treningowych:
-                            </p>
+                            <MyDojoStatusAdmin/>
                         </AccordionTab>
                         <AccordionTab
                             header={
