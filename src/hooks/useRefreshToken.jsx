@@ -16,7 +16,7 @@ const useRefreshToken = () => {
                 }
             });
             setAuth(prev => {
-                return {...prev, token: response.data.accessToken}
+                return {...prev, accessToken: response.data.accessToken}
             });
             return response.data.accessToken;
         } catch (error) {
