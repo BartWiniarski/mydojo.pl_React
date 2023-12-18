@@ -201,7 +201,8 @@ const AdminUserList = () => {
                         visible={addDialogVisible}
                         onHide={() => {
                             setAddDialogVisible(false);
-                            resetMessages();}}
+                            resetMessages();
+                        }}
                         user={formData}
                         onFormSubmit={handleNewUser}
                         onInputChange={handleInputChange}
@@ -212,7 +213,8 @@ const AdminUserList = () => {
                         visible={editDialogVisible}
                         onHide={() => {
                             setEditDialogVisible(false);
-                            resetMessages();}}
+                            resetMessages();
+                        }}
                         user={formData}
                         onFormSubmit={handleUpdateUser}
                         onInputChange={handleInputChange}
@@ -223,7 +225,8 @@ const AdminUserList = () => {
                         visible={deleteDialogVisible}
                         onHide={() => {
                             setDeleteDialogVisible(false);
-                            resetMessages();}}
+                            resetMessages();
+                        }}
                         user={selectedUser}
                         onDelete={handleDeleteUser}
                         successMessage={successMessage}
