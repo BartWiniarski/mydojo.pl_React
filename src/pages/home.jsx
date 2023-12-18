@@ -41,7 +41,7 @@ function Home() {
                     consectetur
                     libero id faucibus nisl tincidunt. Orci ac auctor augue mauris augue neque
                     gravida in.
-                    Tristique magna sit amet purus gravida. Nunc sed id semper risus. Convallis
+                    Tridstique magna sit amet purus gravida. Nunc sed id semper risus. Convallis
                     posuere
                     morbi leo urna. Morbi tincidunt augue interdum velit euismod in. Tempus urna et
                     pharetra
