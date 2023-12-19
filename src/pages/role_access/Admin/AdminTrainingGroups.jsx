@@ -49,7 +49,7 @@ function AdminTrainingGroups() {
         fetchTrainingGroups();
         fetchTrainers();
         fetchStudents();
-    }, [axiosInstanceToken]);
+    }, []);
 
     useEffect(() => {
         if (!selectedGroup) {
@@ -68,13 +68,17 @@ function AdminTrainingGroups() {
         setErrorMessage('');
     };
 
+    const resetFormData=()=>{
+        setFormData({name: "", description: "", schedule: ""});
+    };
+
     const handleInputChange = (data) => {
         setFormData(data);
     };
 
     const handleCloseDialog = () => {
         resetMessages();
-        setFormData({name: "", description: "", schedule: ""});
+        resetFormData();
     }
 
 // FETCHING TRAINING GROUPS
@@ -125,6 +129,7 @@ function AdminTrainingGroups() {
                 await axiosInstanceToken.post("/admin/trainingGroups", formData);
             setSuccessMessage('Nowa grupa treningowa dodana!');
             fetchTrainingGroups();
+            resetFormData();
         } catch (error) {
             if (!error?.response) {
                 setErrorMessage("Brak odpowiedzi serwera")
@@ -241,7 +246,7 @@ function AdminTrainingGroups() {
                     <ul>
                         {data.trainers.length > 0 ? (
                             data.trainers.map((trainerId) => (
-                                <li key={trainerId}> {getTrainerNameById(trainerId)} </li>
+                                <li key={Number(trainerId)}> {getTrainerNameById(trainerId)} </li>
                             ))
                         ) : (
                             <span> Brak trenerów</span>

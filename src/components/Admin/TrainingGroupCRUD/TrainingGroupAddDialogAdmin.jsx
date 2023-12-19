@@ -22,7 +22,7 @@ const TrainingGroupAddDialogAdmin = ({
         if (visible) {
             setSchedule({});
             setSelectedDay(null);
-            setSelectedHour(new Date());
+            setSelectedHour(null);
         }
     }, [visible]);
 
@@ -57,7 +57,6 @@ const TrainingGroupAddDialogAdmin = ({
         description: trainingGroup.description || '',
         schedule: schedule
     };
-
 
     return (
         <Dialog header="Dodawanie nowej grupy treningowej" visible={visible} style={{width: '50vw'}}
