@@ -26,6 +26,10 @@ function MyDojoStatusAdmin(){
                 <li id="noStudents">Ilość uczniów: {response.numberOfStudents}</li>
                 <li id="noTrainers">Ilość trenerów: {response.numberOfTrainers}</li>
                 <li id="noTrainingGroups">Ilość grup treningowych: {response.numberOfTrainingGroups}</li>
+                <li id="noOfEnabledUsers">
+                    <span className="badge bg-success">aktywni</span> : {response.numberOfEnabledUsers}</li>
+                <li id="noOfDisabledUsers">
+                    <span className="badge bg-danger">zablokowani</span> : {response.numberOfDisabledUsers}</li>
             </ul>
         </article>
     );
