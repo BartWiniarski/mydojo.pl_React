@@ -47,13 +47,11 @@ body {
 
 @media (max-width: 767px) {
     .column-left {
-        position: -ms-device-fixed;
-        height: 20vh;
-        overflow: hidden;
+        display: none;
     }
 
     .column-right {
-        height: 67vh;
+        height: 87vh;
         overflow-y: auto;
     }
 }
