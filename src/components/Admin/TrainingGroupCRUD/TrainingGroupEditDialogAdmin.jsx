@@ -1,24 +1,26 @@
-import React, { useState, useEffect } from 'react';
-import { Dialog } from 'primereact/dialog';
+import React, {useState, useEffect} from 'react';
+import {Dialog} from 'primereact/dialog';
 import DatePicker from 'react-datepicker';
 import DaysOfWeekSelect from "./DaysOfWeekSelect.jsx";
 
 
-const TrainingGroupEditDialogAdmin = ({ visible,
-                                 onHide,
-                                 trainingGroup,
-                                 onFormSubmit,
-                                 onInputChange,
-                                 successMessage,
-                                 errorMessage }) => {
+const TrainingGroupEditDialogAdmin = ({
+                                          visible,
+                                          onHide,
+                                          trainingGroup,
+                                          onFormSubmit,
+                                          onInputChange,
+                                          successMessage,
+                                          errorMessage
+                                      }) => {
 
     const [selectedDay, setSelectedDay] = useState(null);
-    const [selectedHour, setSelectedHour] = useState(new Date());
-    const [schedule, setSchedule] = useState(trainingGroup.schedule || {});
+    const [selectedHour, setSelectedHour] = useState(null);
+    const [schedule, setSchedule] = useState({});
 
     useEffect(() => {
         if (visible && trainingGroup.schedule) {
-            setSchedule(trainingGroup.schedule);
+            console.log(schedule);
 
             const entries = Object.entries(trainingGroup.schedule);
             if (entries.length > 0) {
@@ -33,10 +35,11 @@ const TrainingGroupEditDialogAdmin = ({ visible,
 
     const handleDayChange = (day) => {
         setSelectedDay(day);
-        const updatedSchedule = { ...schedule, [day]: schedule[day] || '' };
+        const updatedSchedule = { [day]: schedule[day] || ''};
         setSchedule(updatedSchedule);
-        onInputChange({ ...trainingGroup, schedule: updatedSchedule });
+        onInputChange({...trainingGroup, schedule: updatedSchedule});
     };
+
 
     const handleHourChange = (date) => {
         setSelectedHour(date);
@@ -44,9 +47,9 @@ const TrainingGroupEditDialogAdmin = ({ visible,
         const minutes = date.getMinutes().toString().padStart(2, '0');
         const formattedTime = `${hours}:${minutes}:00`;
         if (selectedDay) {
-            const updatedSchedule = { ...schedule, [selectedDay]: formattedTime };
+            const updatedSchedule = {...schedule, [selectedDay]: formattedTime};
             setSchedule(updatedSchedule);
-            onInputChange({ ...trainingGroup, schedule: updatedSchedule });
+            onInputChange({...trainingGroup, schedule: updatedSchedule});
         }
     };
 

@@ -35,7 +35,7 @@ function Login() {
             const roles = response?.data?.roles;
             const firstName = response?.data?.firstName;
 
-            setAuth({ firstName, roles, token: accessToken, refreshToken });
+            setAuth({ firstName, roles, accessToken, refreshToken });
             navigate(from, {replace: true});
 
         } catch (error) {

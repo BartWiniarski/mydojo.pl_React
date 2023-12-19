@@ -37,7 +37,7 @@ function Home() {
                 <hr/>
                 <p>
                     Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
-                    incididunt ut lffabore et dolore magna aliqua. Laoreet suspendisse interdum
+                    incididunt ut labore et dolore magna aliqua. Laoreet suspendisse interdum
                     consectetur
                     libero id faucibus nisl tincidunt. Orci ac auctor augue mauris augue neque
                     gravida in.

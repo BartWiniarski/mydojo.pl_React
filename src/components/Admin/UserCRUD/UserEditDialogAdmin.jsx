@@ -1,25 +1,33 @@
 import React from 'react';
-import { Dialog } from 'primereact/dialog';
+import {Dialog} from 'primereact/dialog';
 import Calendar from "../../Calendar.jsx";
 
-const UserEditDialogAdmin = ({ visible,
+const UserEditDialogAdmin = ({
+                                 visible,
                                  onHide,
                                  user,
                                  onFormSubmit,
                                  onInputChange,
                                  successMessage,
-                                 errorMessage }) => {
+                                 errorMessage
+                             }) => {
 
     const parsedDate = new Date(user.dob);
     const roleOptions = [
-        { id: 1, type: "ADMIN" },
-        { id: 2, type: "TRAINER" },
-        { id: 3, type: "STUDENT" }
+        {id: 1, type: "ADMIN"},
+        {id: 2, type: "TRAINER"},
+        {id: 3, type: "STUDENT"}
     ];
 
     const handleRoleChange = (event) => {
-        const selectedRoleTypes = Array.from(event.target.selectedOptions, option => option.value);
-        const selectedRoles = roleOptions.filter(role => selectedRoleTypes.includes(role.type));
+        const selectedRoleTypes = Array.from(
+            event.target.selectedOptions,
+            option => option.value);
+
+
+        const selectedRoles = roleOptions.filter(
+            role => selectedRoleTypes.includes(role.type));
+
         onInputChange({...user, roles: selectedRoles});
     };
 

@@ -1,11 +1,9 @@
 import {useNavigate, Link} from "react-router-dom";
 import useAuth from "../hooks/useAuth.jsx";
-import AdminUserList from "./role_access/Admin/AdminUserList.jsx";
-
 
 function Header() {
     const {auth, setAuth} = useAuth();
-    const isLoggedIn = auth.token;
+    const isLoggedIn = auth.accessToken;
     const navigate = useNavigate();
 
     const logout = async () => {

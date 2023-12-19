@@ -49,7 +49,7 @@ function AdminTrainingGroups() {
         fetchTrainingGroups();
         fetchTrainers();
         fetchStudents();
-    }, [axiosInstanceToken]);
+    }, []);
 
     useEffect(() => {
         if (!selectedGroup) {
@@ -68,13 +68,17 @@ function AdminTrainingGroups() {
         setErrorMessage('');
     };
 
+    const resetFormData=()=>{
+        setFormData({name: "", description: "", schedule: ""});
+    };
+
     const handleInputChange = (data) => {
         setFormData(data);
     };
 
     const handleCloseDialog = () => {
         resetMessages();
-        setFormData({name: "", description: "", schedule: ""});
+        resetFormData();
     }
 
 // FETCHING TRAINING GROUPS
@@ -84,7 +88,7 @@ function AdminTrainingGroups() {
                 await axiosInstanceToken.get("/admin/trainingGroups");
             setAvailableTrainingGroups(response.data);
         } catch (error) {
-            console.log(error);
+            console.error("Error fetching available training groups:", error);
         }
     }
 
@@ -94,7 +98,7 @@ function AdminTrainingGroups() {
             const response = await axiosInstanceToken.get("/admin/trainers");
             setAvailableTrainers(response.data);
         } catch (error) {
-            console.error("Error fetching availableTrainers:", error);
+            console.error("Error fetching available trainers:", error);
         }
     };
 
@@ -104,7 +108,7 @@ function AdminTrainingGroups() {
             const response = await axiosInstanceToken.get("/admin/students");
             setAvailableStudents(response.data);
         } catch (error) {
-            console.error("Error fetching users:", error);
+            console.error("Error fetching available users:", error);
         }
     };
 
@@ -125,6 +129,7 @@ function AdminTrainingGroups() {
                 await axiosInstanceToken.post("/admin/trainingGroups", formData);
             setSuccessMessage('Nowa grupa treningowa dodana!');
             fetchTrainingGroups();
+            resetFormData();
         } catch (error) {
             if (!error?.response) {
                 setErrorMessage("Brak odpowiedzi serwera")
@@ -147,10 +152,10 @@ function AdminTrainingGroups() {
             return;
         }
 
-
         try {
             const response =
-                await axiosInstanceToken.put(`/admin/trainingGroups/${selectedTrainingGroup.id}`, formData);
+                await axiosInstanceToken.put(`/admin/trainingGroups/${selectedTrainingGroup.id}`,
+                    formData);
             setSuccessMessage('Aktualizacja grupy treningowej zakończona sukcesem!');
             fetchTrainingGroups();
         } catch (error) {
@@ -196,7 +201,7 @@ function AdminTrainingGroups() {
 
         try {
             const response =
-                await axiosInstanceToken.delete(`/admin/trainingGroups/${selectedTrainingGroup.id}`, formData);
+                await axiosInstanceToken.delete(`/admin/trainingGroups/${selectedTrainingGroup.id}`);
             setSuccessMessage('Grupa treningowa usunięta');
             setSelectedGroup(null);
             fetchTrainingGroups();
@@ -241,7 +246,7 @@ function AdminTrainingGroups() {
                     <ul>
                         {data.trainers.length > 0 ? (
                             data.trainers.map((trainerId) => (
-                                <li key={trainerId}> {getTrainerNameById(trainerId)} </li>
+                                <li key={Number(trainerId)}> {getTrainerNameById(trainerId)} </li>
                             ))
                         ) : (
                             <span> Brak trenerów</span>
@@ -297,7 +302,8 @@ function AdminTrainingGroups() {
                             <hr/>
                             <DataTable value={availableTrainingGroups}
                                        expandedRows={expandedRows}
-                                       onRowToggle={(e) => setExpandedRows(e.data)}
+                                       onRowToggle={(e) =>
+                                           setExpandedRows(e.data)}
                                        rowExpansionTemplate={rowExpansion} dataKey="id"
                                        className="p-datatable-striped">
                                 <Column expander style={{width: '3em'}}/>

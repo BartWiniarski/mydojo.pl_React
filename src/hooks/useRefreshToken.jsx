@@ -3,7 +3,7 @@ import useAuth from "./useAuth.jsx";
 
 
 const useRefreshToken = () => {
-    const {setAuth, auth} = useAuth();
+    const {auth, setAuth} = useAuth();
 
     const REFRESH_URL = "/auth/refresh";
 
