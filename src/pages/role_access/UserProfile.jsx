@@ -72,10 +72,8 @@ function UserProfile() {
 
     return (
         <div className="card card-primary-body rounded-5 mx-auto"
-             style={{marginTop: "15vh", marginBottom: "15vh", width: "70%"}}>
+             style={{marginTop: "10vh", marginBottom: "50vh", width: "70%"}}>
             <div className="row flex-row justify-content-center">
-                {/*<div className="col-lg-6 bg-registration-image d-none d-lg-block">*/}
-                {/*</div>*/}
                 <div className="col-lg-6">
                     <div className="p-5">
                         <div className="text-center">

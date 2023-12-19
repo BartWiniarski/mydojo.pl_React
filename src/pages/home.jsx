@@ -33,206 +33,35 @@ function Home() {
             <div id="column-landing"
                  className={`col-12 ms-3 me-3 column-landing ${isTextShowing ? 'text-unhide' : 'text-hide'} ${!isLogoHidden ? 'd-none' : ''}`}
                  style={{width: '99%'}}>
-                <h1 className="text-center">LANDING PAGE</h1>
-                <hr/>
-                <p>
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
-                    incididunt ut labore et dolore magna aliqua. Laoreet suspendisse interdum
-                    consectetur
-                    libero id faucibus nisl tincidunt. Orci ac auctor augue mauris augue neque
-                    gravida in.
-                    Tridstique magna sit amet purus gravida. Nunc sed id semper risus. Convallis
-                    posuere
-                    morbi leo urna. Morbi tincidunt augue interdum velit euismod in. Tempus urna et
-                    pharetra
-                    pharetra. Lacus viverra vitae congue eu consequat. Sed odio morbi quis commodo
-                    odio.
-                    Lacus sed viverra tellus in hac habitasse platea dictumst vestibulum. Posuere
-                    sollicitudin aliquam ultrices sagittis orci a scelerisque purus. Elementum
-                    tempus
-                    egestas seeed sed risus pretium quam. Tincidunt nunc pulvinar sapien et ligula
-                    ullamcorperf.
-                </p>
-                <p>
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
-                    incididunt ut labore et dolore magna aliqua. Laoreet suspendisse interdum
-                    consectetur
-                    libero id faucibus nisl tincidunt. Orci ac auctor augue mauris augue neque
-                    gravida in.
-                    Tristique magna sit amet purus gravida. Nunc sed id semper risus. Convallis
-                    posuere
-                    morbi leo urna. Morbi tincidunt augue interdum velit euismod in. Tempus urna et
-                    pharetra
-                    pharetra. Lacus viverra vitae congue eu consequat. Sed odio morbi quis commodo
-                    odio.
-                    Lacus sed viverra tellus in hac habitasse platea dictumst vestibulum. Posuere
-                    sollicitudin aliquam ultrices sagittis orci a scelerisque purus. Elementum
-                    tempus
-                    egestas sed sed risus pretium quam. Tincidunt nunc pulvinar sapien et ligula
-                    ullamcorper.
-                </p>
-                <p>
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
-                    incididunt ut labore et dolore magna aliqua. Laoreet suspendisse interdum
-                    consectetur
-                    libero id faucibus nisl tincidunt. Orci ac auctor augue mauris augue neque
-                    gravida in.
-                    Tristique magna sit amet purus gravida. Nunc sed id semper risus. Convallis
-                    posuere
-                    morbi leo urna. Morbi tincidunt augue interdum velit euismod in. Tempus urna et
-                    pharetra
-                    pharetra. Lacus viverra vitae congue eu consequat. Sed odio morbi quis commodo
-                    odio.
-                    Lacus sed viverra tellus in hac habitasse platea dictumst vestibulum. Posuere
-                    sollicitudin aliquam ultrices sagittis orci a scelerisque purus. Elementum
-                    tempus
-                    egestas sed sed risus pretium quam. Tincidunt nunc pulvinar sapien et ligula
-                    ullamcorper.
-                </p>
-                <p>
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
-                    incididunt ut labore et dolore magna aliqua. Laoreet suspendisse interdum
-                    consectetur
-                    libero id faucibus nisl tincidunt. Orci ac auctor augue mauris augue neque
-                    gravida in.
-                    Tristique magna sit amet purus gravida. Nunc sed id semper risus. Convallis
-                    posuere
-                    morbi leo urna. Morbi tincidunt augue interdum velit euismod in. Tempus urna et
-                    pharetra
-                    pharetra. Lacus viverra vitae congue eu consequat. Sed odio morbi quis commodo
-                    odio.
-                    Lacus sed viverra tellus in hac habitasse platea dictumst vestibulum. Posuere
-                    sollicitudin aliquam ultrices sagittis orci a scelerisque purus. Elementum
-                    tempus
-                    egestas sed sed risus pretium quam. Tincidunt nunc pulvinar sapien et ligula
-                    ullamcorper.
-                </p>
-                <p>
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
-                    incididunt ut labore et dolore magna aliqua. Laoreet suspendisse interdum
-                    consectetur
-                    libero id faucibus nisl tincidunt. Orci ac auctor augue mauris augue neque
-                    gravida in.
-                    Tristique magna sit amet purus gravida. Nunc sed id semper risus. Convallis
-                    posuere
-                    morbi leo urna. Morbi tincidunt augue interdum velit euismod in. Tempus urna et
-                    pharetra
-                    pharetra. Lacus viverra vitae congue eu consequat. Sed odio morbi quis commodo
-                    odio.
-                    Lacus sed viverra tellus in hac habitasse platea dictumst vestibulum. Posuere
-                    sollicitudin aliquam ultrices sagittis orci a scelerisque purus. Elementum
-                    tempus
-                    egestas sed sed risus pretium quam. Tincidunt nunc pulvinar sapien et ligula
-                    ullamcorper.
-                </p>
-                <p>
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
-                    incididunt ut labore et dolore magna aliqua. Laoreet suspendisse interdum
-                    consectetur
-                    libero id faucibus nisl tincidunt. Orci ac auctor augue mauris augue neque
-                    gravida in.
-                    Tristique magna sit amet purus gravida. Nunc sed id semper risus. Convallis
-                    posuere
-                    morbi leo urna. Morbi tincidunt augue interdum velit euismod in. Tempus urna et
-                    pharetra
-                    pharetra. Lacus viverra vitae congue eu consequat. Sed odio morbi quis commodo
-                    odio.
-                    Lacus sed viverra tellus in hac habitasse platea dictumst vestibulum. Posuere
-                    sollicitudin aliquam ultrices sagittis orci a scelerisque purus. Elementum
-                    tempus
-                    egestas sed sed risus pretium quam. Tincidunt nunc pulvinar sapien et ligula
-                    ullamcorper.
-                </p>
-                <p>
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
-                    incididunt ut labore et dolore magna aliqua. Laoreet suspendisse interdum
-                    consectetur
-                    libero id faucibus nisl tincidunt. Orci ac auctor augue mauris augue neque
-                    gravida in.
-                    Tristique magna sit amet purus gravida. Nunc sed id semper risus. Convallis
-                    posuere
-                    morbi leo urna. Morbi tincidunt augue interdum velit euismod in. Tempus urna et
-                    pharetra
-                    pharetra. Lacus viverra vitae congue eu consequat. Sed odio morbi quis commodo
-                    odio.
-                    Lacus sed viverra tellus in hac habitasse platea dictumst vestibulum. Posuere
-                    sollicitudin aliquam ultrices sagittis orci a scelerisque purus. Elementum
-                    tempus
-                    egestas sed sed risus pretium quam. Tincidunt nunc pulvinar sapien et ligula
-                    ullamcorper.
-                </p>
-                <p>
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
-                    incididunt ut labore et dolore magna aliqua. Laoreet suspendisse interdum
-                    consectetur
-                    libero id faucibus nisl tincidunt. Orci ac auctor augue mauris augue neque
-                    gravida in.
-                    Tristique magna sit amet purus gravida. Nunc sed id semper risus. Convallis
-                    posuere
-                    morbi leo urna. Morbi tincidunt augue interdum velit euismod in. Tempus urna et
-                    pharetra
-                    pharetra. Lacus viverra vitae congue eu consequat. Sed odio morbi quis commodo
-                    odio.
-                    Lacus sed viverra tellus in hac habitasse platea dictumst vestibulum. Posuere
-                    sollicitudin aliquam ultrices sagittis orci a scelerisque purus. Elementum
-                    tempus
-                    egestas sed sed risus pretium quam. Tincidunt nunc pulvinar sapien et ligula
-                    ullamcorper.
-                </p>
-                <p>
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
-                    incididunt ut labore et dolore magna aliqua. Laoreet suspendisse interdum
-                    consectetur
-                    libero id faucibus nisl tincidunt. Orci ac auctor augue mauris augue neque
-                    gravida in.
-                    Tristique magna sit amet purus gravida. Nunc sed id semper risus. Convallis
-                    posuere
-                    morbi leo urna. Morbi tincidunt augue interdum velit euismod in. Tempus urna et
-                    pharetra
-                    pharetra. Lacus viverra vitae congue eu consequat. Sed odio morbi quis commodo
-                    odio.
-                    Lacus sed viverra tellus in hac habitasse platea dictumst vestibulum. Posuere
-                    sollicitudin aliquam ultrices sagittis orci a scelerisque purus. Elementum
-                    tempus
-                    egestas sed sed risus pretium quam. Tincidunt nunc pulvinar sapien et ligula
-                    ullamcorper.
-                </p>
-                <p>
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
-                    incididunt ut labore et dolore magna aliqua. Laoreet suspendisse interdum
-                    consectetur
-                    libero id faucibus nisl tincidunt. Orci ac auctor augue mauris augue neque
-                    gravida in.
-                    Tristique magna sit amet purus gravida. Nunc sed id semper risus. Convallis
-                    posuere
-                    morbi leo urna. Morbi tincidunt augue interdum velit euismod in. Tempus urna et
-                    pharetra
-                    pharetra. Lacus viverra vitae congue eu consequat. Sed odio morbi quis commodo
-                    odio.
-                    Lacus sed viverra tellus in hac habitasse platea dictumst vestibulum. Posuere
-                    sollicitudin aliquam ultrices sagittis orci a scelerisque purus. Elementum
-                    tempus
-                    egestas sed sed risus pretium quam. Tincidunt nunc pulvinar sapien et ligula
-                    ullamcorper.
-                </p>
-                <p>
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
-                    incididunt ut labore et dolore magna aliqua. Laoreet suspendisse interdum
-                    consectetur
-                    libero id faucibus nisl tincidunt. Orci ac auctor augue mauris augue neque
-                    gravida in.
-                    Tristique magna sit amet purus gravida. Nunc sed id semper risus. Convallis
-                    posuere
-                    morbi leo urna. Morbi tincidunt augue interdum velit euismod in. Tempus urna et
-                    pharetra
-                    pharetra. Lacus viverra vitae congue eu consequat. Sed odio morbi quis commodo
-                    odio.
-                    Lacus sed viverra tellus in hac habitasse platea dictumst vestibulum. Posuere
-                    sollicitudin aliquam ultrices sagittis orci a scelerisque purus. Elementum
-                    tempus
-                    egestas sed sed risus pretium quam. Tincidunt nunc pulvinar sapien et ligula
-                    ullamcorper.
-                </p>
+                <div>
+                    <div className="d-flex justify-content-center">
+                        <img src="/images/logo_symbol_3.png" className="shadow-img" alt="Logo"
+                             style={{height: '3.15rem', verticalAlign: 'middle'}}/>
+                        <h1 className="ms-2">myDojo.pl</h1>
+                    </div>
+                    <h4 className="text-center mt-3">Twoja cyfrowa szkoła sztuk walki</h4>
+                    <hr/>
+                </div>
+                <div className="mt-5 ">
+                    <h4>Poznaj funkcjonalność</h4>
+                    <ul className="mt-4">
+                        <li className="mb-3">
+                            Zaloguj się jako administrator:
+                            <br/>e-mail: admin@admin
+                            <br/>hasło: admin
+                        </li>
+                        <li className="mb-3">
+                            Zaloguj się jako trener:
+                            <br/>e-mail: trener@trener
+                            <br/>hasło: trener
+                        </li>
+                        <li className="mb-3">
+                            Zaloguj się jako uczeń:
+                            <br/>e-mail: uczen@uczen
+                            <br/>hasło: uczen
+                        </li>
+                    </ul>
+                </div>
             </div>
         </>
     );
