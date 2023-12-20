@@ -41,6 +41,7 @@ const AdminUserList = () => {
     useEffect(() => {
         if (selectedUser) {
             setFormData({
+                id: selectedUser.id,
                 firstName: selectedUser.firstName,
                 lastName: selectedUser.lastName,
                 dob: selectedUser.dob,
@@ -146,14 +147,10 @@ const AdminUserList = () => {
     };
 
 // CHANGE USER STATUS
-    const handleUserStatusChange = async () => {
-        console.log("CLICK POST 1")
-        console.log(selectedUser.id)
+    const handleUserStatusChange = async (selectedUser) => {
         try {
             const response =
                 await axiosInstanceToken.post(`/admin/users/status/${selectedUser.id}`);
-            console.log("CLICK POST 2");
-            console.log(selectedUser.id)
             fetchUsers();
         } catch (error) {
             if (!error?.response) {
@@ -165,7 +162,7 @@ const AdminUserList = () => {
     };
 
 // TABLE ROW EXPAND
-    const rowExpansionTemplate = (data) => {
+    const rowExpansion = (data) => {
         return (
             <div className="p-3 card">
                 <h5 className="fw-bold">{data.firstName} {data.lastName}</h5>
@@ -189,18 +186,14 @@ const AdminUserList = () => {
                     {data.enabled ?
                         <button type="submit" className="btn btn-danger shadow-lg mx-2 rounded-4"
                                 onClick={() => {
-                                    setSelectedUser(data);
-                                    console.log("CLICK ZABLOKUJ")
-                                    handleUserStatusChange()
+                                    handleUserStatusChange(data)
                                 }}>
                             zablokuj
                         </button>
                         :
                         <button type="submit" className="btn btn-success shadow-lg mx-2 rounded-4"
                                 onClick={() => {
-                                    setSelectedUser(data);
-                                    console.log("CLICK AKTYWUJ")
-                                    handleUserStatusChange()
+                                    handleUserStatusChange(data)
                                 }}>
                             aktywuj
                         </button>}
@@ -232,7 +225,7 @@ const AdminUserList = () => {
                 </button>
                 <div className="card">
                     <DataTable value={users} expandedRows={expandedRows} onRowToggle={(e) => setExpandedRows(e.data)}
-                               rowExpansionTemplate={rowExpansionTemplate} dataKey="id" className="p-datatable-striped">
+                               rowExpansionTemplate={rowExpansion} dataKey="id" className="p-datatable-striped">
                         <Column expander style={{width: '3em'}}/>
                         <Column field="firstName" header="Imię" sortable/>
                         <Column field="lastName" header="Nazwisko" sortable/>

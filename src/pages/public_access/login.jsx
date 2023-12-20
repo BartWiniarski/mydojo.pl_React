@@ -45,10 +45,15 @@ function Login() {
             });
             if (!error?.response) {
                 setErrorMessage("Brak odpowiedzi serwera.");
-            } else if (error.response?.status === 403) {
-                setErrorMessage('Brak autoryzacji - sprawdź poprawność e-mail i hasła.');
+            } else if (error.response?.status === 401) {
+                const errorCode = error.response?.data?.error;
+                if (errorCode === 'authentication-005') {
+                    setErrorMessage('Konto użytkownika zostało zablokowane - proszę skontaktować się z administratorem.');
+                } else {
+                    setErrorMessage('Błąd uwierzytelnienia - sprawdź poprawność e-mail i hasła.');
+                }
             } else {
-                setErrorMessage("Logowanie zakończone niepowodzeniem.");
+                setErrorMessage("Logowanie zakończone niepowodzeniem");
             }
         }
     };
