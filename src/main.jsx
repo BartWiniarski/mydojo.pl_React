@@ -11,6 +11,7 @@ if (process.env.NODE_ENV === 'production') {
     disableReactDevTools();
 }
 
+
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
     <React.StrictMode>
