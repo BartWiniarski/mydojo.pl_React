@@ -21,7 +21,8 @@ const AdminUserList = () => {
         lastName: "",
         dob: null,
         email: "",
-        roles: ""
+        roles: "",
+        enabled: ""
     });
 
     const resetMessages = () => {
@@ -40,11 +41,13 @@ const AdminUserList = () => {
     useEffect(() => {
         if (selectedUser) {
             setFormData({
+                id: selectedUser.id,
                 firstName: selectedUser.firstName,
                 lastName: selectedUser.lastName,
                 dob: selectedUser.dob,
                 email: selectedUser.email,
-                roles: selectedUser.roles
+                roles: selectedUser.roles,
+                enabled: selectedUser.enabled
             });
         }
     }, [selectedUser]);
@@ -71,7 +74,7 @@ const AdminUserList = () => {
             !formData.lastName.trim() ||
             !formData.dob ||
             !formData.email.trim() ||
-            !formData.roles ) {
+            !formData.roles) {
             setErrorMessage('Wszystkie pola są wymagane!');
             return;
         }
@@ -102,7 +105,7 @@ const AdminUserList = () => {
             !formData.lastName.trim() ||
             !formData.dob ||
             !formData.email.trim() ||
-            !formData.roles ) {
+            !formData.roles) {
             setErrorMessage('Wszystkie pola są wymagane!');
             return;
         }
@@ -143,8 +146,23 @@ const AdminUserList = () => {
         }
     };
 
+// CHANGE USER STATUS
+    const handleUserStatusChange = async (selectedUser) => {
+        try {
+            const response =
+                await axiosInstanceToken.post(`/admin/users/status/${selectedUser.id}`);
+            fetchUsers();
+        } catch (error) {
+            if (!error?.response) {
+                setErrorMessage("Brak odpowiedzi serwera")
+            } else {
+                setErrorMessage("Zmiana statusu użytkownika zakończona niepowodzeniem")
+            }
+        }
+    };
+
 // TABLE ROW EXPAND
-    const rowExpansionTemplate = (data) => {
+    const rowExpansion = (data) => {
         return (
             <div className="p-3 card">
                 <h5 className="fw-bold">{data.firstName} {data.lastName}</h5>
@@ -153,19 +171,37 @@ const AdminUserList = () => {
                 <p>Email: {data.email}</p>
                 <p>Data urodzenia: {data.dob}</p>
                 <p>Wiek: {data.age}</p>
+                <p>Status: {data.enabled ?
+                    <span className="badge bg-success">aktywny</span>
+                    : <span className="badge bg-danger">zablokowany</span>}
+                </p>
                 <div className="text-left">
                     <button type="submit" className="btn btn-primary shadow-lg mx-2 rounded-4"
                             onClick={() => {
-                        setSelectedUser(data);
-                        setEditDialogVisible(true);
-                    }}>
+                                setSelectedUser(data);
+                                setEditDialogVisible(true);
+                            }}>
                         edytuj
                     </button>
+                    {data.enabled ?
+                        <button type="submit" className="btn btn-danger shadow-lg mx-2 rounded-4"
+                                onClick={() => {
+                                    handleUserStatusChange(data)
+                                }}>
+                            zablokuj
+                        </button>
+                        :
+                        <button type="submit" className="btn btn-success shadow-lg mx-2 rounded-4"
+                                onClick={() => {
+                                    handleUserStatusChange(data)
+                                }}>
+                            aktywuj
+                        </button>}
                     <button type="submit" className="btn btn-primary shadow-lg mx-2 rounded-4"
                             onClick={() => {
-                        setSelectedUser(data);
-                        setDeleteDialogVisible(true);
-                    }}>
+                                setSelectedUser(data);
+                                setDeleteDialogVisible(true);
+                            }}>
                         usuń
                     </button>
                 </div>
@@ -189,13 +225,19 @@ const AdminUserList = () => {
                 </button>
                 <div className="card">
                     <DataTable value={users} expandedRows={expandedRows} onRowToggle={(e) => setExpandedRows(e.data)}
-                               rowExpansionTemplate={rowExpansionTemplate} dataKey="id" className="p-datatable-striped">
+                               rowExpansionTemplate={rowExpansion} dataKey="id" className="p-datatable-striped">
                         <Column expander style={{width: '3em'}}/>
                         <Column field="firstName" header="Imię" sortable/>
                         <Column field="lastName" header="Nazwisko" sortable/>
                         <Column field="roles" header="Role" sortable
                                 body={(rowData) => rowData.roles.map((role) => role.type).join(', ')}/>
-                        <Column field="status" header="Status" sortable/>
+                        <Column field="enabled" header="Status" sortable
+                                body={(rowData) => (
+                                    rowData.enabled
+                                        ? <span className="badge bg-success">aktywny</span>
+                                        : <span className="badge bg-danger">zablokowany</span>
+                                )}
+                        />
                     </DataTable>
                     <UserAddDialogAdmin
                         visible={addDialogVisible}

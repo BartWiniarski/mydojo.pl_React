@@ -12,7 +12,6 @@ const TestFetchAdmin = () => {
             try {
                 const response =
                     await axiosInstanceToken.get("/admin/test");
-
                  if (isMounted) {
                     setResponses(response.data);
                 }
