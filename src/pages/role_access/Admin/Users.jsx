@@ -6,6 +6,7 @@ import {Column} from "primereact/column";
 import UserAddDialog from "../../../components/Admin/UserCRUD/UserAddDialog.jsx";
 import UserDeleteDialog from "../../../components/Admin/UserCRUD/UserDeleteDialog.jsx";
 import postStatus from "../../../axios/users/postStatus.jsx";
+import UserEditDialog from "../../../components/Admin/UserCRUD/UserEditDialog.jsx";
 
 
 function Users() {
@@ -58,8 +59,8 @@ function Users() {
                 <div className="text-left">
                     <button type="submit" className="btn btn-primary shadow-lg mx-2 rounded-4"
                             onClick={() => {
-                                // setSelectedUser(data);
-                                // setEditDialogVisible(true);
+                                setSelectedUser(data);
+                                setEditDialogVisible(true);
                             }}>
                         edytuj
                     </button>
@@ -134,18 +135,14 @@ function Users() {
                         }}
                         onSuccess={refreshUsers}
                     />
-                    {/*<UserEditDialogAdmin*/}
-                    {/*    visible={editDialogVisible}*/}
-                    {/*    onHide={() => {*/}
-                    {/*        setEditDialogVisible(false);*/}
-                    {/*        resetMessages();*/}
-                    {/*    }}*/}
-                    {/*    user={formData}*/}
-                    {/*    onFormSubmit={handleUpdateUser}*/}
-                    {/*    onInputChange={handleInputChange}*/}
-                    {/*    successMessage={successMessage}*/}
-                    {/*    errorMessage={errorMessage}*/}
-                    {/*/>*/}
+                    <UserEditDialog
+                        visible={editDialogVisible}
+                        onHide={() => {
+                            setEditDialogVisible(false);
+                        }}
+                        user={selectedUser}
+                        onSuccess={refreshUsers}
+                    />
                     <UserDeleteDialog
                         visible={deleteDialogVisible}
                         onHide={() => {

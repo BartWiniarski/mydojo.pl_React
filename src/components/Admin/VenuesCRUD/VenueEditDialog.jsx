@@ -31,8 +31,16 @@ const VenueEditDialog = ({
     };
 
     const handleSaveClick = () => {
+
+        if (!venue.name.trim() ||
+            !venue.address.trim()) {
+            setErrorMessage('Wszystkie pola są wymagane!');
+            return;
+        }
+
         putVenue(axiosInstanceToken, venue, (message) => {
             setSuccessMessage(message);
+            setErrorMessage("");
             onSuccess();
         }, setErrorMessage);
     }

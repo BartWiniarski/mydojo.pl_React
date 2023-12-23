@@ -1,23 +1,17 @@
-import React, {useEffect, useState} from 'react';
-import {Dialog} from 'primereact/dialog';
-import Calendar from "../../Calendar.jsx";
+import React, {useEffect, useState} from "react";
 import useAxiosInstanceToken from "../../../hooks/useAxiosInstanceToken.jsx";
-import postUser from "../../../axios/users/postUser.jsx";
+import {Dialog} from "primereact/dialog";
+import Calendar from "../../Calendar.jsx";
+import putUser from "../../../axios/users/putUser.jsx";
 
+const UserEditDialog = ({
+                            visible,
+                            onHide,
+                            user: initialUser,
+                            onSuccess
+                        }) => {
 
-const UserAddDialog = ({
-                           visible,
-                           onHide,
-                           onSuccess
-                       }) => {
-
-    const [user, setUser] = useState({
-        firstName: "",
-        lastName: "",
-        dob: null,
-        email: "",
-        roles: []
-    });
+    const [user, setUser] = useState(initialUser);
     const [successMessage, setSuccessMessage] = useState("");
     const [errorMessage, setErrorMessage] = useState("");
     const axiosInstanceToken = useAxiosInstanceToken();
@@ -34,13 +28,7 @@ const UserAddDialog = ({
 
     useEffect(() => {
         if (visible) {
-            setUser({
-                firstName: "",
-                lastName: "",
-                dob: null,
-                email: "",
-                roles: []
-            });
+            setUser(initialUser);
             setSuccessMessage("");
             setErrorMessage("");
         }
@@ -64,7 +52,7 @@ const UserAddDialog = ({
             return;
         }
 
-        postUser(axiosInstanceToken, user, (message) => {
+        putUser(axiosInstanceToken, user, (message) => {
             setSuccessMessage(message);
             setErrorMessage("");
             onSuccess();
@@ -154,4 +142,5 @@ const UserAddDialog = ({
     );
 };
 
-export default UserAddDialog;
+
+export default UserEditDialog;
