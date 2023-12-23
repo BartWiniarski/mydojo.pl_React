@@ -12,6 +12,7 @@ import Forbidden from "./pages/public_access/forbidden.jsx";
 import UserProfile from "./pages/role_access/UserProfile.jsx";
 import AdminUserList from "./pages/role_access/Admin/AdminUserList.jsx";
 import AdminTrainingGroups from "./pages/role_access/Admin/AdminTrainingGroups.jsx";
+import AdminVenues from "./pages/role_access/Admin/AdminVenues.jsx";
 
 
 function App() {
@@ -31,6 +32,7 @@ function App() {
                     <Route path="adminDashboard" element={<AdminDashboard/>}/>
                     <Route path="adminUserList" element={<AdminUserList/>}/>
                     <Route path="adminTrainingGroups" element={<AdminTrainingGroups/>}/>
+                    <Route path="adminVenues" element={<AdminVenues/>}/>
                 </Route>
                 <Route element={<RequireAuth allowedRoles={["TRAINER"]}/>}>
                     <Route path="trainerDashboard" element={<TrainerDashboard/>}/>

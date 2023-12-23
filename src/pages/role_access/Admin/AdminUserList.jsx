@@ -269,7 +269,7 @@ const AdminUserList = () => {
                             setDeleteDialogVisible(false);
                             resetMessages();
                         }}
-                        user={selectedUser}
+                        venue={selectedUser}
                         onDelete={handleDeleteUser}
                         successMessage={successMessage}
                         errorMessage={errorMessage}
