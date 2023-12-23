@@ -3,7 +3,7 @@ import { Dialog } from 'primereact/dialog';
 
 const UserDeleteDialogAdmin = ({ visible,
                                    onHide,
-                                   user,
+                                   venue,
                                    onDelete,
                                    successMessage,
                                    errorMessage }) => {
@@ -11,7 +11,7 @@ const UserDeleteDialogAdmin = ({ visible,
         <Dialog header="Usuwanie użytkownika" visible={visible} style={{ width: '50vw' }} onHide={onHide}>
             <hr />
             <div className="p-2">
-                {user && <p>Czy na pewno usunąć użytkownika {user.firstName} {user.lastName}?</p>}
+                {venue && <p>Czy na pewno usunąć użytkownika {venue.firstName} {venue.lastName}?</p>}
             </div>
             <button type="button" className="btn btn-danger shadow-lg mx-2 rounded-4" onClick={onDelete}>
                 usuń

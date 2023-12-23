@@ -1,4 +1,4 @@
-:root{
+:root {
     --main-color: rgba(220, 114, 62);
     --main-color-darker: rgb(139, 72, 39);
 
@@ -31,6 +31,7 @@ body {
         margin-right: 20rem !important;
     }
 }
+
 /*RESPONSIVE MAIN CONTENT COLUMNS*/
 @media (min-width: 768px) {
     .column-left {
@@ -55,9 +56,23 @@ body {
         overflow-y: auto;
     }
 }
-.column-landing{
+
+.column-landing {
     height: 87vh;
     overflow-y: auto;
+}
+
+/*RESPONSIVE REACT DIALOGS*/
+@media (min-width: 768px) {
+    .responsive-dialog {
+        width: 50vw;
+    }
+}
+
+@media (max-width: 767px) {
+    .responsive-dialog {
+        width: 85vw;
+    }
 }
 
 /* SCROLLBAR DEFINITION */
@@ -92,6 +107,7 @@ body {
     background-size: contain;
     background-origin: content-box;
 }
+
 /*REGISTRATION PAGE IMG*/
 .bg-registration-image {
     background-image: url('../images/meditating_3.png');
@@ -155,16 +171,16 @@ body {
     }
 }
 
-.notify-badge{
+.notify-badge {
     position: absolute;
-    right:0px;
-    top:5px;
-    background:var(--main-color);
+    right: 0px;
+    top: 5px;
+    background: var(--main-color);
     text-align: center;
     border-radius: 50px 50px 50px 50px;
-    color:white;
-    padding:5px 10px;
-    font-size:0.6rem;
+    color: white;
+    padding: 5px 10px;
+    font-size: 0.6rem;
 }
 
 /* MAIN ROW STYLES */
@@ -193,26 +209,31 @@ body {
     filter: drop-shadow(5px 5px 10px rgba(0, 0, 0, 0.75));
 }
 
-/*TABLE ADDITIONAL STYLES */
-input[type=checkbox]{
-    accent-color: var(--main-color);
-}
-.bootstrap-table .fixed-table-container .table thead th .both {
-    background-image: url("/images/both.png");
-    background-position: 95% center;
-}
-.bootstrap-table .fixed-table-container .table thead th .desc {
-    background-image: url("/images/down.png")
-}
-.bootstrap-table .fixed-table-container .table thead th .asc {
-    background-image: url("/images/up.png")
-}
+/*!*TABLE ADDITIONAL STYLES *!*/
+/*input[type=checkbox] {*/
+/*    accent-color: var(--main-color);*/
+/*}*/
+
+/*.bootstrap-table .fixed-table-container .table thead th .both {*/
+/*    background-image: url("/images/both.png");*/
+/*    background-position: 95% center;*/
+/*}*/
+
+/*.bootstrap-table .fixed-table-container .table thead th .desc {*/
+/*    background-image: url("/images/down.png")*/
+/*}*/
+
+/*.bootstrap-table .fixed-table-container .table thead th .asc {*/
+/*    background-image: url("/images/up.png")*/
+/*}*/
+
 /*SELECTED ROW*/
 .selected {
     background: black;
 }
+
 .selected td:nth-child(2) {
-    color: white!important;
+    color: white !important;
 }
 
 /*CUSTOM LINKS*/

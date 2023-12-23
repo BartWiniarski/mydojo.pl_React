@@ -83,6 +83,7 @@ function Header() {
                                             <Link to="/adminDashboard" className="nav-link active">Panel administratora</Link>
                                             <Link to="/adminUserList" className="nav-link active">Lista użytkowników</Link>
                                             <Link to="/adminTrainingGroups" className="nav-link active">Grupy treningowe</Link>
+                                            <Link to="/adminVenues" className="nav-link active">Sale treningowe</Link>
 
                                         </li>
                                     )}
