@@ -4,7 +4,7 @@ import {DataTable} from 'primereact/datatable';
 import {Column} from 'primereact/column';
 import UserAddDialog from "../../../components/Admin/UserCRUD/UserAddDialog.jsx";
 import UserEditDialogAdmin from "../../../components/Admin/UserCRUD/UserEditDialogAdmin.jsx";
-import UserDeleteDialogAdmin from "../../../components/Admin/UserCRUD/UserDeleteDialogAdmin.jsx";
+import UserDeleteDialog from "../../../components/Admin/UserCRUD/UserDeleteDialog.jsx";
 
 const AdminUserList = () => {
     const [users, setUsers] = useState([]);
@@ -263,7 +263,7 @@ const AdminUserList = () => {
                         successMessage={successMessage}
                         errorMessage={errorMessage}
                     />
-                    <UserDeleteDialogAdmin
+                    <UserDeleteDialog
                         visible={deleteDialogVisible}
                         onHide={() => {
                             setDeleteDialogVisible(false);

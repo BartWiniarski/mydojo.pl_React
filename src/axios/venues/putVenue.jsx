@@ -1,6 +1,5 @@
 const putVenue = async (axiosInstanceToken, venue, onSuccess, onError) => {
-    console.log("PUT VENUE:")
-    console.log(venue.id)
+
     try {
         await axiosInstanceToken.put(`/admin/venues/${venue.id}`, venue);
         onSuccess('Lokalizacja treningowa zaktualizowana!');

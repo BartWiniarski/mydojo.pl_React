@@ -4,15 +4,15 @@ import getUsers from "../../../axios/users/getUsers.jsx";
 import {DataTable} from "primereact/datatable";
 import {Column} from "primereact/column";
 import UserAddDialog from "../../../components/Admin/UserCRUD/UserAddDialog.jsx";
-import UserEditDialogAdmin from "../../../components/Admin/UserCRUD/UserEditDialogAdmin.jsx";
-import UserDeleteDialogAdmin from "../../../components/Admin/UserCRUD/UserDeleteDialogAdmin.jsx";
+import UserDeleteDialog from "../../../components/Admin/UserCRUD/UserDeleteDialog.jsx";
+import postStatus from "../../../axios/users/postStatus.jsx";
 
 
 function Users() {
 
     const axiosInstanceToken = useAxiosInstanceToken();
     const [users, setUsers] = useState([]);
-    const [selectedUsers, setSelectedUsers] = useState([]);
+    const [selectedUser, setSelectedUser] = useState([]);
     const [usersRefresh, setUsersRefresh] = useState(true)
     const [expandedRows, setExpandedRows] = useState(null);
     const [addDialogVisible, setAddDialogVisible] = useState(false);
@@ -24,12 +24,19 @@ function Users() {
         setUsersRefresh(true);
     };
 
+    const handleUserStatusChange = (user) => {
+        postStatus(axiosInstanceToken, user, () => {
+            refreshUsers();
+        });
+    };
+
     useEffect(() => {
         if (usersRefresh) {
             getUsers(axiosInstanceToken, setUsers);
             setUsersRefresh(false);
         }
     }, [usersRefresh]);
+
 
     const rowExpansion = (data) => {
         return (
@@ -59,21 +66,21 @@ function Users() {
                     {data.enabled ?
                         <button type="submit" className="btn btn-danger shadow-lg mx-2 rounded-4"
                                 onClick={() => {
-                                    // handleUserStatusChange(data)
+                                    handleUserStatusChange(data);
                                 }}>
                             zablokuj
                         </button>
                         :
                         <button type="submit" className="btn btn-success shadow-lg mx-2 rounded-4"
                                 onClick={() => {
-                                    // handleUserStatusChange(data)
+                                    handleUserStatusChange(data);
                                 }}>
                             aktywuj
                         </button>}
                     <button type="submit" className="btn btn-primary shadow-lg mx-2 rounded-4"
                             onClick={() => {
-                                // setSelectedUser(data);
-                                // setDeleteDialogVisible(true);
+                                setSelectedUser(data);
+                                setDeleteDialogVisible(true);
                             }}>
                         usuń
                     </button>
@@ -139,17 +146,14 @@ function Users() {
                     {/*    successMessage={successMessage}*/}
                     {/*    errorMessage={errorMessage}*/}
                     {/*/>*/}
-                    {/*<UserDeleteDialogAdmin*/}
-                    {/*    visible={deleteDialogVisible}*/}
-                    {/*    onHide={() => {*/}
-                    {/*        setDeleteDialogVisible(false);*/}
-                    {/*        resetMessages();*/}
-                    {/*    }}*/}
-                    {/*    venue={selectedUser}*/}
-                    {/*    onDelete={handleDeleteUser}*/}
-                    {/*    successMessage={successMessage}*/}
-                    {/*    errorMessage={errorMessage}*/}
-                    {/*/>*/}
+                    <UserDeleteDialog
+                        visible={deleteDialogVisible}
+                        onHide={() => {
+                            setDeleteDialogVisible(false);
+                        }}
+                        user={selectedUser}
+                        onSuccess={refreshUsers}
+                    />
                 </div>
                 <hr/>
             </div>
