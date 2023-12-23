@@ -10,9 +10,9 @@ import TrainerDashboard from "./pages/role_access/Trainer/TrainerDashboard.jsx";
 import StudentDashboard from "./pages/role_access/Student/StudentDashboard.jsx";
 import Forbidden from "./pages/public_access/forbidden.jsx";
 import UserProfile from "./pages/role_access/UserProfile.jsx";
-import AdminUserList from "./pages/role_access/Admin/AdminUserList.jsx";
 import AdminTrainingGroups from "./pages/role_access/Admin/AdminTrainingGroups.jsx";
-import AdminVenues from "./pages/role_access/Admin/AdminVenues.jsx";
+import Venues from "./pages/role_access/Admin/Venues.jsx";
+import Users from "./pages/role_access/Admin/Users.jsx";
 
 
 function App() {
@@ -30,9 +30,9 @@ function App() {
                 {/*protected*/}
                 <Route element={<RequireAuth allowedRoles={["ADMIN"]}/>}>
                     <Route path="adminDashboard" element={<AdminDashboard/>}/>
-                    <Route path="adminUserList" element={<AdminUserList/>}/>
+                    <Route path="users" element={<Users/>}/>
                     <Route path="adminTrainingGroups" element={<AdminTrainingGroups/>}/>
-                    <Route path="adminVenues" element={<AdminVenues/>}/>
+                    <Route path="venues" element={<Venues/>}/>
                 </Route>
                 <Route element={<RequireAuth allowedRoles={["TRAINER"]}/>}>
                     <Route path="trainerDashboard" element={<TrainerDashboard/>}/>

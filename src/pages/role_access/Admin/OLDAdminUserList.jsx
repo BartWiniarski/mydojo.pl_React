@@ -2,7 +2,7 @@ import {useEffect, useState} from "react";
 import useAxiosInstanceToken from "../../../hooks/useAxiosInstanceToken.jsx";
 import {DataTable} from 'primereact/datatable';
 import {Column} from 'primereact/column';
-import UserAddDialogAdmin from "../../../components/Admin/UserCRUD/UserAddDialogAdmin.jsx";
+import UserAddDialog from "../../../components/Admin/UserCRUD/UserAddDialog.jsx";
 import UserEditDialogAdmin from "../../../components/Admin/UserCRUD/UserEditDialogAdmin.jsx";
 import UserDeleteDialogAdmin from "../../../components/Admin/UserCRUD/UserDeleteDialogAdmin.jsx";
 
@@ -239,7 +239,7 @@ const AdminUserList = () => {
                                 )}
                         />
                     </DataTable>
-                    <UserAddDialogAdmin
+                    <UserAddDialog
                         visible={addDialogVisible}
                         onHide={() => {
                             setAddDialogVisible(false);
