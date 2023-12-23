@@ -5,10 +5,10 @@ import postVenue from "../../../axios/venues/postVenue.jsx";
 
 
 const VenueAddDialog = ({
-                                 visible,
-                                 onHide,
-                                 onSuccess
-                             }) => {
+                            visible,
+                            onHide,
+                            onSuccess
+                        }) => {
 
     const [venue, setVenue] = useState({name: "", address: ""});
     const [successMessage, setSuccessMessage] = useState("");
@@ -29,8 +29,16 @@ const VenueAddDialog = ({
     };
 
     const handleSaveClick = () => {
+
+        if (!venue.name.trim() ||
+            !venue.address.trim()) {
+            setErrorMessage('Wszystkie pola są wymagane!');
+            return;
+        }
+
         postVenue(axiosInstanceToken, venue, (message) => {
             setSuccessMessage(message);
+            setErrorMessage("")
             onSuccess();
         }, setErrorMessage);
     }

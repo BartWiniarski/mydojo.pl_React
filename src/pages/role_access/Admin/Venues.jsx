@@ -7,7 +7,7 @@ import VenueEditDialog from "../../../components/Admin/VenuesCRUD/VenueEditDialo
 import getVenues from "../../../axios/venues/getVenues.jsx";
 import useAxiosInstanceToken from "../../../hooks/useAxiosInstanceToken.jsx";
 
-function AdminVenues() {
+function Venues() {
     const axiosInstanceToken = useAxiosInstanceToken();
     const [venues, setVenues] = useState([]);
     const [selectedVenue, setSelectedVenue] = useState([]);
@@ -73,7 +73,8 @@ function AdminVenues() {
                 <div className="card">
                     <DataTable value={venues}
                                expandedRows={expandedRows}
-                               onRowToggle={(e) => setExpandedRows(e.data)}
+                               onRowToggle={(e)=>
+                                   setExpandedRows(e.data)}
                                rowExpansionTemplate={rowExpansion}
                                dataKey="id"
                                className="p-datatable-striped">
@@ -110,4 +111,4 @@ function AdminVenues() {
     );
 }
 
-export default AdminVenues;
+export default Venues;

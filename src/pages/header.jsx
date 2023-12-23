@@ -81,9 +81,9 @@ function Header() {
                                     {auth.roles && auth.roles.includes("ADMIN") && (
                                         <li className="nav-item">
                                             <Link to="/adminDashboard" className="nav-link active">Panel administratora</Link>
-                                            <Link to="/adminUserList" className="nav-link active">Lista użytkowników</Link>
+                                            <Link to="/users" className="nav-link active">Lista użytkowników</Link>
                                             <Link to="/adminTrainingGroups" className="nav-link active">Grupy treningowe</Link>
-                                            <Link to="/adminVenues" className="nav-link active">Sale treningowe</Link>
+                                            <Link to="/venues" className="nav-link active">Sale treningowe</Link>
 
                                         </li>
                                     )}
