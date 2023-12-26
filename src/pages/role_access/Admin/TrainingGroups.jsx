@@ -4,9 +4,10 @@ import {DataTable} from "primereact/datatable";
 import {Column} from "primereact/column";
 import useAxiosInstanceToken from "../../../hooks/useAxiosInstanceToken.jsx";
 import getTrainingGroups from "../../../axios/training groups/getTrainingGroups.jsx";
-import getTrainiers from "../../../axios/trainers/getTrainiers.jsx";
+import getTrainers from "../../../axios/trainers/getTrainers.jsx";
 import getStudents from "../../../axios/students/getStudents.jsx";
 import getVenues from "../../../axios/venues/getVenues.jsx";
+import getSchedules from "../../../axios/schedules/getSchedules.jsx";
 
 function TrainingGroups() {
     const [trainingGroupRefresh, setTrainingGroupRefresh] = useState(true);
@@ -15,6 +16,7 @@ function TrainingGroups() {
     const [availableTrainers, setAvailableTrainers] = useState([]);
     const [availableStudents, setAvailableStudents] = useState([]);
     const [availableVenues, setAvailableVenues] = useState([]);
+    const [availableSchedules, setAvailableSchedules] = useState([]);
 
     const [selectedTrainingGroup, setSelectedTrainingGroup] = useState(null);
     const [selectedGroup, setSelectedGroup] = useState(null);
@@ -44,9 +46,10 @@ function TrainingGroups() {
         SUNDAY: 'Niedziela'
     };
     useEffect(() => {
-        getTrainiers(axiosInstanceToken, setAvailableTrainers);
+        getTrainers(axiosInstanceToken, setAvailableTrainers);
         getStudents(axiosInstanceToken, setAvailableStudents);
         getVenues(axiosInstanceToken, setAvailableVenues);
+        getSchedules(axiosInstanceToken, setAvailableSchedules);
     }, []);
 
     const refreshTrainingGroups = () => {
@@ -73,15 +76,50 @@ function TrainingGroups() {
             return "Brak danych o trenerze";
         };
 
+        const getStudentNameById = (studentId) => {
+            const student = availableStudents.find(
+                (student) => student.id === studentId);
+            if (student) {
+                return `${student.firstName} ${student.lastName}`;
+            }
+            return "Brak danych o uczniu";
+        };
+
+        const getVenueNameById = (venueId) => {
+            const venue = availableVenues.find(
+                (venue) => venue.id === venueId);
+            if (venue) {
+                return `${venue.name}`;
+            }
+            return "Brak danych o lokalizacji";
+        }
+
         return (
             <div className="p-3 card">
                 <h5 className="fw-bold">{data.name}</h5>
                 <hr/>
                 <p>Opis grupy: {data.description}</p>
-                <p>Lokalizacja: </p>
                 <p>Harmonogram zajęć:
                     <ul>
+                        {availableSchedules.filter(schedule => schedule.trainingGroupId === data.id)
+                            .map((schedule, index) => {
+
+                                const timeParts = schedule.time.split(':');
+                                const formattedTime = `${timeParts[0]}:${timeParts[1]}`;
+
+                                return (
+                                    <li key={index}>
+                                        {daysOfWeekMap[schedule.dayOfWeek] || schedule.dayOfWeek}, {' '}
+                                        {formattedTime}, {' '}
+                                        {getVenueNameById(schedule.venueId)}
+                                    </li>
+                                );
+                            })}
                     </ul>
+                </p>
+                <p>Liczba uczestników:
+                    {' '}{data.studentsId.length !== 0 ?
+                        data.studentsId.length : "Brak uczniów"}
                 </p>
                 <p>Trenerzy:
                     <ul>
@@ -94,9 +132,16 @@ function TrainingGroups() {
                         )}
                     </ul>
                 </p>
-                <p>Liczba uczestników:
-                    {data.studentsId.length !== 0 ?
-                        data.studentsId.length : "Brak uczestników"}
+                <p>Uczestnicy:
+                    <ul>
+                        {data.studentsId.length > 0 ? (
+                            data.studentsId.map((studentId) => (
+                                <li key={Number(studentId)}> {getStudentNameById(studentId)} </li>
+                            ))
+                        ) : (
+                            <span> Brak uczniów</span>
+                        )}
+                    </ul>
                 </p>
                 <div className="text-left">
                     <button type="submit" className="btn btn-primary shadow-lg mx-2 rounded-4"
