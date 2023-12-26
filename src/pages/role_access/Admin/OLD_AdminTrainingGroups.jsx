@@ -12,7 +12,7 @@ import TrainersMultiSelect from "../../../components/Admin/TrainingGroupCRUD/Tra
 import StudentsMultiSelect from "../../../components/Admin/TrainingGroupCRUD/StudentsMultiSelect.jsx";
 
 
-function AdminTrainingGroups() {
+function TrainingGroups() {
     const [availableTrainingGroups, setAvailableTrainingGroups] = useState([]);
     const [availableTrainers, setAvailableTrainers] = useState([]);
     const [availableStudents, setAvailableStudents] = useState([]);
@@ -393,4 +393,4 @@ function AdminTrainingGroups() {
     );
 }
 
-export default AdminTrainingGroups;
+export default TrainingGroups;
