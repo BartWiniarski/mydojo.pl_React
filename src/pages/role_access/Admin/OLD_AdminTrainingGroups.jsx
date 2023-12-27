@@ -3,13 +3,13 @@ import React, {useEffect, useState} from "react";
 import useAxiosInstanceToken from "../../../hooks/useAxiosInstanceToken.jsx";
 import {DataTable} from "primereact/datatable";
 import {Column} from "primereact/column";
-import TrainingGroupAddDialogAdmin from "../../../components/Admin/TrainingGroupCRUD/TrainingGroupAddDialogAdmin.jsx";
-import TrainingGroupEditDialogAdmin from "../../../components/Admin/TrainingGroupCRUD/TrainingGroupEditDialogAdmin.jsx";
+import TrainingGroupAddDialogAdmin from "../../../components/Admin/OLDTrainingGroupCRUD/TrainingGroupAddDialogAdmin.jsx";
+import TrainingGroupEditDialogAdmin from "../../../components/Admin/OLDTrainingGroupCRUD/TrainingGroupEditDialogAdmin.jsx";
 import TrainingGroupDeleteDialogAdmin
-    from "../../../components/Admin/TrainingGroupCRUD/TrainingGroupDeleteDialogAdmin.jsx";
-import TrainingGroupsSelect from "../../../components/Admin/TrainingGroupCRUD/TrainingGroupsSelect.jsx";
-import TrainersMultiSelect from "../../../components/Admin/TrainingGroupCRUD/TrainersMultiSelect.jsx";
-import StudentsMultiSelect from "../../../components/Admin/TrainingGroupCRUD/StudentsMultiSelect.jsx";
+    from "../../../components/Admin/OLDTrainingGroupCRUD/TrainingGroupDeleteDialogAdmin.jsx";
+import TrainingGroupsSelect from "../../../components/Admin/OLDTrainingGroupCRUD/TrainingGroupsSelect.jsx";
+import TrainersMultiSelect from "../../../components/Admin/OLDTrainingGroupCRUD/TrainersMultiSelect.jsx";
+import StudentsMultiSelect from "../../../components/Admin/OLDTrainingGroupCRUD/StudentsMultiSelect.jsx";
 
 
 function TrainingGroups() {

@@ -8,6 +8,7 @@ import getTrainers from "../../../axios/trainers/getTrainers.jsx";
 import getStudents from "../../../axios/students/getStudents.jsx";
 import getVenues from "../../../axios/venues/getVenues.jsx";
 import getSchedules from "../../../axios/schedules/getSchedules.jsx";
+import TrainingGroupAddDialog from "../../../components/Admin/TrainingGroupCRUD/TrainingGroupAddDialog.jsx";
 
 function TrainingGroups() {
     const [trainingGroupRefresh, setTrainingGroupRefresh] = useState(true);
@@ -227,6 +228,13 @@ function TrainingGroups() {
                         <hr/>
                     </div>
                 </div>
+                <TrainingGroupAddDialog
+                    visible={addDialogVisible}
+                    onHide={() => {
+                        setAddDialogVisible(false);
+                    }}
+                    onSuccess={refreshTrainingGroups}
+                />
             </div>
         </>
     );
