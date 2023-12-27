@@ -19,8 +19,8 @@ import ScheduleAddDialog from "../../../components/Admin/ScheduleCRUD/ScheduleAd
 
 function TrainingGroups() {
     const [trainingGroupRefresh, setTrainingGroupRefresh] = useState(true);
+    const [schedulesRefresh, setSchedulesRefresh] = useState(true);
     const [availableTrainingGroups, setAvailableTrainingGroups] = useState([]);
-
     const [availableTrainers, setAvailableTrainers] = useState([]);
     const [availableStudents, setAvailableStudents] = useState([]);
     const [availableVenues, setAvailableVenues] = useState([]);
@@ -102,12 +102,28 @@ function TrainingGroups() {
         setTrainingGroupRefresh(true);
     };
 
+    const refreshSchedules = () => {
+        setSchedulesRefresh(true);
+    }
+
+    const refreshAll = () => {
+        refreshTrainingGroups();
+        refreshSchedules();
+    };
+
     useEffect(() => {
         if (trainingGroupRefresh) {
             getTrainingGroups(axiosInstanceToken, setAvailableTrainingGroups);
             setTrainingGroupRefresh(false);
         }
     }, [trainingGroupRefresh]);
+
+    useEffect(() => {
+        if (schedulesRefresh) {
+            getSchedules(axiosInstanceToken, setAvailableSchedules);
+            setSchedulesRefresh(false);
+        }
+    }, [schedulesRefresh]);
 
     useEffect(() => {
         if (!selectedGroup) {
@@ -306,7 +322,9 @@ function TrainingGroups() {
                             {selectedGroupForSchedule && (
                                 <button type="button"
                                         className="btn btn-primary shadow-lg my-3 rounded-4"
-                                        onClick={() => setAddScheduleDialogVisible(true)}>
+                                        onClick={() =>
+                                            setAddScheduleDialogVisible(true)
+                                        }>
                                     dodaj nową jednostkę treningową
                                 </button>
                             )}
@@ -396,10 +414,11 @@ function TrainingGroups() {
                 <ScheduleAddDialog
                     visible={addScheduleDialogVisible}
                     availableVenues={availableVenues}
+                    trainingGroupId={selectedGroupForSchedule}
                     onHide={() => {
                         setAddScheduleDialogVisible(false);
                     }}
-                    onSuccess={refreshTrainingGroups}
+                    onSuccess={refreshAll}
                 />
             </div>
         </>

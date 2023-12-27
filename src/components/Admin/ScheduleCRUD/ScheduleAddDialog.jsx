@@ -10,12 +10,13 @@ const ScheduleAddDialog = ({
                                visible,
                                onHide,
                                availableVenues,
-                               onSuccess
+                               onSuccess,
+                               trainingGroupId
                            }) => {
 
-    const [schedule, setSchedule] = useState({});
     const [selectedDay, setSelectedDay] = useState(null);
     const [selectedHour, setSelectedHour] = useState(new Date());
+    const [formattedHour, setFormattedHour] = useState(null);
     const [selectedVenue, setSelectedVenue] = useState(null);
     const [successMessage, setSuccessMessage] = useState("");
     const [errorMessage, setErrorMessage] = useState("");
@@ -23,52 +24,44 @@ const ScheduleAddDialog = ({
 
     useEffect(() => {
         if (visible) {
-            setSchedule({});
             setSelectedDay(null);
             setSelectedHour(null);
+            setFormattedHour(null);
             setSelectedVenue(null);
             setSuccessMessage("");
             setErrorMessage("");
         }
     }, [visible]);
 
-    const handleInputChange = (updatedValue) => {
-        setSchedule(prevSchedule => ({...prevSchedule, ...updatedValue}));
-    };
-
-    useEffect(() => {
-        if (selectedDay && schedule[selectedDay]) {
-            const [hours, minutes] = schedule[selectedDay].split(':');
-            setSelectedHour(new Date(new Date().setHours(parseInt(hours), parseInt(minutes), 0)));
-        }
-    }, [selectedDay, schedule]);
-
     const handleDayChange = (day) => {
         setSelectedDay(day);
-        const updatedValue = {[day]: schedule[day] || ''};
-        handleInputChange(updatedValue);
     };
 
     const handleHourChange = (date) => {
         setSelectedHour(date);
         const hours = date.getHours().toString().padStart(2, '0');
         const minutes = date.getMinutes().toString().padStart(2, '0');
-        const formattedTime = `${hours}:${minutes}:00`;
-        if (selectedDay) {
-            const updatedValue = {[selectedDay]: formattedTime};
-            handleInputChange(updatedValue);
-        }
+        setFormattedHour(`${hours}:${minutes}:00`);
     };
 
     const handleSaveClick = () => {
 
-        // if (!schedule.dayOfWeek.trim() ||
-        //     !schedule.time.trim()) {
+        // if (!schedule.dayOfWeek ||
+        //     !schedule.time ||
+        //     !schedule.venueId
+        // ) {
         //     setErrorMessage('Wszystkie pola są wymagane!');
         //     return;
         // }
 
-        postSchedule(axiosInstanceToken, schedule, (message) => {
+        const newSchedule = {
+            dayOfWeek: selectedDay,
+            time: formattedHour,
+            venueId: selectedVenue,
+            trainingGroupId: trainingGroupId
+        };
+
+        postSchedule(axiosInstanceToken, newSchedule, (message) => {
             setSuccessMessage(message);
             setErrorMessage("")
             onSuccess();
