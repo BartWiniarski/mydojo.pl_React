@@ -1,30 +1,40 @@
 import React, {useEffect, useState} from 'react';
 import {Dialog} from 'primereact/dialog';
-import DatePicker from 'react-datepicker';
 import DaysOfWeekSelect from "../ScheduleSelects/DaysOfWeekSelect.jsx";
-import "/public/css/style.css";
+import VenueSelect from "../ScheduleSelects/VenueSelect.jsx";
+import DatePicker from "react-datepicker";
+import useAxiosInstanceToken from "../../../hooks/useAxiosInstanceToken.jsx";
+import postSchedule from "../../../axios/schedules/postSchedule.jsx";
 
-const TrainingGroupAddDialogAdmin = ({
-                                         visible,
-                                         onHide,
-                                         trainingGroup,
-                                         onFormSubmit,
-                                         onInputChange,
-                                         successMessage,
-                                         errorMessage
-                                     }) => {
+const ScheduleAddDialog = ({
+                               visible,
+                               onHide,
+                               availableVenues,
+                               onSuccess
+                           }) => {
 
+    const [schedule, setSchedule] = useState({});
     const [selectedDay, setSelectedDay] = useState(null);
     const [selectedHour, setSelectedHour] = useState(new Date());
-    const [schedule, setSchedule] = useState(trainingGroup.schedule || {});
+    const [selectedVenue, setSelectedVenue] = useState(null);
+    const [successMessage, setSuccessMessage] = useState("");
+    const [errorMessage, setErrorMessage] = useState("");
+    const axiosInstanceToken = useAxiosInstanceToken();
 
     useEffect(() => {
         if (visible) {
             setSchedule({});
             setSelectedDay(null);
             setSelectedHour(null);
+            setSelectedVenue(null);
+            setSuccessMessage("");
+            setErrorMessage("");
         }
     }, [visible]);
+
+    const handleInputChange = (updatedValue) => {
+        setSchedule(prevSchedule => ({...prevSchedule, ...updatedValue}));
+    };
 
     useEffect(() => {
         if (selectedDay && schedule[selectedDay]) {
@@ -35,9 +45,8 @@ const TrainingGroupAddDialogAdmin = ({
 
     const handleDayChange = (day) => {
         setSelectedDay(day);
-        const updatedSchedule = { ...schedule, [day]: schedule[day] || '' };
-        setSchedule(updatedSchedule);
-        onInputChange({ ...trainingGroup, schedule: updatedSchedule });
+        const updatedValue = {[day]: schedule[day] || ''};
+        handleInputChange(updatedValue);
     };
 
     const handleHourChange = (date) => {
@@ -46,34 +55,32 @@ const TrainingGroupAddDialogAdmin = ({
         const minutes = date.getMinutes().toString().padStart(2, '0');
         const formattedTime = `${hours}:${minutes}:00`;
         if (selectedDay) {
-            const updatedSchedule = { ...schedule, [selectedDay]: formattedTime };
-            setSchedule(updatedSchedule);
-            onInputChange({ ...trainingGroup, schedule: updatedSchedule });
+            const updatedValue = {[selectedDay]: formattedTime};
+            handleInputChange(updatedValue);
         }
     };
 
-    trainingGroup = {
-        name: trainingGroup.name || '',
-        description: trainingGroup.description || '',
-        schedule: schedule
-    };
+    const handleSaveClick = () => {
+
+        // if (!schedule.dayOfWeek.trim() ||
+        //     !schedule.time.trim()) {
+        //     setErrorMessage('Wszystkie pola są wymagane!');
+        //     return;
+        // }
+
+        postSchedule(axiosInstanceToken, schedule, (message) => {
+            setSuccessMessage(message);
+            setErrorMessage("")
+            onSuccess();
+        }, setErrorMessage);
+    }
 
     return (
-        <Dialog header="Dodawanie nowej grupy treningowej" visible={visible} style={{width: '50vw'}}
+        <Dialog header="Dodawanie nowej jednostki treningowej"
+                visible={visible}
+                className="responsive-dialog"
                 onHide={onHide}>
             <hr/>
-            <div className="p-2">
-                <input type="text" className="form-control"
-                       id="InputName" placeholder="Podaj nazwę grupy..."
-                       value={trainingGroup.name} onChange={(e) =>
-                    onInputChange({...trainingGroup, name: e.target.value})}/>
-            </div>
-            <div className="p-2">
-                <input type="text" className="form-control"
-                       id="InputDescription" placeholder="Podaj opis grupy..."
-                       value={trainingGroup.description} onChange={(e) =>
-                    onInputChange({...trainingGroup, description: e.target.value})}/>
-            </div>
             <div className="p-2">
                 <DaysOfWeekSelect
                     selectedDay={selectedDay}
@@ -95,10 +102,19 @@ const TrainingGroupAddDialogAdmin = ({
                     />
                 </div>
             </div>
-            <button type="button" className="btn btn-primary shadow-lg mx-2 my-2 rounded-4" onClick={onFormSubmit}>
+            <div className="p-2">
+                <VenueSelect
+                    availableVenues={availableVenues}
+                    selectedVenue={selectedVenue}
+                    setSelectedVenue={setSelectedVenue}
+                />
+            </div>
+            <button type="button" className="btn btn-primary shadow-lg mx-2 my-2 rounded-4"
+                    onClick={handleSaveClick}>
                 zapisz
             </button>
-            <button type="button" className="btn btn-primary shadow-lg mx-2 my-2 rounded-4" onClick={onHide}>
+            <button type="button" className="btn btn-primary shadow-lg mx-2 my-2 rounded-4"
+                    onClick={onHide}>
                 anuluj
             </button>
             {successMessage && (
@@ -111,4 +127,4 @@ const TrainingGroupAddDialogAdmin = ({
     );
 };
 
-export default TrainingGroupAddDialogAdmin;
+export default ScheduleAddDialog;

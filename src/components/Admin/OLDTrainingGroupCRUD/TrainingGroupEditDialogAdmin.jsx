@@ -1,7 +1,7 @@
 import React, {useState, useEffect} from 'react';
 import {Dialog} from 'primereact/dialog';
 import DatePicker from 'react-datepicker';
-import DaysOfWeekSelect from "./DaysOfWeekSelect.jsx";
+import DaysOfWeekSelect from "../ScheduleSelects/DaysOfWeekSelect.jsx";
 
 
 const TrainingGroupEditDialogAdmin = ({

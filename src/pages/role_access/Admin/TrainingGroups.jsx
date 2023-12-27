@@ -15,7 +15,7 @@ import TrainingGroupDeleteDialog from "../../../components/Admin/TrainingGroupCR
 import TrainingGroupsSelect from "../../../components/Admin/TrainingGroupSelects/TrainingGroupsSelect.jsx";
 import TrainersMultiSelect from "../../../components/Admin/TrainingGroupSelects/TrainersMultiSelect.jsx";
 import StudentsMultiSelect from "../../../components/Admin/TrainingGroupSelects/StudentsMultiSelect.jsx";
-
+import ScheduleAddDialog from "../../../components/Admin/ScheduleCRUD/ScheduleAddDialog.jsx";
 
 function TrainingGroups() {
     const [trainingGroupRefresh, setTrainingGroupRefresh] = useState(true);
@@ -34,9 +34,10 @@ function TrainingGroups() {
     const [selectedStudents, setSelectedStudents] = useState(null)
 
     const [expandedRows, setExpandedRows] = useState(null);
-    const [addDialogVisible, setAddDialogVisible] = useState(false);
-    const [editDialogVisible, setEditDialogVisible] = useState(false);
-    const [deleteDialogVisible, setDeleteDialogVisible] = useState(false);
+    const [addTrainingGroupDialogVisible, setAddTrainingGroupDialogVisible] = useState(false);
+    const [editTrainingGroupDialogVisible, setEditTrainingGroupDialogVisible] = useState(false);
+    const [deleteTrainingGroupDialogVisible, setDeleteTrainingGroupDialogVisible] = useState(false);
+    const [addScheduleDialogVisible, setAddScheduleDialogVisible] = useState(false);
     const [successMessage, setSuccessMessage] = useState('');
     const [errorMessage, setErrorMessage] = useState('');
     const axiosInstanceToken = useAxiosInstanceToken();
@@ -208,7 +209,7 @@ function TrainingGroups() {
                             className="btn btn-primary shadow-lg mx-2 rounded-4"
                             onClick={() => {
                                 setSelectedTrainingGroup(data);
-                                setEditDialogVisible(true);
+                                setEditTrainingGroupDialogVisible(true);
                             }}>
                         edytuj
                     </button>
@@ -216,7 +217,7 @@ function TrainingGroups() {
                             className="btn btn-danger shadow-lg mx-2 rounded-4"
                             onClick={() => {
                                 setSelectedTrainingGroup(data);
-                                setDeleteDialogVisible(true);
+                                setDeleteTrainingGroupDialogVisible(true);
                             }}>
                         usuń
                     </button>
@@ -239,7 +240,7 @@ function TrainingGroups() {
                 <hr/>
                 <button type="button"
                         className="btn btn-primary shadow-lg my-3 rounded-4"
-                        onClick={() => setAddDialogVisible(true)}>
+                        onClick={() => setAddTrainingGroupDialogVisible(true)}>
                     dodaj nową grupę
                 </button>
                 <div className="card">
@@ -305,7 +306,7 @@ function TrainingGroups() {
                             {selectedGroupForSchedule && (
                                 <button type="button"
                                         className="btn btn-primary shadow-lg my-3 rounded-4"
-                                        onClick={() => setAddDialogVisible(true)}>
+                                        onClick={() => setAddScheduleDialogVisible(true)}>
                                     dodaj nową jednostkę treningową
                                 </button>
                             )}
@@ -370,26 +371,34 @@ function TrainingGroups() {
                     </div>
                 </div>
                 <TrainingGroupAddDialog
-                    visible={addDialogVisible}
+                    visible={addTrainingGroupDialogVisible}
                     onHide={() => {
-                        setAddDialogVisible(false);
+                        setAddTrainingGroupDialogVisible(false);
                     }}
                     onSuccess={refreshTrainingGroups}
                 />
                 <TrainingGroupEditDialog
-                    visible={editDialogVisible}
+                    visible={editTrainingGroupDialogVisible}
                     onHide={() => {
-                        setEditDialogVisible(false);
+                        setEditTrainingGroupDialogVisible(false);
                     }}
                     trainingGroup={selectedTrainingGroup}
                     onSuccess={refreshTrainingGroups}
                 />
                 <TrainingGroupDeleteDialog
-                    visible={deleteDialogVisible}
+                    visible={deleteTrainingGroupDialogVisible}
                     onHide={() => {
-                        setDeleteDialogVisible(false);
+                        setDeleteTrainingGroupDialogVisible(false);
                     }}
                     trainingGroup={selectedTrainingGroup}
+                    onSuccess={refreshTrainingGroups}
+                />
+                <ScheduleAddDialog
+                    visible={addScheduleDialogVisible}
+                    availableVenues={availableVenues}
+                    onHide={() => {
+                        setAddScheduleDialogVisible(false);
+                    }}
                     onSuccess={refreshTrainingGroups}
                 />
             </div>
