@@ -1,10 +1,14 @@
 import React, { useState, useEffect } from "react";
 import { MultiSelect } from 'primereact/multiselect';
-import {axiosInstanceToken} from "../../../axios/axios.jsx";
-
 
 const StudentsMultiSelect = ({availableStudents, selectedStudents, setSelectedStudents}) => {
     const [groupedStudents, setGroupedStudents] = useState([]);
+
+    // useEffect(() => {
+    //     const usersGroupedByAge = groupUsersByAge(availableStudents);
+    //     setGroupedStudents(usersGroupedByAge);
+    //     console.log("Grouped Students: ", usersGroupedByAge);
+    // }, [availableStudents]);
 
     useEffect(() => {
         const usersGroupedByAge = groupUsersByAge(availableStudents);
@@ -23,7 +27,7 @@ const StudentsMultiSelect = ({availableStudents, selectedStudents, setSelectedSt
 
         users.forEach(user => {
             const age = user.age;
-            let groupKey = '';
+            let groupKey = "";
 
             if (age <= 7) groupKey = '0-7';
             else if (age <= 10) groupKey = '8-10';
@@ -32,7 +36,9 @@ const StudentsMultiSelect = ({availableStudents, selectedStudents, setSelectedSt
             else if (age <= 18) groupKey = '17-18';
             else groupKey = '18+';
 
-            ageGroups[groupKey].push({ label: `${user.firstName} ${user.lastName}`, id: user.id });
+            ageGroups[groupKey].push({
+                label: `${user.firstName} ${user.lastName}`,
+                id: user.id });
         });
 
         return Object.entries(ageGroups).map(([label, items]) => ({

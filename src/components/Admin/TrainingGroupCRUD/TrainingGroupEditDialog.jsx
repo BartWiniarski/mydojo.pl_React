@@ -1,26 +1,25 @@
 import React, {useEffect, useState} from 'react';
 import {Dialog} from 'primereact/dialog';
 import useAxiosInstanceToken from "../../../hooks/useAxiosInstanceToken.jsx";
-import putVenue from "../../../axios/venues/putVenue.jsx";
+import putTrainingGroup from "../../../axios/training groups/putTrainingGroup.jsx";
+import "/public/css/style.css";
 
+const TrainingGroupEditDialog = ({
+                                    visible,
+                                    onHide,
+                                    trainingGroup: initialTrainingGroup,
+                                    onSuccess
+                                }) => {
 
-const VenueEditDialog = ({
-                             visible,
-                             onHide,
-                             venue: initialVenue,
-                             onSuccess
-                         }) => {
-
-    const [venue, setVenue] = useState(
-        initialVenue || {name: '', address: ''});
+    const [trainingGroup, setTrainingGroup] = useState(
+        initialTrainingGroup || { name: '', description: '' });
     const [successMessage, setSuccessMessage] = useState("");
     const [errorMessage, setErrorMessage] = useState("");
     const axiosInstanceToken = useAxiosInstanceToken();
 
-
     useEffect(() => {
         if (visible) {
-            setVenue(initialVenue);
+            setTrainingGroup(initialTrainingGroup);
             setSuccessMessage("");
             setErrorMessage("");
         }
@@ -28,26 +27,28 @@ const VenueEditDialog = ({
 
     const handleInputChange = (e) => {
         const {name, value} = e.target;
-        setVenue(prevVenue => ({...prevVenue, [name]: value}));
+        setTrainingGroup(prevTrainingGroup =>
+            ({...prevTrainingGroup, [name]: value}));
     };
 
     const handleSaveClick = () => {
 
-        if (!venue.name.trim() ||
-            !venue.address.trim()) {
+        if (!trainingGroup.name.trim() ||
+            !trainingGroup.description.trim()) {
             setErrorMessage('Wszystkie pola są wymagane!');
             return;
         }
 
-        putVenue(axiosInstanceToken, venue, (message) => {
+        putTrainingGroup(axiosInstanceToken, trainingGroup, (message) => {
             setSuccessMessage(message);
-            setErrorMessage("");
+            setErrorMessage("")
             onSuccess();
         }, setErrorMessage);
     }
 
+
     return (
-        <Dialog header="Dodawanie nowej lokalizacji"
+        <Dialog header="Edycja grupy treningowej"
                 visible={visible}
                 className="responsive-dialog"
                 onHide={onHide}>
@@ -58,17 +59,17 @@ const VenueEditDialog = ({
                        className="form-control"
                        name="name"
                        id="inputName"
-                       value={venue.name}
+                       value={trainingGroup.name}
                        onChange={handleInputChange}
                 />
             </div>
             <div className="p-2">
-                <label htmlFor="inputAddress">Adres</label>
+                <label htmlFor="inputDescription">Opis</label>
                 <input type="text"
                        className="form-control"
-                       name="address"
-                       id="inputAddress"
-                       value={venue.address}
+                       name="description"
+                       id="inputDescription"
+                       value={trainingGroup.description}
                        onChange={handleInputChange}
                 />
             </div>
@@ -92,4 +93,4 @@ const VenueEditDialog = ({
     );
 };
 
-export default VenueEditDialog;
+export default TrainingGroupEditDialog;

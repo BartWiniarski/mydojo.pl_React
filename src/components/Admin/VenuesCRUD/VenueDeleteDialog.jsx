@@ -36,13 +36,15 @@ const VenueDeleteDialog = ({
                 onHide={onHide}>
             <hr/>
             <div className="p-2">
-                {venue && <p>Czy na pewno usunąć lokalizacje {venue.name} ?</p>}
+                {venue && <p>Czy na pewno usunąć lokalizację "{venue.name}" ?</p>}
             </div>
-            <button type="button" className="btn btn-danger shadow-lg mx-2 rounded-4"
+            <button type="button"
+                    className="btn btn-danger shadow-lg mx-2 rounded-4"
                     onClick={handleDeleteClick}>
                 usuń
             </button>
-            <button type="button" className="btn btn-primary shadow-lg mx-2 rounded-4"
+            <button type="button"
+                    className="btn btn-primary shadow-lg mx-2 rounded-4"
                     onClick={onHide}>
                 anuluj
             </button>

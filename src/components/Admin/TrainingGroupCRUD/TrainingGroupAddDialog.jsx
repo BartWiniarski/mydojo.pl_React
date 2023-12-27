@@ -1,26 +1,25 @@
 import React, {useEffect, useState} from 'react';
 import {Dialog} from 'primereact/dialog';
 import useAxiosInstanceToken from "../../../hooks/useAxiosInstanceToken.jsx";
-import putVenue from "../../../axios/venues/putVenue.jsx";
+import postTrainingGroup from "../../../axios/training groups/postTrainingGroup.jsx";
+import "/public/css/style.css";
 
 
-const VenueEditDialog = ({
-                             visible,
-                             onHide,
-                             venue: initialVenue,
-                             onSuccess
-                         }) => {
+const TrainingGroupAddDialog = ({
+                                    visible,
+                                    onHide,
+                                    onSuccess
+                                }) => {
 
-    const [venue, setVenue] = useState(
-        initialVenue || {name: '', address: ''});
+    const [trainingGroup, setTrainingGroup] = useState(
+        {name: "", description: ""});
     const [successMessage, setSuccessMessage] = useState("");
     const [errorMessage, setErrorMessage] = useState("");
     const axiosInstanceToken = useAxiosInstanceToken();
 
-
     useEffect(() => {
         if (visible) {
-            setVenue(initialVenue);
+            setTrainingGroup({name: "", description: ""});
             setSuccessMessage("");
             setErrorMessage("");
         }
@@ -28,26 +27,28 @@ const VenueEditDialog = ({
 
     const handleInputChange = (e) => {
         const {name, value} = e.target;
-        setVenue(prevVenue => ({...prevVenue, [name]: value}));
+        setTrainingGroup(prevTrainingGroup =>
+            ({...prevTrainingGroup, [name]: value}));
     };
 
     const handleSaveClick = () => {
 
-        if (!venue.name.trim() ||
-            !venue.address.trim()) {
+        if (!trainingGroup.name.trim() ||
+            !trainingGroup.description.trim()) {
             setErrorMessage('Wszystkie pola są wymagane!');
             return;
         }
 
-        putVenue(axiosInstanceToken, venue, (message) => {
+        postTrainingGroup(axiosInstanceToken, trainingGroup, (message) => {
             setSuccessMessage(message);
-            setErrorMessage("");
+            setErrorMessage("")
             onSuccess();
         }, setErrorMessage);
     }
 
+
     return (
-        <Dialog header="Dodawanie nowej lokalizacji"
+        <Dialog header="Dodawanie nowej grupy treningowej"
                 visible={visible}
                 className="responsive-dialog"
                 onHide={onHide}>
@@ -58,27 +59,25 @@ const VenueEditDialog = ({
                        className="form-control"
                        name="name"
                        id="inputName"
-                       value={venue.name}
+                       value={trainingGroup.name}
                        onChange={handleInputChange}
                 />
             </div>
             <div className="p-2">
-                <label htmlFor="inputAddress">Adres</label>
+                <label htmlFor="inputDescription">Opis</label>
                 <input type="text"
                        className="form-control"
-                       name="address"
-                       id="inputAddress"
-                       value={venue.address}
+                       name="description"
+                       id="inputDescription"
+                       value={trainingGroup.description}
                        onChange={handleInputChange}
                 />
             </div>
-            <button type="button"
-                    className="btn btn-primary shadow-lg mx-2 my-2 rounded-4"
+            <button type="button" className="btn btn-primary shadow-lg mx-2 my-2 rounded-4"
                     onClick={handleSaveClick}>
                 zapisz
             </button>
-            <button type="button"
-                    className="btn btn-primary shadow-lg mx-2 my-2 rounded-4"
+            <button type="button" className="btn btn-primary shadow-lg mx-2 my-2 rounded-4"
                     onClick={onHide}>
                 anuluj
             </button>
@@ -92,4 +91,4 @@ const VenueEditDialog = ({
     );
 };
 
-export default VenueEditDialog;
+export default TrainingGroupAddDialog;

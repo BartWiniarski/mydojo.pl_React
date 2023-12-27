@@ -1,14 +1,15 @@
 import React, {useEffect, useState} from 'react';
 import {Dialog} from 'primereact/dialog';
-import deleteUser from "../../../axios/users/deleteUser.jsx";
 import useAxiosInstanceToken from "../../../hooks/useAxiosInstanceToken.jsx";
+import deleteTrainingGroup from "../../../axios/training groups/deleteTrainingGroup.jsx";
 
-const UserDeleteDialog = ({
-                              visible,
-                              onHide,
-                              user,
-                              onSuccess
-                          }) => {
+
+const TrainingGroupDeleteDialog = ({
+                                   visible,
+                                   onHide,
+                                   trainingGroup,
+                                   onSuccess
+                               }) => {
 
     const [successMessage, setSuccessMessage] = useState("");
     const [errorMessage, setErrorMessage] = useState("");
@@ -22,20 +23,20 @@ const UserDeleteDialog = ({
     }, [visible]);
 
     const handleDeleteClick = () => {
-        deleteUser(axiosInstanceToken, user, (message) => {
+        deleteTrainingGroup(axiosInstanceToken, trainingGroup, (message) => {
             setSuccessMessage(message);
             onSuccess();
         }, setErrorMessage);
     }
 
     return (
-        <Dialog header="Usuwanie użytkownika"
+        <Dialog header="Usuwanie grupy treningowej"
                 visible={visible}
                 className="responsive-dialog"
                 onHide={onHide}>
             <hr/>
             <div className="p-2">
-                {user && <p>Czy na pewno usunąć użytkownika "{user.firstName} {user.lastName}"?</p>}
+                {trainingGroup && <p>Czy na pewno usunąć grupę treningową "{trainingGroup.name}" ?</p>}
             </div>
             <button type="button"
                     className="btn btn-danger shadow-lg mx-2 rounded-4"
@@ -57,4 +58,4 @@ const UserDeleteDialog = ({
     );
 };
 
-export default UserDeleteDialog;
+export default TrainingGroupDeleteDialog;

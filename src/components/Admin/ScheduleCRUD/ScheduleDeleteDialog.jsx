@@ -1,14 +1,16 @@
 import React, {useEffect, useState} from 'react';
 import {Dialog} from 'primereact/dialog';
-import deleteUser from "../../../axios/users/deleteUser.jsx";
 import useAxiosInstanceToken from "../../../hooks/useAxiosInstanceToken.jsx";
+import deleteSchedule from "../../../axios/schedules/deleteSchedule.jsx";
 
-const UserDeleteDialog = ({
-                              visible,
-                              onHide,
-                              user,
-                              onSuccess
-                          }) => {
+
+const ScheduleDeleteDialog = ({
+                                  visible,
+                                  onHide,
+                                  availableVenues,
+                                  schedule,
+                                  onSuccess
+                              }) => {
 
     const [successMessage, setSuccessMessage] = useState("");
     const [errorMessage, setErrorMessage] = useState("");
@@ -21,21 +23,46 @@ const UserDeleteDialog = ({
         }
     }, [visible]);
 
+    const daysOfWeekMap = {
+        MONDAY: 'Poniedziałek',
+        TUESDAY: 'Wtorek',
+        WEDNESDAY: 'Środa',
+        THURSDAY: 'Czwartek',
+        FRIDAY: 'Piątek',
+        SATURDAY: 'Sobota',
+        SUNDAY: 'Niedziela'
+    };
+
+    const formatDayOfWeek = (dayOfWeek) => daysOfWeekMap[dayOfWeek] || dayOfWeek;
+
+    const getVenueNameById = (venueId) => {
+        const venue = availableVenues.find(
+            (venue) => venue.id === venueId);
+        if (venue) {
+            return `${venue.name}`;
+        }
+        return "Brak danych o lokalizacji";
+    }
+
     const handleDeleteClick = () => {
-        deleteUser(axiosInstanceToken, user, (message) => {
+        deleteSchedule(axiosInstanceToken, schedule, (message) => {
             setSuccessMessage(message);
             onSuccess();
         }, setErrorMessage);
     }
 
     return (
-        <Dialog header="Usuwanie użytkownika"
+        <Dialog header="Usuwanie jednostki treningowej"
                 visible={visible}
                 className="responsive-dialog"
                 onHide={onHide}>
             <hr/>
             <div className="p-2">
-                {user && <p>Czy na pewno usunąć użytkownika "{user.firstName} {user.lastName}"?</p>}
+                {schedule && <p>Czy na pewno usunąć jednostkę treningową
+                    "{formatDayOfWeek(schedule.dayOfWeek)} - {' '}
+                    {schedule.time} - {' '}
+                    {getVenueNameById(schedule.venueId)}"?
+                </p>}
             </div>
             <button type="button"
                     className="btn btn-danger shadow-lg mx-2 rounded-4"
@@ -57,4 +84,4 @@ const UserDeleteDialog = ({
     );
 };
 
-export default UserDeleteDialog;
+export default ScheduleDeleteDialog;
