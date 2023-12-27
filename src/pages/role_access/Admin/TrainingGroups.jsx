@@ -16,6 +16,8 @@ import TrainingGroupsSelect from "../../../components/Admin/TrainingGroupSelects
 import TrainersMultiSelect from "../../../components/Admin/TrainingGroupSelects/TrainersMultiSelect.jsx";
 import StudentsMultiSelect from "../../../components/Admin/TrainingGroupSelects/StudentsMultiSelect.jsx";
 import ScheduleAddDialog from "../../../components/Admin/ScheduleCRUD/ScheduleAddDialog.jsx";
+import ScheduleDeleteDialog from "../../../components/Admin/ScheduleCRUD/ScheduleDeleteDialog.jsx";
+
 
 function TrainingGroups() {
     const [trainingGroupRefresh, setTrainingGroupRefresh] = useState(true);
@@ -30,14 +32,16 @@ function TrainingGroups() {
     const [selectedGroup, setSelectedGroup] = useState(null);
     const [selectedGroupForSchedule, setSelectedGroupForSchedule] = useState(null);
     const [selectedGroupSchedules, setSelectedGroupSchedules] = useState(null);
-    const [selectedTrainers, setSelectedTrainers] = useState([])
-    const [selectedStudents, setSelectedStudents] = useState(null)
+    const [selectedTrainers, setSelectedTrainers] = useState([]);
+    const [selectedStudents, setSelectedStudents] = useState(null);
+    const [selectedSchedule, setSelectedSchedule] = useState(null);
 
     const [expandedRows, setExpandedRows] = useState(null);
     const [addTrainingGroupDialogVisible, setAddTrainingGroupDialogVisible] = useState(false);
     const [editTrainingGroupDialogVisible, setEditTrainingGroupDialogVisible] = useState(false);
     const [deleteTrainingGroupDialogVisible, setDeleteTrainingGroupDialogVisible] = useState(false);
     const [addScheduleDialogVisible, setAddScheduleDialogVisible] = useState(false);
+    const [deleteScheduleDialogVisible, setDeleteScheduleDialogVisible] = useState(false);
     const [successMessage, setSuccessMessage] = useState('');
     const [errorMessage, setErrorMessage] = useState('');
     const axiosInstanceToken = useAxiosInstanceToken();
@@ -168,7 +172,8 @@ function TrainingGroups() {
     };
 
     const handleDeleteSchedule = (schedule) => {
-        console.log("Delete schedule", schedule);
+        setSelectedSchedule(schedule);
+        setDeleteScheduleDialogVisible(true);
     };
 
 // TABLE ROW EXPAND
@@ -222,7 +227,7 @@ function TrainingGroups() {
                 </div>
                 <div className="text-left">
                     <button type="submit"
-                            className="btn btn-primary shadow-lg mx-2 rounded-4"
+                            className="btn btn-primary btn-sm shadow-lg mx-2 rounded-4"
                             onClick={() => {
                                 setSelectedTrainingGroup(data);
                                 setEditTrainingGroupDialogVisible(true);
@@ -230,7 +235,7 @@ function TrainingGroups() {
                         edytuj
                     </button>
                     <button type="submit"
-                            className="btn btn-danger shadow-lg mx-2 rounded-4"
+                            className="btn btn-danger btn-sm shadow-lg mx-2 rounded-4"
                             onClick={() => {
                                 setSelectedTrainingGroup(data);
                                 setDeleteTrainingGroupDialogVisible(true);
@@ -305,12 +310,12 @@ function TrainingGroups() {
                                     <Column header="Akcje" body={(rowData) => (
                                         <>
                                             <button type="button"
-                                                    className="btn btn-primary shadow-lg mx-2 rounded-4"
+                                                    className="btn btn-primary btn-sm shadow-lg mx-2 rounded-4"
                                                     onClick={() => handleEditSchedule(rowData)}>
                                                 edytuj
                                             </button>
                                             <button type="button"
-                                                    className="btn btn-danger shadow-lg mx-2 rounded-4"
+                                                    className="btn btn-danger btn-sm shadow-lg mx-2 rounded-4"
                                                     onClick={() => handleDeleteSchedule(rowData)}>
                                                 usuń
                                             </button>
@@ -418,6 +423,15 @@ function TrainingGroups() {
                     onHide={() => {
                         setAddScheduleDialogVisible(false);
                     }}
+                    onSuccess={refreshAll}
+                />
+                <ScheduleDeleteDialog
+                    visible={deleteScheduleDialogVisible}
+                    availableVenues={availableVenues}
+                    onHide={() => {
+                        setDeleteScheduleDialogVisible(false);
+                    }}
+                    schedule={selectedSchedule}
                     onSuccess={refreshAll}
                 />
             </div>

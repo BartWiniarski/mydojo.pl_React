@@ -57,7 +57,7 @@ function Users() {
                     : <span className="badge bg-danger">zablokowany</span>}
                 </p>
                 <div className="text-left">
-                    <button type="submit" className="btn btn-primary shadow-lg mx-2 rounded-4"
+                    <button type="submit" className="btn btn-primary btn-sm shadow-lg mx-2 rounded-4"
                             onClick={() => {
                                 setSelectedUser(data);
                                 setEditDialogVisible(true);
@@ -65,20 +65,20 @@ function Users() {
                         edytuj
                     </button>
                     {data.enabled ?
-                        <button type="submit" className="btn btn-danger shadow-lg mx-2 rounded-4"
+                        <button type="submit" className="btn btn-danger btn-sm shadow-lg mx-2 rounded-4"
                                 onClick={() => {
                                     handleUserStatusChange(data);
                                 }}>
                             zablokuj
                         </button>
                         :
-                        <button type="submit" className="btn btn-success shadow-lg mx-2 rounded-4"
+                        <button type="submit" className="btn btn-success btn-sm shadow-lg mx-2 rounded-4"
                                 onClick={() => {
                                     handleUserStatusChange(data);
                                 }}>
                             aktywuj
                         </button>}
-                    <button type="submit" className="btn btn-primary shadow-lg mx-2 rounded-4"
+                    <button type="submit" className="btn btn-danger btn-sm shadow-lg mx-2 rounded-4"
                             onClick={() => {
                                 setSelectedUser(data);
                                 setDeleteDialogVisible(true);

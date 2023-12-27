@@ -38,7 +38,7 @@ function Venues() {
                 <p>Adres: {data.address}</p>
                 <div className="text-left">
                     <button type="submit"
-                            className="btn btn-primary shadow-lg mx-2 rounded-4"
+                            className="btn btn-primary btn-sm shadow-lg mx-2 rounded-4"
                             onClick={() => {
                                 setSelectedVenue(data);
                                 setEditDialogVisible(true)
@@ -46,7 +46,7 @@ function Venues() {
                         edytuj
                     </button>
                     <button type="submit"
-                            className="btn btn-primary shadow-lg mx-2 rounded-4"
+                            className="btn btn-danger btn-sm shadow-lg mx-2 rounded-4"
                             onClick={() => {
                                 setSelectedVenue(data);
                                 setDeleteDialogVisible(true)
