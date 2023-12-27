@@ -124,11 +124,13 @@ const UserEditDialog = ({
                     ))}
                 </select>
             </div>
-            <button type="button" className="btn btn-primary shadow-lg mx-2 my-2 rounded-4"
+            <button type="button"
+                    className="btn btn-primary shadow-lg mx-2 my-2 rounded-4"
                     onClick={handleSaveClick}>
                 zapisz
             </button>
-            <button type="button" className="btn btn-primary shadow-lg mx-2 my-2 rounded-4"
+            <button type="button"
+                    className="btn btn-primary shadow-lg mx-2 my-2 rounded-4"
                     onClick={onHide}>
                 anuluj
             </button>

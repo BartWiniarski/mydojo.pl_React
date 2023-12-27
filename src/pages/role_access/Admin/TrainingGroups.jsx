@@ -10,6 +10,8 @@ import getVenues from "../../../axios/venues/getVenues.jsx";
 import getSchedules from "../../../axios/schedules/getSchedules.jsx";
 import TrainingGroupAddDialog from "../../../components/Admin/TrainingGroupCRUD/TrainingGroupAddDialog.jsx";
 import TrainingGroupEditDialog from "../../../components/Admin/TrainingGroupCRUD/TrainingGroupEditDialog.jsx";
+import TrainingGroupDeleteDialog from "../../../components/Admin/TrainingGroupCRUD/TrainingGroupDeleteDialog.jsx";
+
 
 function TrainingGroups() {
     const [trainingGroupRefresh, setTrainingGroupRefresh] = useState(true);
@@ -21,7 +23,6 @@ function TrainingGroups() {
     const [availableSchedules, setAvailableSchedules] = useState([]);
 
     const [selectedTrainingGroup, setSelectedTrainingGroup] = useState(null);
-    const [selectedGroup, setSelectedGroup] = useState(null);
     const [selectedTrainers, setSelectedTrainers] = useState([])
     const [selectedStudents, setSelectedStudents] = useState(null)
 
@@ -241,6 +242,14 @@ function TrainingGroups() {
                     visible={editDialogVisible}
                     onHide={() => {
                         setEditDialogVisible(false);
+                    }}
+                    trainingGroup={selectedTrainingGroup}
+                    onSuccess={refreshTrainingGroups}
+                />
+                <TrainingGroupDeleteDialog
+                    visible={deleteDialogVisible}
+                    onHide={() => {
+                        setDeleteDialogVisible(false);
                     }}
                     trainingGroup={selectedTrainingGroup}
                     onSuccess={refreshTrainingGroups}
