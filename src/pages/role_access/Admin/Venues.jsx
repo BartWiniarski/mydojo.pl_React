@@ -37,14 +37,16 @@ function Venues() {
                 <hr/>
                 <p>Adres: {data.address}</p>
                 <div className="text-left">
-                    <button type="submit" className="btn btn-primary shadow-lg mx-2 rounded-4"
+                    <button type="submit"
+                            className="btn btn-primary shadow-lg mx-2 rounded-4"
                             onClick={() => {
                                 setSelectedVenue(data);
                                 setEditDialogVisible(true)
                             }}>
                         edytuj
                     </button>
-                    <button type="submit" className="btn btn-primary shadow-lg mx-2 rounded-4"
+                    <button type="submit"
+                            className="btn btn-primary shadow-lg mx-2 rounded-4"
                             onClick={() => {
                                 setSelectedVenue(data);
                                 setDeleteDialogVisible(true)
@@ -59,14 +61,17 @@ function Venues() {
     return (
         <>
             <div id="column-left" className="col-12 col-md-2 mt-md-3  column-left">
-                <img src="/images/house_1.png" className="img-fluid shadow-img d-block mx-auto mt-5"
+                <img src="/images/house_1.png"
+                     className="img-fluid shadow-img d-block mx-auto mt-5"
                      alt="Logo"
                      style={{maxHeight: '600px'}}/>
             </div>
-            <div id="column-right" className="col-12 col-md-10 ms-md-auto mt-md-auto column-right">
+            <div id="column-right"
+                 className="col-12 col-md-10 ms-md-auto mt-md-auto column-right">
                 <h1 className="h3 mb-2">Sale treningowe</h1>
                 <hr/>
-                <button type="button" className="btn btn-primary shadow-lg my-3 rounded-4"
+                <button type="button"
+                        className="btn btn-primary shadow-lg my-3 rounded-4"
                         onClick={() => setAddDialogVisible(true)}>
                     dodaj nową lokalizację
                 </button>

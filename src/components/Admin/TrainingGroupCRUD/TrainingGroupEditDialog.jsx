@@ -1,25 +1,25 @@
 import React, {useEffect, useState} from 'react';
 import {Dialog} from 'primereact/dialog';
 import useAxiosInstanceToken from "../../../hooks/useAxiosInstanceToken.jsx";
-import postTrainingGroup from "../../../axios/training groups/postTrainingGroup.jsx";
+import putTrainingGroup from "../../../axios/training groups/putTrainingGroup.jsx";
 import "/public/css/style.css";
 
-
-const TrainingGroupAddDialog = ({
+const TrainingGroupEditDialog = ({
                                     visible,
                                     onHide,
+                                    trainingGroup: initialTrainingGroup,
                                     onSuccess
                                 }) => {
 
     const [trainingGroup, setTrainingGroup] = useState(
-        {name: "", description: ""});
+        initialTrainingGroup || { name: '', description: '' });
     const [successMessage, setSuccessMessage] = useState("");
     const [errorMessage, setErrorMessage] = useState("");
     const axiosInstanceToken = useAxiosInstanceToken();
 
     useEffect(() => {
         if (visible) {
-            setTrainingGroup({name: "", description: ""});
+            setTrainingGroup(initialTrainingGroup);
             setSuccessMessage("");
             setErrorMessage("");
         }
@@ -39,7 +39,7 @@ const TrainingGroupAddDialog = ({
             return;
         }
 
-        postTrainingGroup(axiosInstanceToken, trainingGroup, (message) => {
+        putTrainingGroup(axiosInstanceToken, trainingGroup, (message) => {
             setSuccessMessage(message);
             setErrorMessage("")
             onSuccess();
@@ -48,7 +48,7 @@ const TrainingGroupAddDialog = ({
 
 
     return (
-        <Dialog header="Dodawanie nowej grupy treningowej"
+        <Dialog header="Edycja grupy treningowej"
                 visible={visible}
                 className="responsive-dialog"
                 onHide={onHide}>
@@ -73,11 +73,13 @@ const TrainingGroupAddDialog = ({
                        onChange={handleInputChange}
                 />
             </div>
-            <button type="button" className="btn btn-primary shadow-lg mx-2 my-2 rounded-4"
+            <button type="button"
+                    className="btn btn-primary shadow-lg mx-2 my-2 rounded-4"
                     onClick={handleSaveClick}>
                 zapisz
             </button>
-            <button type="button" className="btn btn-primary shadow-lg mx-2 my-2 rounded-4"
+            <button type="button"
+                    className="btn btn-primary shadow-lg mx-2 my-2 rounded-4"
                     onClick={onHide}>
                 anuluj
             </button>
@@ -91,4 +93,4 @@ const TrainingGroupAddDialog = ({
     );
 };
 
-export default TrainingGroupAddDialog;
+export default TrainingGroupEditDialog;

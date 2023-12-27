@@ -9,6 +9,7 @@ import getStudents from "../../../axios/students/getStudents.jsx";
 import getVenues from "../../../axios/venues/getVenues.jsx";
 import getSchedules from "../../../axios/schedules/getSchedules.jsx";
 import TrainingGroupAddDialog from "../../../components/Admin/TrainingGroupCRUD/TrainingGroupAddDialog.jsx";
+import TrainingGroupEditDialog from "../../../components/Admin/TrainingGroupCRUD/TrainingGroupEditDialog.jsx";
 
 function TrainingGroups() {
     const [trainingGroupRefresh, setTrainingGroupRefresh] = useState(true);
@@ -32,11 +33,6 @@ function TrainingGroups() {
     const [errorMessage, setErrorMessage] = useState('');
     const axiosInstanceToken = useAxiosInstanceToken();
 
-    const [formData, setFormData] = useState({
-        name: "",
-        description: "",
-        schedule: ""
-    });
     const daysOfWeekMap = {
         MONDAY: 'Poniedziałek',
         TUESDAY: 'Wtorek',
@@ -100,7 +96,8 @@ function TrainingGroups() {
                 <h5 className="fw-bold">{data.name}</h5>
                 <hr/>
                 <p>Opis grupy: {data.description}</p>
-                <p>Harmonogram zajęć:
+                <p>Harmonogram zajęć: </p>
+                <div>
                     <ul>
                         {availableSchedules.filter(schedule => schedule.trainingGroupId === data.id)
                             .map((schedule, index) => {
@@ -117,12 +114,13 @@ function TrainingGroups() {
                                 );
                             })}
                     </ul>
-                </p>
+                </div>
                 <p>Liczba uczestników:
                     {' '}{data.studentsId.length !== 0 ?
                         data.studentsId.length : "Brak uczniów"}
                 </p>
-                <p>Trenerzy:
+                <p>Trenerzy:</p>
+                <div>
                     <ul>
                         {data.trainersId.length > 0 ? (
                             data.trainersId.map((trainerId) => (
@@ -132,8 +130,9 @@ function TrainingGroups() {
                             <span> Brak trenerów</span>
                         )}
                     </ul>
-                </p>
-                <p>Uczestnicy:
+                </div>
+                <p>Uczestnicy:</p>
+                <div>
                     <ul>
                         {data.studentsId.length > 0 ? (
                             data.studentsId.map((studentId) => (
@@ -143,21 +142,18 @@ function TrainingGroups() {
                             <span> Brak uczniów</span>
                         )}
                     </ul>
-                </p>
+                </div>
                 <div className="text-left">
-                    <button type="submit" className="btn btn-primary shadow-lg mx-2 rounded-4"
+                    <button type="submit"
+                            className="btn btn-primary shadow-lg mx-2 rounded-4"
                             onClick={() => {
                                 setSelectedTrainingGroup(data);
-                                setFormData({
-                                    name: data.name,
-                                    description: data.description,
-                                    schedule: data.schedule
-                                });
                                 setEditDialogVisible(true);
                             }}>
                         edytuj
                     </button>
-                    <button type="submit" className="btn btn-primary shadow-lg mx-2 rounded-4"
+                    <button type="submit"
+                            className="btn btn-primary shadow-lg mx-2 rounded-4"
                             onClick={() => {
                                 setSelectedTrainingGroup(data);
                                 setDeleteDialogVisible(true);
@@ -173,21 +169,25 @@ function TrainingGroups() {
     return (
         <>
             <div id="column-left" className="col-12 col-md-2 mt-md-3  column-left">
-                <img src="/images/kimono_3.png" className="img-fluid shadow-img d-block mx-auto mt-5"
+                <img src="/images/kimono_3.png"
+                     className="img-fluid shadow-img d-block mx-auto mt-5"
                      alt="Logo"
                      style={{maxHeight: '600px'}}/>
             </div>
-            <div id="column-right" className="col-12 col-md-10 ms-md-auto mt-md-auto column-right">
+            <div id="column-right"
+                 className="col-12 col-md-10 ms-md-auto mt-md-auto column-right">
                 <h1 className="h3 mb-2">Grupy treningowe</h1>
                 <hr/>
-                <button type="button" className="btn btn-primary shadow-lg my-3 rounded-4"
+                <button type="button"
+                        className="btn btn-primary shadow-lg my-3 rounded-4"
                         onClick={() => setAddDialogVisible(true)}>
                     dodaj nową grupę
                 </button>
                 <div className="card">
                     <div className="">
                         <hr/>
-                        <Fieldset legend="Wszystkie grupy" toggleable collapsed={true}>
+                        <Fieldset legend="Wszystkie grupy"
+                                  toggleable collapsed={true}>
                             <hr/>
                             <DataTable value={availableTrainingGroups}
                                        expandedRows={expandedRows}
@@ -204,7 +204,8 @@ function TrainingGroups() {
                         <hr/>
                     </div>
                     <div className="">
-                        <Fieldset legend="Zarządzaj harmonogramami" toggleable collapsed={true}>
+                        <Fieldset legend="Zarządzaj harmonogramami"
+                                  toggleable collapsed={true}>
                             <hr/>
                             {successMessage && (
                                 <div className="alert alert-success mt-3 text-center rounded-4">{successMessage}</div>
@@ -216,7 +217,8 @@ function TrainingGroups() {
                         <hr/>
                     </div>
                     <div className="">
-                        <Fieldset legend="Zarządzaj uczestnikami" toggleable collapsed={true}>
+                        <Fieldset legend="Zarządzaj uczestnikami"
+                                  toggleable collapsed={true}>
                             <hr/>
                             {successMessage && (
                                 <div className="alert alert-success mt-3 text-center rounded-4">{successMessage}</div>
@@ -233,6 +235,14 @@ function TrainingGroups() {
                     onHide={() => {
                         setAddDialogVisible(false);
                     }}
+                    onSuccess={refreshTrainingGroups}
+                />
+                <TrainingGroupEditDialog
+                    visible={editDialogVisible}
+                    onHide={() => {
+                        setEditDialogVisible(false);
+                    }}
+                    trainingGroup={selectedTrainingGroup}
                     onSuccess={refreshTrainingGroups}
                 />
             </div>

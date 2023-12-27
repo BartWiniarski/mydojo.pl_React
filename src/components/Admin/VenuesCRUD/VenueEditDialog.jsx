@@ -11,7 +11,8 @@ const VenueEditDialog = ({
                              onSuccess
                          }) => {
 
-    const [venue, setVenue] = useState(initialVenue);
+    const [venue, setVenue] = useState(
+        initialVenue || {name: '', address: ''});
     const [successMessage, setSuccessMessage] = useState("");
     const [errorMessage, setErrorMessage] = useState("");
     const axiosInstanceToken = useAxiosInstanceToken();
@@ -71,11 +72,13 @@ const VenueEditDialog = ({
                        onChange={handleInputChange}
                 />
             </div>
-            <button type="button" className="btn btn-primary shadow-lg mx-2 my-2 rounded-4"
+            <button type="button"
+                    className="btn btn-primary shadow-lg mx-2 my-2 rounded-4"
                     onClick={handleSaveClick}>
                 zapisz
             </button>
-            <button type="button" className="btn btn-primary shadow-lg mx-2 my-2 rounded-4"
+            <button type="button"
+                    className="btn btn-primary shadow-lg mx-2 my-2 rounded-4"
                     onClick={onHide}>
                 anuluj
             </button>
