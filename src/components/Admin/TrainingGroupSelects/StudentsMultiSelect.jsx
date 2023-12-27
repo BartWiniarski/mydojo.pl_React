@@ -4,6 +4,12 @@ import { MultiSelect } from 'primereact/multiselect';
 const StudentsMultiSelect = ({availableStudents, selectedStudents, setSelectedStudents}) => {
     const [groupedStudents, setGroupedStudents] = useState([]);
 
+    // useEffect(() => {
+    //     const usersGroupedByAge = groupUsersByAge(availableStudents);
+    //     setGroupedStudents(usersGroupedByAge);
+    //     console.log("Grouped Students: ", usersGroupedByAge);
+    // }, [availableStudents]);
+
     useEffect(() => {
         const usersGroupedByAge = groupUsersByAge(availableStudents);
         setGroupedStudents(usersGroupedByAge);
@@ -21,7 +27,7 @@ const StudentsMultiSelect = ({availableStudents, selectedStudents, setSelectedSt
 
         users.forEach(user => {
             const age = user.age;
-            let groupKey = '';
+            let groupKey = "";
 
             if (age <= 7) groupKey = '0-7';
             else if (age <= 10) groupKey = '8-10';

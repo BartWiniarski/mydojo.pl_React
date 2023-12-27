@@ -28,6 +28,8 @@ function TrainingGroups() {
 
     const [selectedTrainingGroup, setSelectedTrainingGroup] = useState(null);
     const [selectedGroup, setSelectedGroup] = useState(null);
+    const [selectedGroupForSchedule, setSelectedGroupForSchedule] = useState(null);
+    const [selectedGroupSchedules, setSelectedGroupSchedules] = useState(null);
     const [selectedTrainers, setSelectedTrainers] = useState([])
     const [selectedStudents, setSelectedStudents] = useState(null)
 
@@ -39,6 +41,13 @@ function TrainingGroups() {
     const [errorMessage, setErrorMessage] = useState('');
     const axiosInstanceToken = useAxiosInstanceToken();
 
+    useEffect(() => {
+        getTrainers(axiosInstanceToken, setAvailableTrainers);
+        getStudents(axiosInstanceToken, setAvailableStudents);
+        getVenues(axiosInstanceToken, setAvailableVenues);
+        getSchedules(axiosInstanceToken, setAvailableSchedules);
+    }, []);
+
     const daysOfWeekMap = {
         MONDAY: 'Poniedziałek',
         TUESDAY: 'Wtorek',
@@ -49,12 +58,39 @@ function TrainingGroups() {
         SUNDAY: 'Niedziela'
     };
 
-    useEffect(() => {
-        getTrainers(axiosInstanceToken, setAvailableTrainers);
-        getStudents(axiosInstanceToken, setAvailableStudents);
-        getVenues(axiosInstanceToken, setAvailableVenues);
-        getSchedules(axiosInstanceToken, setAvailableSchedules);
-    }, []);
+    const formatDayOfWeek = (dayOfWeek) => daysOfWeekMap[dayOfWeek] || dayOfWeek;
+
+    const formatTime = (time) => {
+        const timeParts = time.split(':');
+        return `${timeParts[0]}:${timeParts[1]}`;
+    };
+
+    const getTrainerNameById = (trainerId) => {
+        const trainer = availableTrainers.find(
+            (trainer) => trainer.id === trainerId);
+        if (trainer) {
+            return `${trainer.firstName} ${trainer.lastName}`;
+        }
+        return "Brak danych o trenerze";
+    };
+
+    const getStudentNameById = (studentId) => {
+        const student = availableStudents.find(
+            (student) => student.id === studentId);
+        if (student) {
+            return `${student.firstName} ${student.lastName}`;
+        }
+        return "Brak danych o uczniu";
+    };
+
+    const getVenueNameById = (venueId) => {
+        const venue = availableVenues.find(
+            (venue) => venue.id === venueId);
+        if (venue) {
+            return `${venue.name}`;
+        }
+        return "Brak danych o lokalizacji";
+    }
 
     const resetMessages = () => {
         setSuccessMessage('');
@@ -77,11 +113,22 @@ function TrainingGroups() {
             setSelectedTrainers([]);
             setSelectedStudents([]);
         } else {
-            const group = availableTrainingGroups.find(group => group.id === selectedGroup);
+            const group = availableTrainingGroups.find(
+                group => group.id === selectedGroup);
             setSelectedTrainers(group.trainersId);
             setSelectedStudents(group.studentsId);
         }
     }, [selectedGroup, availableTrainingGroups]);
+
+    useEffect(() => {
+        if (!selectedGroupForSchedule) {
+            setSelectedGroupSchedules([]);
+        } else {
+            const filteredSchedules = availableSchedules.filter(
+                schedule => schedule.trainingGroupId === selectedGroupForSchedule);
+            setSelectedGroupSchedules(filteredSchedules);
+        }
+    }, [selectedGroupForSchedule, availableSchedules]);
 
     const handleUpdateTrainingGroupUsers = () => {
 
@@ -99,35 +146,16 @@ function TrainingGroups() {
 
     };
 
+    const handleEditSchedule = (schedule) => {
+        console.log("Edit schedule", schedule);
+    };
+
+    const handleDeleteSchedule = (schedule) => {
+        console.log("Delete schedule", schedule);
+    };
+
 // TABLE ROW EXPAND
     const rowExpansion = (data) => {
-
-        const getTrainerNameById = (trainerId) => {
-            const trainer = availableTrainers.find(
-                (trainer) => trainer.id === trainerId);
-            if (trainer) {
-                return `${trainer.firstName} ${trainer.lastName}`;
-            }
-            return "Brak danych o trenerze";
-        };
-
-        const getStudentNameById = (studentId) => {
-            const student = availableStudents.find(
-                (student) => student.id === studentId);
-            if (student) {
-                return `${student.firstName} ${student.lastName}`;
-            }
-            return "Brak danych o uczniu";
-        };
-
-        const getVenueNameById = (venueId) => {
-            const venue = availableVenues.find(
-                (venue) => venue.id === venueId);
-            if (venue) {
-                return `${venue.name}`;
-            }
-            return "Brak danych o lokalizacji";
-        }
 
         return (
             <div className="p-3 card">
@@ -138,19 +166,13 @@ function TrainingGroups() {
                 <div>
                     <ul>
                         {availableSchedules.filter(schedule => schedule.trainingGroupId === data.id)
-                            .map((schedule, index) => {
-
-                                const timeParts = schedule.time.split(':');
-                                const formattedTime = `${timeParts[0]}:${timeParts[1]}`;
-
-                                return (
-                                    <li key={index}>
-                                        {daysOfWeekMap[schedule.dayOfWeek] || schedule.dayOfWeek}, {' '}
-                                        {formattedTime}, {' '}
-                                        {getVenueNameById(schedule.venueId)}
-                                    </li>
-                                );
-                            })}
+                            .map((schedule, index) => (
+                                <li key={index}>
+                                    {formatDayOfWeek(schedule.dayOfWeek)}, {' '}
+                                    {formatTime(schedule.time)}, {' '}
+                                    {getVenueNameById(schedule.venueId)}
+                                </li>
+                            ))}
                     </ul>
                 </div>
                 <p>Liczba uczestników:
@@ -191,7 +213,7 @@ function TrainingGroups() {
                         edytuj
                     </button>
                     <button type="submit"
-                            className="btn btn-primary shadow-lg mx-2 rounded-4"
+                            className="btn btn-danger shadow-lg mx-2 rounded-4"
                             onClick={() => {
                                 setSelectedTrainingGroup(data);
                                 setDeleteDialogVisible(true);
@@ -244,6 +266,49 @@ function TrainingGroups() {
                         <Fieldset legend="Zarządzaj harmonogramami"
                                   toggleable collapsed={true}>
                             <hr/>
+                            <div>
+                                <TrainingGroupsSelect
+                                    availableTrainingGroups={availableTrainingGroups}
+                                    selectedGroup={selectedGroupForSchedule}
+                                    setSelectedGroup={(group) => {
+                                        resetMessages();
+                                        setSelectedGroupForSchedule(group);
+                                    }}
+                                />
+                                <hr/>
+                                <DataTable value={selectedGroupSchedules}
+                                           dataKey="id"
+                                           className="p-datatable-striped">
+                                    <Column field="dayOfWeek" header="Dzień"
+                                            body={(rowData) => formatDayOfWeek(rowData.dayOfWeek)}/>
+                                    <Column field="time" header="Godzina"
+                                            body={(rowData) => formatTime(rowData.time)}/>
+                                    <Column field="venueId" header="Lokalizacja"
+                                            body={(rowData) => getVenueNameById(rowData.venueId)}/>
+                                    <Column header="Akcje" body={(rowData) => (
+                                        <>
+                                            <button type="button"
+                                                    className="btn btn-primary shadow-lg mx-2 rounded-4"
+                                                    onClick={() => handleEditSchedule(rowData)}>
+                                                edytuj
+                                            </button>
+                                            <button type="button"
+                                                    className="btn btn-danger shadow-lg mx-2 rounded-4"
+                                                    onClick={() => handleDeleteSchedule(rowData)}>
+                                                usuń
+                                            </button>
+                                        </>
+                                    )}/>
+                                </DataTable>
+                            </div>
+                            <hr/>
+                            {selectedGroupForSchedule && (
+                                <button type="button"
+                                        className="btn btn-primary shadow-lg my-3 rounded-4"
+                                        onClick={() => setAddDialogVisible(true)}>
+                                    dodaj nową jednostkę treningową
+                                </button>
+                            )}
                             {successMessage && (
                                 <div className="alert alert-success mt-3 text-center rounded-4">{successMessage}</div>
                             )}
