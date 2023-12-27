@@ -1,7 +1,5 @@
 import React, { useState, useEffect } from "react";
 import { MultiSelect } from 'primereact/multiselect';
-import {axiosInstanceToken} from "../../../axios/axios.jsx";
-
 
 const StudentsMultiSelect = ({availableStudents, selectedStudents, setSelectedStudents}) => {
     const [groupedStudents, setGroupedStudents] = useState([]);
@@ -32,7 +30,9 @@ const StudentsMultiSelect = ({availableStudents, selectedStudents, setSelectedSt
             else if (age <= 18) groupKey = '17-18';
             else groupKey = '18+';
 
-            ageGroups[groupKey].push({ label: `${user.firstName} ${user.lastName}`, id: user.id });
+            ageGroups[groupKey].push({
+                label: `${user.firstName} ${user.lastName}`,
+                id: user.id });
         });
 
         return Object.entries(ageGroups).map(([label, items]) => ({

@@ -8,9 +8,13 @@ import getTrainers from "../../../axios/trainers/getTrainers.jsx";
 import getStudents from "../../../axios/students/getStudents.jsx";
 import getVenues from "../../../axios/venues/getVenues.jsx";
 import getSchedules from "../../../axios/schedules/getSchedules.jsx";
+import putTrainingGroup from "../../../axios/training groups/putTrainingGroup.jsx";
 import TrainingGroupAddDialog from "../../../components/Admin/TrainingGroupCRUD/TrainingGroupAddDialog.jsx";
 import TrainingGroupEditDialog from "../../../components/Admin/TrainingGroupCRUD/TrainingGroupEditDialog.jsx";
 import TrainingGroupDeleteDialog from "../../../components/Admin/TrainingGroupCRUD/TrainingGroupDeleteDialog.jsx";
+import TrainingGroupsSelect from "../../../components/Admin/TrainingGroupSelects/TrainingGroupsSelect.jsx";
+import TrainersMultiSelect from "../../../components/Admin/TrainingGroupSelects/TrainersMultiSelect.jsx";
+import StudentsMultiSelect from "../../../components/Admin/TrainingGroupSelects/StudentsMultiSelect.jsx";
 
 
 function TrainingGroups() {
@@ -23,6 +27,7 @@ function TrainingGroups() {
     const [availableSchedules, setAvailableSchedules] = useState([]);
 
     const [selectedTrainingGroup, setSelectedTrainingGroup] = useState(null);
+    const [selectedGroup, setSelectedGroup] = useState(null);
     const [selectedTrainers, setSelectedTrainers] = useState([])
     const [selectedStudents, setSelectedStudents] = useState(null)
 
@@ -43,12 +48,18 @@ function TrainingGroups() {
         SATURDAY: 'Sobota',
         SUNDAY: 'Niedziela'
     };
+
     useEffect(() => {
         getTrainers(axiosInstanceToken, setAvailableTrainers);
         getStudents(axiosInstanceToken, setAvailableStudents);
         getVenues(axiosInstanceToken, setAvailableVenues);
         getSchedules(axiosInstanceToken, setAvailableSchedules);
     }, []);
+
+    const resetMessages = () => {
+        setSuccessMessage('');
+        setErrorMessage('');
+    };
 
     const refreshTrainingGroups = () => {
         setTrainingGroupRefresh(true);
@@ -61,6 +72,32 @@ function TrainingGroups() {
         }
     }, [trainingGroupRefresh]);
 
+    useEffect(() => {
+        if (!selectedGroup) {
+            setSelectedTrainers([]);
+            setSelectedStudents([]);
+        } else {
+            const group = availableTrainingGroups.find(group => group.id === selectedGroup);
+            setSelectedTrainers(group.trainersId);
+            setSelectedStudents(group.studentsId);
+        }
+    }, [selectedGroup, availableTrainingGroups]);
+
+    const handleUpdateTrainingGroupUsers = () => {
+
+        let updatedTrainingGroup = {
+            id: selectedGroup,
+            trainersId: selectedTrainers,
+            studentsId: selectedStudents,
+        };
+
+        putTrainingGroup(axiosInstanceToken, updatedTrainingGroup, (message) => {
+            setSuccessMessage(message);
+            setErrorMessage("")
+            setTrainingGroupRefresh(true);
+        }, setErrorMessage);
+
+    };
 
 // TABLE ROW EXPAND
     const rowExpansion = (data) => {
@@ -166,7 +203,6 @@ function TrainingGroups() {
         )
     };
 
-
     return (
         <>
             <div id="column-left" className="col-12 col-md-2 mt-md-3  column-left">
@@ -221,6 +257,43 @@ function TrainingGroups() {
                         <Fieldset legend="Zarządzaj uczestnikami"
                                   toggleable collapsed={true}>
                             <hr/>
+                            <div>
+                                <TrainingGroupsSelect
+                                    availableTrainingGroups={availableTrainingGroups}
+                                    selectedGroup={selectedGroup}
+                                    setSelectedGroup={(group) => {
+                                        resetMessages();
+                                        setSelectedGroup(group);
+                                    }}
+                                />
+                            </div>
+                            <hr/>
+                            <div>
+                                <TrainersMultiSelect
+                                    availableTrainers={availableTrainers}
+                                    selectedTrainers={selectedTrainers}
+                                    setSelectedTrainers={(trainers) => {
+                                        resetMessages();
+                                        setSelectedTrainers(trainers);
+                                    }}
+                                />
+                            </div>
+                            <hr/>
+                            <div>
+                                <StudentsMultiSelect
+                                    availableStudents={availableStudents}
+                                    selectedStudents={selectedStudents}
+                                    setSelectedStudents={(students) => {
+                                        resetMessages();
+                                        setSelectedStudents(students);
+                                    }}
+                                />
+                            </div>
+                            <button type="submit"
+                                    className="btn btn-primary shadow-lg mx-2 my-3 rounded-4"
+                                    onClick={() => handleUpdateTrainingGroupUsers()}>
+                                zapisz
+                            </button>
                             {successMessage && (
                                 <div className="alert alert-success mt-3 text-center rounded-4">{successMessage}</div>
                             )}

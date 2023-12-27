@@ -7,9 +7,9 @@ import TrainingGroupAddDialogAdmin from "../../../components/Admin/OLDTrainingGr
 import TrainingGroupEditDialogAdmin from "../../../components/Admin/OLDTrainingGroupCRUD/TrainingGroupEditDialogAdmin.jsx";
 import TrainingGroupDeleteDialogAdmin
     from "../../../components/Admin/OLDTrainingGroupCRUD/TrainingGroupDeleteDialogAdmin.jsx";
-import TrainingGroupsSelect from "../../../components/Admin/OLDTrainingGroupCRUD/TrainingGroupsSelect.jsx";
-import TrainersMultiSelect from "../../../components/Admin/OLDTrainingGroupCRUD/TrainersMultiSelect.jsx";
-import StudentsMultiSelect from "../../../components/Admin/OLDTrainingGroupCRUD/StudentsMultiSelect.jsx";
+import TrainingGroupsSelect from "../../../components/Admin/TrainingGroupSelects/TrainingGroupsSelect.jsx";
+import TrainersMultiSelect from "../../../components/Admin/TrainingGroupSelects/TrainersMultiSelect.jsx";
+import StudentsMultiSelect from "../../../components/Admin/TrainingGroupSelects/StudentsMultiSelect.jsx";
 
 
 function TrainingGroups() {
