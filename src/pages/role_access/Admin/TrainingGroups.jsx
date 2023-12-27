@@ -17,6 +17,7 @@ import TrainersMultiSelect from "../../../components/Admin/TrainingGroupSelects/
 import StudentsMultiSelect from "../../../components/Admin/TrainingGroupSelects/StudentsMultiSelect.jsx";
 import ScheduleAddDialog from "../../../components/Admin/ScheduleCRUD/ScheduleAddDialog.jsx";
 import ScheduleDeleteDialog from "../../../components/Admin/ScheduleCRUD/ScheduleDeleteDialog.jsx";
+import ScheduleEditDialog from "../../../components/Admin/ScheduleCRUD/ScheduleEditDialog.jsx";
 
 
 function TrainingGroups() {
@@ -41,6 +42,7 @@ function TrainingGroups() {
     const [editTrainingGroupDialogVisible, setEditTrainingGroupDialogVisible] = useState(false);
     const [deleteTrainingGroupDialogVisible, setDeleteTrainingGroupDialogVisible] = useState(false);
     const [addScheduleDialogVisible, setAddScheduleDialogVisible] = useState(false);
+    const [editScheduleDialogVisible, setEditScheduleDialogVisible] = useState(false);
     const [deleteScheduleDialogVisible, setDeleteScheduleDialogVisible] = useState(false);
     const [successMessage, setSuccessMessage] = useState('');
     const [errorMessage, setErrorMessage] = useState('');
@@ -168,7 +170,8 @@ function TrainingGroups() {
     };
 
     const handleEditSchedule = (schedule) => {
-        console.log("Edit schedule", schedule);
+        setSelectedSchedule(schedule);
+        setEditScheduleDialogVisible(true);
     };
 
     const handleDeleteSchedule = (schedule) => {
@@ -425,13 +428,24 @@ function TrainingGroups() {
                     }}
                     onSuccess={refreshAll}
                 />
+                <ScheduleEditDialog
+                    visible={editScheduleDialogVisible}
+                    schedule={selectedSchedule}
+                    availableVenues={availableVenues}
+                    trainingGroupId={selectedGroupForSchedule}
+                    onHide={() => {
+                        setEditScheduleDialogVisible(false);
+                    }}
+                    onSuccess={refreshAll}
+
+                />
                 <ScheduleDeleteDialog
                     visible={deleteScheduleDialogVisible}
+                    schedule={selectedSchedule}
                     availableVenues={availableVenues}
                     onHide={() => {
                         setDeleteScheduleDialogVisible(false);
                     }}
-                    schedule={selectedSchedule}
                     onSuccess={refreshAll}
                 />
             </div>

@@ -4,15 +4,16 @@ import DaysOfWeekSelect from "../ScheduleSelects/DaysOfWeekSelect.jsx";
 import VenueSelect from "../ScheduleSelects/VenueSelect.jsx";
 import DatePicker from "react-datepicker";
 import useAxiosInstanceToken from "../../../hooks/useAxiosInstanceToken.jsx";
-import postSchedule from "../../../axios/schedules/postSchedule.jsx";
+import putSchedule from "../../../axios/schedules/putSchedule.jsx";
 
-const ScheduleAddDialog = ({
-                               visible,
-                               onHide,
-                               availableVenues,
-                               onSuccess,
-                               trainingGroupId
-                           }) => {
+const ScheduleEditDialog = ({
+                                visible,
+                                onHide,
+                                availableVenues,
+                                schedule,
+                                onSuccess,
+                                trainingGroupId
+                            }) => {
 
     const [selectedDay, setSelectedDay] = useState(null);
     const [selectedHour, setSelectedHour] = useState(new Date());
@@ -24,14 +25,23 @@ const ScheduleAddDialog = ({
 
     useEffect(() => {
         if (visible) {
-            setSelectedDay(null);
-            setSelectedHour(null);
-            setFormattedHour(null);
-            setSelectedVenue(null);
+            setSelectedDay(schedule.dayOfWeek);
+            setSelectedVenue(schedule.venueId);
             setSuccessMessage("");
             setErrorMessage("");
+
+            if (schedule.time) {
+                const [hours, minutes] = schedule.time.split(':');
+                const date = new Date();
+                date.setHours(parseInt(hours, 10), parseInt(minutes, 10), 0);
+                setSelectedHour(date);
+                handleHourChange(date);
+            } else {
+                setSelectedHour(null);
+                setFormattedHour(null);
+            }
         }
-    }, [visible]);
+    }, [visible, schedule]);
 
     const handleDayChange = (day) => {
         setSelectedDay(day);
@@ -55,10 +65,11 @@ const ScheduleAddDialog = ({
             dayOfWeek: selectedDay,
             time: formattedHour,
             venueId: selectedVenue,
-            trainingGroupId: trainingGroupId
+            trainingGroupId: trainingGroupId,
+            id: schedule.id
         };
 
-        postSchedule(axiosInstanceToken, newSchedule, (message) => {
+        putSchedule(axiosInstanceToken, newSchedule, (message) => {
             setSuccessMessage(message);
             setErrorMessage("")
             onSuccess();
@@ -66,7 +77,7 @@ const ScheduleAddDialog = ({
     }
 
     return (
-        <Dialog header="Dodawanie nowej jednostki treningowej"
+        <Dialog header="Edycja jednostki treningowej"
                 visible={visible}
                 className="responsive-dialog"
                 onHide={onHide}>
@@ -117,4 +128,4 @@ const ScheduleAddDialog = ({
     );
 };
 
-export default ScheduleAddDialog;
+export default ScheduleEditDialog;
