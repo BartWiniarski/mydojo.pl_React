@@ -50,7 +50,7 @@ function Header() {
                                 </>
                             )}
 
-                            <div className="btn-slideY p-2">
+                            <div className="btn-slideY p-2 d-none">
                                 <span id="message-counter" className="notify-badge">3</span>
                                 <img src="/images/envelope_4.png" className="me-2" alt="envelope"
                                      style={{height: '3.5rem', verticalAlign: 'middle'}}/>

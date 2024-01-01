@@ -49,7 +49,18 @@ const MyTrainingGroupsTraine = () => {
                                     <li key={index}>{formatSchedule(schedule)}</li>
                                 ))
                             ) : (
-                                <li>"Brak harmonogramów"</li>
+                                <li>Brak harmonogramów</li>
+                            )}
+                        </ul>
+                        <br/>
+                        <p>Uczniowie:</p>
+                        <ul>
+                            {group.students.length !== 0 ? (
+                                group.students.map((student, index) => (
+                                    <li key={index}> {student} </li>
+                                ))
+                            ) : (
+                                <li>Brak uczniów</li>
                             )}
                         </ul>
                         <br/>
@@ -60,7 +71,7 @@ const MyTrainingGroupsTraine = () => {
                                     <li key={index}> {trainer} </li>
                                 ))
                             ) : (
-                                <li>"Brak trenerów"</li>
+                                <li>Brak trenerów</li>
                             )}
                         </ul>
                         <hr/>

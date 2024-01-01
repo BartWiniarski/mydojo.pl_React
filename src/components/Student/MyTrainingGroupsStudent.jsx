@@ -48,7 +48,7 @@ const MyTrainingGroupsStudent = () => {
                                     <li key={index}>{formatSchedule(schedule)}</li>
                                 ))
                             ) : (
-                                <li>"Brak harmonogramów"</li>
+                                <li>Brak harmonogramów</li>
                             )}
                         </ul>
                         <br/>
@@ -59,7 +59,7 @@ const MyTrainingGroupsStudent = () => {
                                     <li key={index}> {trainer} </li>
                                 ))
                             ) : (
-                                <li>"Brak trenerów"</li>
+                                <li>Brak trenerów</li>
                             )}
                         </ul>
                         <hr/>
