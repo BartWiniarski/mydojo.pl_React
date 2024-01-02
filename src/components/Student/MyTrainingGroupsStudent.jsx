@@ -40,8 +40,8 @@ const MyTrainingGroupsStudent = () => {
                 {response.map((group) => (
                     <li key={group.id}>
                         <h3>{group.name}</h3>
-                        <span>{group.description}</span>
-                        <span>Harmonogram zajęć:</span>
+                        <p>{group.description}</p>
+                        <p>Harmonogram zajęć:</p>
                         <ul>
                             {group.schedules.length !== 0 ? (
                                 group.schedules.map((schedule, index) => (
@@ -52,7 +52,7 @@ const MyTrainingGroupsStudent = () => {
                             )}
                         </ul>
                         <br/>
-                        <span>Trenerzy:</span>
+                        <p>Trenerzy:</p>
                         <ul>
                             {group.trainers.length !== 0 ? (
                                 group.trainers.map((trainer, index) => (

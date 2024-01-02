@@ -1,7 +1,6 @@
-import {useState, useEffect} from "react";
+import {useEffect, useState} from "react";
 import useAxiosInstanceToken from "../../hooks/useAxiosInstanceToken.jsx";
 import Calendar from "../../components/Calendar.jsx";
-import {Link} from "react-router-dom";
 
 function UserProfile() {
     const [formData, setFormData] = useState({
@@ -17,8 +16,7 @@ function UserProfile() {
     const axiosInstanceToken = useAxiosInstanceToken();
 
 
-// POBIERANIE GETEM
-        useEffect(() => {
+    useEffect(() => {
         const fetchUserProfile = async () => {
             try {
                 const response =
@@ -42,7 +40,6 @@ function UserProfile() {
     }, []);
 
 
-// WYSYŁANIE POSTEM
     const handleFormSubmit = async (e) => {
         e.preventDefault();
         setSuccessMessage('');
@@ -99,11 +96,11 @@ function UserProfile() {
                                            setFormData({...formData, lastName: e.target.value})}/>
                             </div>
                             <div className="p-2">
-                                    <label>Data urodzenia</label><br/>
-                                    <Calendar
-                                        selectedDate={formData.dob}
-                                        onDateChange={(date) => setFormData({...formData, dob: date})}
-                                    />
+                                <label>Data urodzenia</label><br/>
+                                <Calendar
+                                    selectedDate={formData.dob}
+                                    onDateChange={(date) => setFormData({...formData, dob: date})}
+                                />
                             </div>
                             <div className="p-2">
                                 <label htmlFor="InputEmail">E-mail</label>
