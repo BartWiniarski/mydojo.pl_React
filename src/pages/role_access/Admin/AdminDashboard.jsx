@@ -1,7 +1,5 @@
-import TestFetchAdmin from "../../../components/Admin/TestFetchAdmin.jsx"
-import myDojoStatusAdmin from "../../../components/Admin/myDojoStatusAdmin.jsx";
-import {Accordion, AccordionTab} from 'primereact/accordion';
 import MyDojoStatusAdmin from "../../../components/Admin/myDojoStatusAdmin.jsx";
+import {Accordion, AccordionTab} from 'primereact/accordion';
 
 function AdminDashboard() {
 
@@ -30,13 +28,14 @@ function AdminDashboard() {
                         <AccordionTab
                             header={
                                 <div className="flex align-items-center">
-                                    <i className="pi pi-user mr-2"></i>
-                                    <span className="vertical-align-middle">Test Fetch</span>
+                                    <i className="pi pi-search mr-2"></i>
+                                    <span className="vertical-align-middle">TBD</span>
+                                    <i className="pi pi-cog ml-2 ml-2"></i>
                                 </div>
                             }
                         >
                             <p className="m-0">
-                                <TestFetchAdmin/>
+                                TBD
                             </p>
                         </AccordionTab>
                         <AccordionTab

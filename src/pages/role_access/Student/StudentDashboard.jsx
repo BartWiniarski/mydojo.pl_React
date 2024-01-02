@@ -1,4 +1,3 @@
-import TestFetchStudent from "../../../components/Student/TestFetchStudent.jsx";
 import {Accordion, AccordionTab} from "primereact/accordion";
 import MyTrainingGroupsStudent from "../../../components/Student/MyTrainingGroupsStudent.jsx";
 
@@ -23,21 +22,9 @@ function StudentDashboard() {
                                 </div>
                             }
                         >
-                            <p className="m-0">
+                            <div className="m-0">
                                 <MyTrainingGroupsStudent/>
-                            </p>
-                        </AccordionTab>
-                        <AccordionTab
-                            header={
-                                <div className="flex align-items-center">
-                                    <i className="pi pi-user mr-2"></i>
-                                    <span className="vertical-align-middle">TEST FETCH</span>
-                                </div>
-                            }
-                        >
-                            <p className="m-0">
-                                <TestFetchStudent/>
-                            </p>
+                            </div>
                         </AccordionTab>
                         <AccordionTab
                             header={
@@ -48,9 +35,22 @@ function StudentDashboard() {
                                 </div>
                             }
                         >
-                            <p className="m-0">
+                            <div className="m-0">
                                 TBD
-                            </p>
+                            </div>
+                        </AccordionTab>
+                        <AccordionTab
+                            header={
+                                <div className="flex align-items-center">
+                                    <i className="pi pi-search mr-2"></i>
+                                    <span className="vertical-align-middle">TBD</span>
+                                    <i className="pi pi-cog ml-2 ml-2"></i>
+                                </div>
+                            }
+                        >
+                            <div className="m-0">
+                                TBD
+                            </div>
                         </AccordionTab>
                     </Accordion>
                 </div>

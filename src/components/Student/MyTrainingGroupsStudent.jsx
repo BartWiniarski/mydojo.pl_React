@@ -1,59 +1,70 @@
-import {useState, useEffect} from "react";
+import React, {useEffect, useState} from "react";
 import useAxiosInstanceToken from "../../hooks/useAxiosInstanceToken.jsx";
+import getStudentsTrainingGroups from "../../axios/training groups/getStudentsTrainingGroups.jsx";
 
 const MyTrainingGroupsStudent = () => {
     const [response, setResponses] = useState([]);
+    const [error, setError] = useState(null);
     const axiosInstanceToken = useAxiosInstanceToken();
 
     useEffect(() => {
+        getStudentsTrainingGroups(axiosInstanceToken, setResponses, setError);
+    }, []);
 
-        const getFetch = async () => {
-            try {
-                const response = await axiosInstanceToken.get("/student/trainingGroups");
-                    setResponses(response.data);
-            } catch (error) {
-                    console.log(error);
-            }
-        }
-        getFetch();
+    const daysOfWeekMap = {
+        MONDAY: 'Poniedziałek',
+        TUESDAY: 'Wtorek',
+        WEDNESDAY: 'Środa',
+        THURSDAY: 'Czwartek',
+        FRIDAY: 'Piątek',
+        SATURDAY: 'Sobota',
+        SUNDAY: 'Niedziela'
+    };
 
-    }, [axiosInstanceToken]);
+    const formatSchedule = (schedule) => {
+        return schedule.split(" ").map(word => {
+            return daysOfWeekMap[word] || word;
+        }).join(" ");
+    };
+
+    if (error === "User is not assigned to any Training Group") {
+        return <div>Brak przypisanej grupy treningowej</div>;
+    } else if (error === "Wystąpił nieznany błąd") {
+        return <div>Nieznany błąd pobierania grupy treningowej</div>;
+    }
 
     return (
         <article>
             <ul>
+                <hr/>
                 {response.map((group) => (
-                    <>
-                        <li key={group.id}>
-                            <h3>{group.name}</h3>
-                            <p>{group.description}</p>
-                            <p>Harmonogram zajęć:</p>
-                            <ul>
-                                {Object.entries(group.schedule).map(([day, time]) => (
-                                    <li key={day}>
-                                        {day}: {time}
-                                    </li>
-                                ))}
-                            </ul>
-                            <br/>
-                            <p>Uczniowie:</p>
-                            <ul>
-                                {group.students.map((studentId) => (
-                                    <li key={studentId}>ID: {studentId}</li>
-                                ))}
-                            </ul>
-                            <br/>
-                            <p>Trenerzy:</p>
-                            <ul>
-                                {group.trainers.map((trainerId) => (
-                                    <li key={trainerId}>ID: {trainerId}</li>
-                                ))}
-                            </ul>
-                        </li>
+                    <li key={group.id}>
+                        <h3>{group.name}</h3>
+                        <p>{group.description}</p>
+                        <p>Harmonogram zajęć:</p>
+                        <ul>
+                            {group.schedules.length !== 0 ? (
+                                group.schedules.map((schedule, index) => (
+                                    <li key={index}>{formatSchedule(schedule)}</li>
+                                ))
+                            ) : (
+                                <li>Brak harmonogramów</li>
+                            )}
+                        </ul>
+                        <br/>
+                        <p>Trenerzy:</p>
+                        <ul>
+                            {group.trainers.length !== 0 ? (
+                                group.trainers.map((trainer, index) => (
+                                    <li key={index}> {trainer} </li>
+                                ))
+                            ) : (
+                                <li>Brak trenerów</li>
+                            )}
+                        </ul>
                         <hr/>
-                    </>
+                    </li>
                 ))}
-
             </ul>
         </article>
     );

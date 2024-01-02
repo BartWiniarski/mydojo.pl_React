@@ -1,4 +1,5 @@
 import { Route, Routes, Link} from "react-router-dom";
+import WebFont from 'webfontloader';
 import Layout from "./components/Layout.jsx";
 import Login from "./pages/public_access/login.jsx";
 import Home from "./pages/home.jsx";
@@ -14,6 +15,11 @@ import TrainingGroups from "./pages/role_access/Admin/TrainingGroups.jsx";
 import Venues from "./pages/role_access/Admin/Venues.jsx";
 import Users from "./pages/role_access/Admin/Users.jsx";
 
+WebFont.load({
+    google: {
+        families: ['Poppins:400,600', 'sans-serif']
+    }
+});
 
 function App() {
 

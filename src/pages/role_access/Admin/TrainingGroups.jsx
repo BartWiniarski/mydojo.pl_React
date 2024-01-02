@@ -208,8 +208,8 @@ function TrainingGroups() {
                 <div>
                     <ul>
                         {data.trainersId.length > 0 ? (
-                            data.trainersId.map((trainerId) => (
-                                <li key={Number(trainerId)}> {getTrainerNameById(trainerId)} </li>
+                            data.trainersId.map((trainerId,index) => (
+                                <li key={index}> {getTrainerNameById(trainerId)} </li>
                             ))
                         ) : (
                             <span> Brak trenerów</span>
@@ -220,8 +220,8 @@ function TrainingGroups() {
                 <div>
                     <ul>
                         {data.studentsId.length > 0 ? (
-                            data.studentsId.map((studentId) => (
-                                <li key={Number(studentId)}> {getStudentNameById(studentId)} </li>
+                            data.studentsId.map((studentId,index) => (
+                                <li key={index}> {getStudentNameById(studentId)} </li>
                             ))
                         ) : (
                             <span> Brak uczniów</span>

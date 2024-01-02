@@ -42,25 +42,76 @@ function Home() {
                     <h4 className="text-center mt-3">Twoja cyfrowa szkoła sztuk walki</h4>
                     <hr/>
                 </div>
-                <div className="mt-5 ">
-                    <h4>Poznaj funkcjonalność</h4>
-                    <ul className="mt-4">
-                        <li className="mb-3">
-                            Zaloguj się jako administrator:
-                            <br/>e-mail: admin@admin
-                            <br/>hasło: admin
-                        </li>
-                        <li className="mb-3">
-                            Zaloguj się jako trener:
-                            <br/>e-mail: trener@trener
-                            <br/>hasło: trener
-                        </li>
-                        <li className="mb-3">
-                            Zaloguj się jako uczeń:
-                            <br/>e-mail: uczen@uczen
-                            <br/>hasło: uczen
-                        </li>
-                    </ul>
+                <div className="container">
+                    <div className="row">
+                        <div className="col-md-4 mt-5">
+                            <div>
+                                <h4 className="text-center">Poznaj funkcjonalność</h4>
+                                <hr/>
+                                <ul className="mt-4">
+                                    <li className="mb-3">
+                                        Zaloguj się jako administrator:
+                                        <br/>e-mail: admin@admin
+                                        <br/>hasło: admin
+                                    </li>
+                                    <li className="mb-3">
+                                        Zaloguj się jako trener:
+                                        <br/>e-mail: trener@trener
+                                        <br/>hasło: trener
+                                    </li>
+                                    <li className="mb-3">
+                                        Zaloguj się jako uczeń:
+                                        <br/>e-mail: uczen@uczen
+                                        <br/>hasło: uczen
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div className="col-md-4 mt-5">
+                            <div>
+                                <img src="/images/logo_1_1024_64.png" className="img-fluid shadow-img d-block mx-auto"
+                                     alt="board"
+                                     style={{maxHeight: '300px'}}/>
+                            </div>
+                        </div>
+                        <div className="col-md-4 mt-5">
+                            <div>
+                                <h4 className="text-center">Wersja 0.1.0</h4>
+                                <hr/>
+                                <ul className="mt-4">
+                                    <li className="mb-3">
+                                        Integracja z API v.0.1.0 (api.mydojo.pl)
+                                    </li>
+                                    <li className="mb-3">
+                                        Autoryzacja z użyciem czasowego tokenu JWS
+                                    </li>
+                                    <li className="mb-3">
+                                        Logowanie i rejestracja użytkownika
+                                    </li>
+                                    <li className="mb-3">
+                                        Aktualizacja danych profilu przez użytkownika
+                                    </li>
+                                    <li className="mb-3">
+                                        Administrator:
+                                        <br/>- zarządzanie użytkownikami - CRUD
+                                        <br/>- blokowanie dostępu dla użytkownika
+                                        <br/>- tworzenie nowych lokalizacji treningowych
+                                        <br/>- zarządzanie grupami treningowymi - CRUD
+                                        <br/>- zarządzanie harmonogramami treningowymi
+                                        <br/>- zarządzanie uczniami i studentami wewnątrz grupy treningowej
+                                    </li>
+                                    <li className="mb-3">
+                                        Trener:
+                                        <br/>- podgląd przypisanych grup treningowych
+                                    </li>
+                                    <li className="mb-3">
+                                        Uczeń:
+                                        <br/>- podgląd przypisanych grup treningowych
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </>
