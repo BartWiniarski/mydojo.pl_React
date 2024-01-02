@@ -1,13 +1,12 @@
 import axios from "axios";
-
-const BASE_URL = "http://localhost:8080/v1";
+import config from "../../config.js";
 
 export const axiosInstance = axios.create({
-    baseURL: BASE_URL
-});
+    baseURL: config.API_URL
+})
 
 export const axiosInstanceToken = axios.create({
-    baseURL: BASE_URL,
+    baseURL: config.API_URL,
     headers: {"Content-Type": "application/json"},
     withCredentials: true
 });
