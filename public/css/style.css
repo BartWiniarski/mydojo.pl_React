@@ -209,24 +209,6 @@ body {
     filter: drop-shadow(5px 5px 10px rgba(0, 0, 0, 0.75));
 }
 
-/*!*TABLE ADDITIONAL STYLES *!*/
-/*input[type=checkbox] {*/
-/*    accent-color: var(--main-color);*/
-/*}*/
-
-/*.bootstrap-table .fixed-table-container .table thead th .both {*/
-/*    background-image: url("/images/both.png");*/
-/*    background-position: 95% center;*/
-/*}*/
-
-/*.bootstrap-table .fixed-table-container .table thead th .desc {*/
-/*    background-image: url("/images/down.png")*/
-/*}*/
-
-/*.bootstrap-table .fixed-table-container .table thead th .asc {*/
-/*    background-image: url("/images/up.png")*/
-/*}*/
-
 /*SELECTED ROW*/
 .selected {
     background: black;
