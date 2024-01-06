@@ -61,8 +61,8 @@ function Home() {
                                     </li>
                                     <li className="mb-3">
                                         Zaloguj się jako uczeń:
-                                        <br/>e-mail: uczen@uczen
-                                        <br/>hasło: uczen
+                                        <br/>e-mail: student@student
+                                        <br/>hasło: student
                                     </li>
                                 </ul>
                             </div>
@@ -76,7 +76,7 @@ function Home() {
                         </div>
                         <div className="col-md-4 mt-5">
                             <div>
-                                <h4 className="text-center">Wersja 0.1.0</h4>
+                                <h4 className="text-center">Wersja 0.1.1</h4>
                                 <hr/>
                                 <ul className="mt-4">
                                     <li className="mb-3">

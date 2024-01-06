@@ -1,4 +1,4 @@
-# MyDojo Frontend (React) - Version 0.1.0
+# MyDojo Frontend (React) - Version 0.1.1
 # mydojo.pl
 
 ## Overview
